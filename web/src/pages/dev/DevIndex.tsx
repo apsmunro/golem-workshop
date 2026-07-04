@@ -5,6 +5,7 @@ const demos = [
   { path: '/dev/living-posterior', name: 'Living posterior header' },
   { path: '/dev/garden', name: 'Garden of Forking Data' },
   { path: '/dev/calibration', name: 'Calibration sketch' },
+  { path: '/dev/webr', name: 'webR runner' },
 ]
 
 export function DevIndex() {

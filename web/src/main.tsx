@@ -18,6 +18,7 @@ import { DevIndex } from './pages/dev/DevIndex'
 import { GardenDemo } from './pages/dev/GardenDemo'
 import { LivingPosteriorDemo } from './pages/dev/LivingPosteriorDemo'
 import { Specimen } from './pages/dev/Specimen'
+import { WebRDemo } from './pages/dev/WebRDemo'
 
 const router = createBrowserRouter(
   [
@@ -31,6 +32,7 @@ const router = createBrowserRouter(
         { path: '/dev/living-posterior', element: <LivingPosteriorDemo /> },
         { path: '/dev/garden', element: <GardenDemo /> },
         { path: '/dev/calibration', element: <CalibrationDemo /> },
+        { path: '/dev/webr', element: <WebRDemo /> },
       ],
     },
   ],

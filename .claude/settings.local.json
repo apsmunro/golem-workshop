@@ -7,7 +7,8 @@
       "PowerShell(npm test)",
       "PowerShell(git add -A)",
       "PowerShell(npm run shot -- /dev/living-posterior)",
-      "PowerShell(npm run shot -- /chapter/small-worlds-and-large-worlds)"
+      "PowerShell(npm run shot -- /chapter/small-worlds-and-large-worlds)",
+      "PowerShell(npm install webr)"
     ]
   }
 }
