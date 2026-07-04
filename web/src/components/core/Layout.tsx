@@ -21,6 +21,9 @@ export function Layout() {
             The Golem Workshop
           </Link>
           <nav className="flex items-baseline gap-6">
+            <Link to="/bestiary" className="text-sm !text-secondary !no-underline transition-colors duration-[180ms] hover:!text-accent-bright">
+              Bestiary
+            </Link>
             <button
               type="button"
               onClick={toggleTheme}

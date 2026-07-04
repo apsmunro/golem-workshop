@@ -6,6 +6,7 @@ const demos = [
   { path: '/dev/garden', name: 'Garden of Forking Data' },
   { path: '/dev/calibration', name: 'Calibration sketch' },
   { path: '/dev/webr', name: 'webR runner' },
+  { path: '/dev/ceremony', name: 'Forging ceremony & golem art' },
 ]
 
 export function DevIndex() {

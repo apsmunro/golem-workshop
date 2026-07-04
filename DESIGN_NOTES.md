@@ -16,3 +16,13 @@ Decisions:
 - Density curves on the specimen use the exact house treatment from `densityStyle()` so the specimen is contract, not illustration.
 Rejected (Chanel rule): "Statistical Rethinking · brms" eyebrow in the top nav — duplicated the hero eyebrow and wrapped to three lines at 390px. The nav is now wordmark + theme toggle only.
 Watchpoints: unforged status circles in `--line` are nearly invisible at a glance — deliberate for now (quiet until forged), revisit when real golem SVGs land; daylight mood has no dedicated screenshot pass yet — do one when the first reading page exists.
+
+## 003 — Phase 1: living posteriors, garden, ceremony (2026-07-04)
+Shipped: LivingPosterior header (brass bootstrap-KDE curves rising like smoke over the ch 2–3 headers — the signature element works and reads as "this app" instantly); Garden of Forking Data (radial fan, withering branches in `--line` ghosts, posterior bars in brass, prior ticks in verdigris on round 2+); calibration sketch (guess in bone, truth in brass with the 8% house fill); chapter MDX with eyebrow h2s, KaTeX + italic gloss lines, webR cells framed as instruments; golem art (clay strokes, bone engraving, brass eyes) with the fragment-assembly forging ceremony; bestiary grid with empty plinths.
+Screenshots: `web/shots/chapter-small-worlds-and-large-worlds-*.png` and preview captures during the session.
+Decisions:
+- Marble/data dots in the garden use bone (data), never verdigris/brass — the semantic palette stays clean: only the plausibility bars are brass because they *are* the posterior being born.
+- Ceremony is a modal with one 1.1s fragment-assembly transition, nothing else moves. Reduced motion: golem appears already assembled.
+- Golem bodies stroke in clay-500, engraving hatches in bone-300, eyes in brass-400; unforged state collapses everything to `--line` so the bestiary reads as etched-but-unfired clay.
+Rejected: YouTube iframe embeds for lectures (heavy, off-palette chrome; link cards with timestamps instead); drawing the garden past 4^3 leaves (visual noise — the "too dense to draw" message carries the pedagogical point better).
+Watchpoints: Sampler Sprite silhouette is the weakest art in the set (body reads bean-like) — redo in the Phase 7 art pass; LivingPosterior left-tail flat segments stack into horizontal hairlines when the posterior has long tails — acceptable engraving texture for Beta(7,4), recheck on multimodal draws; hint-ladder skeleton tier renders raw text, wants mono treatment matched to WebRRunner when the Rosetta toggle lands in Phase 2.

@@ -2,6 +2,7 @@ import { Suspense, lazy, useEffect } from 'react'
 import type { ComponentType } from 'react'
 import type { MDXComponents } from 'mdx/types'
 import { Link, useParams } from 'react-router-dom'
+import { ForgeCTA } from '../components/bestiary/ForgeCTA'
 import { ChapterShell } from '../components/core/ChapterShell'
 import { LivingPosterior } from '../components/core/LivingPosterior'
 import { ChapterPractice } from '../components/practice/ChapterPractice'
@@ -98,6 +99,7 @@ export function ChapterPage() {
           <div className="mt-6">
             <ChapterPractice chapter={chapter.n} hints={hintsByChapter[chapter.n]!} />
           </div>
+          <ForgeCTA chapter={chapter.n} />
         </section>
       ) : null}
       <p className="mt-16">

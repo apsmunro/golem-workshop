@@ -11,9 +11,11 @@ import '@fontsource/ibm-plex-mono/500.css'
 import './styles/global.css'
 
 import { Layout } from './components/core/Layout'
+import { Bestiary } from './pages/Bestiary'
 import { ChapterPage } from './pages/ChapterPage'
 import { Home } from './pages/Home'
 import { CalibrationDemo } from './pages/dev/CalibrationDemo'
+import { CeremonyDemo } from './pages/dev/CeremonyDemo'
 import { DevIndex } from './pages/dev/DevIndex'
 import { GardenDemo } from './pages/dev/GardenDemo'
 import { LivingPosteriorDemo } from './pages/dev/LivingPosteriorDemo'
@@ -27,12 +29,14 @@ const router = createBrowserRouter(
       children: [
         { path: '/', element: <Home /> },
         { path: '/chapter/:slug', element: <ChapterPage /> },
+        { path: '/bestiary', element: <Bestiary /> },
         { path: '/dev', element: <DevIndex /> },
         { path: '/dev/specimen', element: <Specimen /> },
         { path: '/dev/living-posterior', element: <LivingPosteriorDemo /> },
         { path: '/dev/garden', element: <GardenDemo /> },
         { path: '/dev/calibration', element: <CalibrationDemo /> },
         { path: '/dev/webr', element: <WebRDemo /> },
+        { path: '/dev/ceremony', element: <CeremonyDemo /> },
       ],
     },
   ],

@@ -13,13 +13,13 @@ Claude Code: read this first each session. Tick items as completed. Log blockers
 - [x] DESIGN_NOTES entry 002: screenshots of tokens/type specimen page
 
 ## Phase 1 — Ch. 1–3 vertical slice
-- [ ] LivingPosterior header component (canvas, reduced-motion fallback)
-- [ ] Garden of Forking Data interactive (engine + tests + /dev route)
-- [ ] webR runner: lazy load, editable cells, seeded, loading-golem state
-- [ ] Ch. 1–3 MDX content (original prose; lecture embeds from lectures.json)
-- [ ] Hint ladder + practice UI wired to problems.json (ch 2–3)
-- [ ] Calibration sketch v1 + scoring
-- [ ] Globe-Tossing Golem + Sampler Sprite art; forging ceremony v1
+- [x] LivingPosterior header component (canvas, reduced-motion fallback)
+- [x] Garden of Forking Data interactive (engine + tests + /dev route)
+- [x] webR runner: lazy load, editable cells, seeded, loading-golem state
+- [x] Ch. 1–3 MDX content (original prose; lecture links from lectures.json — link cards with timestamps, not iframes)
+- [x] Hint ladder + practice UI wired to problems.json (ch 2–3, full original ladders for all 33 problems)
+- [x] Calibration sketch v1 + scoring (1 − TV; ch02 globe prompt wired into chapter 2)
+- [x] Globe-Tossing Golem + Sampler Sprite art; forging ceremony v1; /bestiary route + ForgeCTA gate
 
 ## Phase 2 — Ch. 4–6
 - [ ] Prior Predictive Playground (config-driven, red-zone overlays)
@@ -67,3 +67,4 @@ Claude Code: read this first each session. Tick items as completed. Log blockers
 ## Session log
 - 000: repo initialized with plan, CLAUDE.md, course data manifests, this file.
 - 001 (2026-07-04): Phase 0 built. git init; web/ scaffold (Vite 6, React 18, TS strict, Tailwind 4); tokens.css + global.css; Layout/ChapterShell/Home/ChapterPage/dev specimen; workshop store (5 slices, persist v1, export/import) with 14 passing tests; plot-theme.ts; shot + prose-lint scripts; deploy workflow. Build, tests, prose-lint all green.
+- 002 (2026-07-04): Phase 1 built, same session. rng (PCG32) + stats libs; LivingPosterior (bootstrap-KDE smoke, wired to ch 2–3 globe draws); Garden of Forking Data (counts verified 0/3/8/9/0 and sequential 0/3/16/27/0 in-browser); calibration sketch (94.2% on faithful trace, persists); practice system with 33 original hint ladders; webR runner (verified real R eval in browser); MDX + KaTeX pipeline with original ch 1–3 prose; golem art + forging ceremony + bestiary. 57 tests, build, prose-lint green. Chapter completion rule v1: all hint-laddered problems marked complete → ForgeCTA unlocks.
