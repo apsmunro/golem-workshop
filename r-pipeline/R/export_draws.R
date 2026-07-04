@@ -1,0 +1,67 @@
+# Export fitted models as golem-workshop/posterior@1 artifacts.
+# Refuses to export any fit failing rhat < 1.01 or bulk-ESS > 400.
+library(posterior)
+library(jsonlite)
+
+`%||%` <- function(a, b) if (is.null(a)) b else a
+
+OUT <- "../web/public/data/posteriors"
+dir.create(OUT, recursive = TRUE, showWarnings = FALSE)
+N_DRAWS <- 2000
+
+# course-facing parameter names per model
+param_maps <- list(
+  "m4.1" = c(mu = "b_Intercept", sigma = "sigma"),
+  "m4.3" = c(a = "b_Intercept", b = "b_weight_c", sigma = "sigma"),
+  "m5.1" = c(a = "b_Intercept", bA = "b_A", sigma = "sigma"),
+  "m5.2" = c(a = "b_Intercept", bM = "b_M", sigma = "sigma"),
+  "m5.3" = c(a = "b_Intercept", bM = "b_M", bA = "b_A", sigma = "sigma"),
+  "m5.7" = c(a = "b_Intercept", bN = "b_N", bM = "b_M", sigma = "sigma")
+)
+
+chapters <- c("m4.1" = 4, "m4.3" = 4, "m5.1" = 5, "m5.2" = 5,
+              "m5.3" = 5, "m5.7" = 5)
+
+for (model in names(param_maps)) {
+  path <- file.path("fits", paste0(model, ".rds"))
+  if (!file.exists(path)) {
+    cat("skip", model, "- not fitted\n")
+    next
+  }
+  fit <- readRDS(path)
+  draws <- as_draws_df(fit)
+  map <- param_maps[[model]]
+
+  diagnostics <- list()
+  out_draws <- list()
+  for (course_name in names(map)) {
+    internal <- map[[course_name]]
+    col <- draws[[internal]]
+    stopifnot(!is.null(col))
+    rhat_v <- rhat(extract_variable_matrix(fit, internal))
+    ess_v <- ess_bulk(extract_variable_matrix(fit, internal))
+    if (rhat_v >= 1.01 || ess_v <= 400) {
+      stop(sprintf("%s %s fails gates: rhat %.4f ess %.0f",
+                   model, course_name, rhat_v, ess_v))
+    }
+    diagnostics[[course_name]] <- list(rhat = rhat_v, ess_bulk = ess_v)
+    idx <- round(seq(1, length(col), length.out = N_DRAWS))
+    out_draws[[course_name]] <- col[idx]
+  }
+
+  artifact <- list(
+    schema = "golem-workshop/posterior@1",
+    model = model,
+    chapter = chapters[[model]],
+    seed = 1959,
+    engine = "brms",
+    created = format(Sys.time(), "%Y-%m-%dT%H:%M:%SZ", tz = "UTC"),
+    data = list(name = attr(fit$data, "data_name") %||% "", n = nrow(fit$data)),
+    params = names(map),
+    draws = out_draws,
+    diagnostics = diagnostics
+  )
+  write_json(artifact, file.path(OUT, paste0(model, ".json")),
+             auto_unbox = TRUE, digits = 6)
+  cat("exported", model, "\n")
+}

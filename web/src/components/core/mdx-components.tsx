@@ -5,9 +5,15 @@
  */
 import 'katex/dist/katex.min.css'
 import type { MDXComponents } from 'mdx/types'
+import { Rosetta } from '../code/Rosetta'
 import { WebRRunner } from '../code/WebRRunner'
 import { GardenOfForkingData } from '../interactives/garden-of-forking-data/GardenOfForkingData'
-import { GlobeCalibration } from '../../content/chapters/embeds'
+import {
+  DagSandbox,
+  GlobeCalibration,
+  HowellExplorer,
+  PriorPlayground,
+} from '../../content/chapters/embeds'
 import { LectureCallout } from './LectureCallout'
 
 export const mdxComponents: MDXComponents = {
@@ -30,9 +36,11 @@ export const mdxComponents: MDXComponents = {
   ),
   hr: () => <hr className="mt-16" />,
   em: (props) => <em {...props} />,
-  // gloss line under display equations
+  // gloss line under display equations. A block <span> rather than <p>:
+  // remark-math wraps the display equation in a paragraph and the Gloss
+  // that follows can land inside it, where a <p> would be invalid nesting.
   Gloss: ({ children }: { children: React.ReactNode }) => (
-    <p className="mt-2 text-sm text-secondary italic">{children}</p>
+    <span className="mt-2 block text-sm text-secondary italic">{children}</span>
   ),
   Wide: ({ children }: { children: React.ReactNode }) => (
     <div className="mt-8 lg:-mx-24">{children}</div>
@@ -40,5 +48,9 @@ export const mdxComponents: MDXComponents = {
   LectureCallout,
   GardenOfForkingData,
   GlobeCalibration,
+  PriorPlayground,
+  DagSandbox,
+  HowellExplorer,
+  Rosetta,
   WebRRunner,
 }

@@ -16,7 +16,10 @@ import { ChapterPage } from './pages/ChapterPage'
 import { Home } from './pages/Home'
 import { CalibrationDemo } from './pages/dev/CalibrationDemo'
 import { CeremonyDemo } from './pages/dev/CeremonyDemo'
+import { DagDemo } from './pages/dev/DagDemo'
 import { DevIndex } from './pages/dev/DevIndex'
+import { ExplorerDemo } from './pages/dev/ExplorerDemo'
+import { PriorDemo } from './pages/dev/PriorDemo'
 import { GardenDemo } from './pages/dev/GardenDemo'
 import { LivingPosteriorDemo } from './pages/dev/LivingPosteriorDemo'
 import { Specimen } from './pages/dev/Specimen'
@@ -37,6 +40,9 @@ const router = createBrowserRouter(
         { path: '/dev/calibration', element: <CalibrationDemo /> },
         { path: '/dev/webr', element: <WebRDemo /> },
         { path: '/dev/ceremony', element: <CeremonyDemo /> },
+        { path: '/dev/dag', element: <DagDemo /> },
+        { path: '/dev/prior', element: <PriorDemo /> },
+        { path: '/dev/explorer', element: <ExplorerDemo /> },
       ],
     },
   ],

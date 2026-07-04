@@ -7,6 +7,9 @@ const demos = [
   { path: '/dev/calibration', name: 'Calibration sketch' },
   { path: '/dev/webr', name: 'webR runner' },
   { path: '/dev/ceremony', name: 'Forging ceremony & golem art' },
+  { path: '/dev/dag', name: 'DAG sandbox' },
+  { path: '/dev/prior', name: 'Prior predictive playground' },
+  { path: '/dev/explorer', name: 'Posterior explorer (m4.3)' },
 ]
 
 export function DevIndex() {

@@ -152,3 +152,134 @@ export function SamplerSprite({
     </svg>
   )
 }
+
+export function GaussianGolem({
+  state = 'forged',
+  dismembered = false,
+  className,
+}: GolemArtProps) {
+  const clay = state === 'forged' ? 'var(--clay-500)' : 'var(--line)'
+  const bone = state === 'forged' ? 'var(--bone-300)' : 'var(--line)'
+  const brass = state === 'forged' ? 'var(--brass-400)' : 'var(--line)'
+  const sw = 1.5
+
+  return (
+    <svg viewBox="0 0 120 150" className={className} role="img" aria-label={`Gaussian Golem, ${state}`}>
+      {/* the bell curve crown */}
+      <Fragment offset="translate(0px, -30px) rotate(0deg)" dismembered={dismembered}>
+        <path d="M32 40 C44 40 44 16 60 16 C76 16 76 40 88 40" fill="none" stroke={brass} strokeWidth={sw} />
+        <path d="M32 40 C44 40 44 16 60 16 C76 16 76 40 88 40 L88 44 L32 44 Z" fill={brass} opacity="0.08" stroke="none" />
+      </Fragment>
+
+      {/* head */}
+      <Fragment offset="translate(0px, -20px) rotate(0deg)" dismembered={dismembered}>
+        <rect x="48" y="44" width="24" height="22" rx="3" fill="none" stroke={clay} strokeWidth={sw} />
+        <circle cx="55" cy="55" r="1.8" fill={brass} />
+        <circle cx="65" cy="55" r="1.8" fill={brass} />
+      </Fragment>
+
+      {/* torso engraved with a symmetric axis */}
+      <Fragment offset="translate(-22px, 14px) rotate(-16deg)" dismembered={dismembered}>
+        <path d="M44 66 L76 66 Q80 66 80 72 L78 110 L42 110 L40 72 Q40 66 44 66 Z" fill="none" stroke={clay} strokeWidth={sw} strokeLinejoin="round" />
+        <line x1="60" y1="70" x2="60" y2="106" stroke={bone} strokeWidth="0.8" strokeDasharray="2 3" />
+        <path d="M48 96 C54 96 54 84 60 84 C66 84 66 96 72 96" fill="none" stroke={bone} strokeWidth="0.9" />
+      </Fragment>
+
+      {/* arms */}
+      <Fragment offset="translate(28px, 6px) rotate(30deg)" dismembered={dismembered}>
+        <path d="M44 74 L30 86 M76 74 L90 86" fill="none" stroke={clay} strokeWidth={sw} strokeLinecap="round" />
+      </Fragment>
+
+      {/* legs */}
+      <Fragment offset="translate(6px, 28px) rotate(12deg)" dismembered={dismembered}>
+        <path d="M48 110 L47 136 L57 136 L57 110 M63 110 L63 136 L73 136 L72 110" fill="none" stroke={clay} strokeWidth={sw} strokeLinejoin="round" />
+      </Fragment>
+    </svg>
+  )
+}
+
+export function MultivariableGolem({
+  state = 'forged',
+  dismembered = false,
+  className,
+}: GolemArtProps) {
+  const clay = state === 'forged' ? 'var(--clay-500)' : 'var(--line)'
+  const bone = state === 'forged' ? 'var(--bone-300)' : 'var(--line)'
+  const brass = state === 'forged' ? 'var(--brass-400)' : 'var(--line)'
+  const sw = 1.5
+
+  return (
+    <svg viewBox="0 0 120 150" className={className} role="img" aria-label={`Multivariable Golem, ${state}`}>
+      {/* three-node crown: many variables feeding one head */}
+      <Fragment offset="translate(0px, -30px) rotate(0deg)" dismembered={dismembered}>
+        <circle cx="34" cy="20" r="5" fill="none" stroke={brass} strokeWidth={sw} />
+        <circle cx="60" cy="14" r="5" fill="none" stroke={brass} strokeWidth={sw} />
+        <circle cx="86" cy="20" r="5" fill="none" stroke={brass} strokeWidth={sw} />
+        <path d="M37 24 L54 40 M60 19 L60 40 M83 24 L66 40" fill="none" stroke={bone} strokeWidth="1" />
+      </Fragment>
+
+      {/* head */}
+      <Fragment offset="translate(0px, -18px) rotate(0deg)" dismembered={dismembered}>
+        <path d="M48 62 L48 46 Q48 40 54 40 L66 40 Q72 40 72 46 L72 62 Z" fill="none" stroke={clay} strokeWidth={sw} strokeLinejoin="round" />
+        <circle cx="55" cy="51" r="1.8" fill={brass} />
+        <circle cx="65" cy="51" r="1.8" fill={brass} />
+      </Fragment>
+
+      {/* broad torso, three engraved columns */}
+      <Fragment offset="translate(-24px, 16px) rotate(-14deg)" dismembered={dismembered}>
+        <path d="M42 62 L78 62 Q82 62 82 68 L80 110 L40 110 L38 68 Q38 62 42 62 Z" fill="none" stroke={clay} strokeWidth={sw} strokeLinejoin="round" />
+        <line x1="52" y1="70" x2="52" y2="104" stroke={bone} strokeWidth="0.8" />
+        <line x1="60" y1="70" x2="60" y2="104" stroke={bone} strokeWidth="0.8" />
+        <line x1="68" y1="70" x2="68" y2="104" stroke={bone} strokeWidth="0.8" />
+      </Fragment>
+
+      {/* legs */}
+      <Fragment offset="translate(6px, 28px) rotate(12deg)" dismembered={dismembered}>
+        <path d="M48 110 L47 136 L57 136 L57 110 M63 110 L63 136 L73 136 L72 110" fill="none" stroke={clay} strokeWidth={sw} strokeLinejoin="round" />
+      </Fragment>
+    </svg>
+  )
+}
+
+export function HauntedDagGolem({
+  state = 'forged',
+  dismembered = false,
+  className,
+}: GolemArtProps) {
+  const clay = state === 'forged' ? 'var(--clay-500)' : 'var(--line)'
+  const bone = state === 'forged' ? 'var(--bone-300)' : 'var(--line)'
+  const plum = state === 'forged' ? 'var(--plum-500)' : 'var(--line)'
+  const brass = state === 'forged' ? 'var(--brass-400)' : 'var(--line)'
+  const sw = 1.5
+
+  return (
+    <svg viewBox="0 0 120 150" className={className} role="img" aria-label={`Haunted DAG Charm, ${state}`}>
+      {/* the ghost — an unobserved confounder hovering above */}
+      <Fragment offset="translate(0px, -34px) rotate(0deg)" dismembered={dismembered}>
+        <path d="M46 30 Q46 12 60 12 Q74 12 74 30 L74 40 L70 36 L66 40 L62 36 L58 40 L54 36 L50 40 L46 36 Z" fill={plum} opacity="0.12" stroke={plum} strokeWidth={sw} strokeLinejoin="round" strokeDasharray="3 3" />
+        <circle cx="55" cy="26" r="1.6" fill={plum} />
+        <circle cx="65" cy="26" r="1.6" fill={plum} />
+      </Fragment>
+
+      {/* the collider node the charm warns about */}
+      <Fragment offset="translate(-22px, 6px) rotate(-18deg)" dismembered={dismembered}>
+        <circle cx="60" cy="66" r="14" fill="none" stroke={clay} strokeWidth={sw} />
+        <circle cx="54" cy="64" r="1.8" fill={brass} />
+        <circle cx="66" cy="64" r="1.8" fill={brass} />
+        <path d="M53 73 Q60 69 67 73" fill="none" stroke={bone} strokeWidth="1" />
+      </Fragment>
+
+      {/* two arrows colliding into it (the fork of the haunting) */}
+      <Fragment offset="translate(24px, 10px) rotate(24deg)" dismembered={dismembered}>
+        <path d="M34 96 L50 74 M86 96 L70 74" fill="none" stroke={bone} strokeWidth="1.2" />
+        <path d="M50 74 l-5 1 l3 4 Z M70 74 l5 1 l-3 4 Z" fill={bone} />
+      </Fragment>
+
+      {/* base */}
+      <Fragment offset="translate(0px, 30px) rotate(0deg)" dismembered={dismembered}>
+        <path d="M40 108 L80 108 L84 126 L36 126 Z" fill="none" stroke={clay} strokeWidth={sw} strokeLinejoin="round" />
+        <path d="M44 116 L76 116" stroke={bone} strokeWidth="0.8" />
+      </Fragment>
+    </svg>
+  )
+}

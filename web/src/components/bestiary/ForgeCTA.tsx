@@ -4,6 +4,8 @@ import { hintsByChapter } from '../../content/practice'
 import { ForgingCeremony } from './ForgingCeremony'
 import { golemForChapter } from './registry'
 
+const EMPTY: string[] = []
+
 /**
  * Appears under a chapter's practice section. Enabled once every problem
  * with a hint ladder is marked complete; forging triggers the ceremony.
@@ -11,7 +13,9 @@ import { golemForChapter } from './registry'
 export function ForgeCTA({ chapter }: { chapter: number }) {
   const [ceremony, setCeremony] = useState(false)
   const golem = golemForChapter(chapter)
-  const done = useWorkshopStore((s) => s.chapters[chapter]?.problemsDone ?? [])
+  // Select the stored array directly (stable identity); default after.
+  const doneStored = useWorkshopStore((s) => s.chapters[chapter]?.problemsDone)
+  const done = doneStored ?? EMPTY
   const forged = useWorkshopStore((s) =>
     golem ? s.golems[golem.id] !== undefined : false,
   )

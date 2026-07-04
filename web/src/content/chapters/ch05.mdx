@@ -1,0 +1,93 @@
+States with more Waffle Houses have higher divorce rates. The correlation is
+real, strong, and completely stupid: Waffle House is a Southern institution,
+the South marries young, and marrying young predicts divorce. The waffles are
+innocent bystanders standing near the crime. This chapter is about golems
+that can tell a bystander from a cause — and about how easily they fail to.
+
+## More is not better
+
+The reflex when a variable looks spurious is to "control for" everything in
+sight. Throw age, marriage rate, region, and waffles into one regression and
+let the golem sort it out. Sometimes this works. Sometimes it manufactures
+confounds, hides real effects, or flips a sign. A regression coefficient is
+not "the effect of X"; it is "the effect of X, given exactly the other
+things in this particular model", and that clause does enormous, invisible
+work.
+
+## Draw the causes first
+
+Before any regression, draw what you think causes what. A directed acyclic
+graph is a set of claims precise enough to be wrong: arrows for direct
+causes, no cycles, and every path between two variables is either open
+(carrying association) or blocked. The sandbox below lets you condition on
+nodes and watch the doors. Start with waffles: which variables must you hold
+fixed to ask honestly whether Waffle Houses cause divorce?
+
+<Wide><DagSandbox /></Wide>
+
+Two rules do most of the work. Conditioning on a **fork** (a common cause)
+closes the spurious path — this is legitimate control, and it is what
+dissolves the waffle correlation. Conditioning on a **collider** (a common
+effect) *opens* a path that was closed, inventing association from nothing.
+The difference between wisdom and self-sabotage is knowing which kind of node
+you just clicked.
+
+## Multiple regression, read honestly
+
+Fit divorce on marriage rate alone and it looks important. Add median age at
+marriage and the marriage-rate coefficient collapses to nearly zero. The
+golem is answering a conditional question: once you know a state's typical
+marriage age, its marriage *rate* tells you almost nothing more about
+divorce.
+
+<Rosetta
+  model="m5.3"
+  book={`m5.3 <- quap(
+  alist(
+    D ~ dnorm(mu, sigma),
+    mu <- a + bM * M + bA * A,
+    a ~ dnorm(0, 0.2),
+    bM ~ dnorm(0, 0.5),
+    bA ~ dnorm(0, 0.5),
+    sigma ~ dexp(1)
+  ),
+  data = d
+)`}
+  brms={`m5.3 <- brm(
+  D ~ 1 + M + A,
+  data = d, family = gaussian(),
+  prior = c(
+    prior(normal(0, 0.2), class = Intercept),
+    prior(normal(0, 0.5), class = b),
+    prior(exponential(1), class = sigma)
+  ),
+  seed = 1959, backend = "cmdstanr"
+)`}
+/>
+
+Predictor residual plots and counterfactual plots are the two tools for
+reading these golems. The first shows what a predictor adds *after* the
+others are accounted for; the second asks the model to imagine intervening —
+raise the marriage age, hold the rate fixed, what happens to divorce? A
+regression that cannot answer a clean counterfactual is not yet a causal
+model, however good its fit.
+
+## Masking
+
+The milk preset shows the opposite failure. Neocortex size and body mass each
+look unrelated to milk energy on their own, because they are correlated with
+each other and pull in opposite directions. Put both in and both light up —
+the golem finally sees each effect with the other held still. Confounds hide
+effects as readily as they fake them.
+
+## Forge it
+
+The 5H problems run both traps: spurious associations to dissolve and masked
+ones to uncover. For each, draw the DAG first, decide what to condition on
+*before* fitting, then check the golem against your reasoning. The
+Multivariable Golem is earned by getting the graph right, not the code.
+
+<LectureCallout
+  n={4}
+  note="Categories and curves, and the causal thinking behind multiple regression."
+/>

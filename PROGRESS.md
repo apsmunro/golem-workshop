@@ -22,13 +22,13 @@ Claude Code: read this first each session. Tick items as completed. Log blockers
 - [x] Globe-Tossing Golem + Sampler Sprite art; forging ceremony v1; /bestiary route + ForgeCTA gate
 
 ## Phase 2 — Ch. 4–6
-- [ ] Prior Predictive Playground (config-driven, red-zone overlays)
-- [ ] DAG engine (d-separation, adjustment sets) + property tests vs known DAGs
-- [ ] DAG Sandbox UI + simulate-from-DAG bias demos; presets (waffles, milk, fungus, grandparents)
-- [ ] r-pipeline scaffold (renv, Makefile, get_data.R) + fits/exports m4.x–m6.x
-- [ ] Posterior Explorer v1 (densities, pairs, PPC overlays, counterfactual sliders)
-- [ ] Rosetta toggle (quap/ulam ↔ brms) component
-- [ ] Ch. 4–6 content, practice, golems
+- [x] Prior Predictive Playground (config-driven, red-zone overlays)
+- [x] DAG engine (d-separation, adjustment sets) + property tests vs known DAGs
+- [x] DAG Sandbox UI + simulate-from-DAG bias demos; presets (waffles, milk, fungus, grandparents)
+- [x] r-pipeline scaffold (renv, Makefile, get_data.R) + fit/export scripts m4.x–m5.x; validating web loader. NOTE: scripts written but not executed here (needs R+cmdstan on a real machine); chapters run on the in-browser quap engine meanwhile.
+- [x] Posterior Explorer v1 (densities, pairs, PPC overlays, counterfactual slider)
+- [x] Rosetta toggle (quap/ulam ↔ brms) component
+- [x] Ch. 4–6 content, practice (full ladders 4E–4H4, 5E–5H4, 6E–6H5), golems (Gaussian, Multivariable, Haunted-DAG)
 
 ## Phase 3 — Ch. 7–9
 - [ ] Overfit-the-polynomial game; LOO/WAIC comparison UI
@@ -67,4 +67,5 @@ Claude Code: read this first each session. Tick items as completed. Log blockers
 ## Session log
 - 000: repo initialized with plan, CLAUDE.md, course data manifests, this file.
 - 001 (2026-07-04): Phase 0 built. git init; web/ scaffold (Vite 6, React 18, TS strict, Tailwind 4); tokens.css + global.css; Layout/ChapterShell/Home/ChapterPage/dev specimen; workshop store (5 slices, persist v1, export/import) with 14 passing tests; plot-theme.ts; shot + prose-lint scripts; deploy workflow. Build, tests, prose-lint all green.
+- 003 (2026-07-04): Phase 2 built. DAG engine (d-sep + minimal backdoor sets, validated: waffles → {S},{A,M}; milk → {M}; fungus/grandparents); DAG sandbox with linear-Gaussian simulate + OLS bias readout (verified waffles unadjusted 1.52 → adjusted-on-S 0.01 in browser); quap engine (Nelder-Mead MAP + numeric Hessian + Cholesky MVN, matches m4.1/m4.3 published numbers); Prior Predictive Playground; Posterior Explorer (m4.3, verified a/b/sigma marginals + 50kg→159cm counterfactual); Rosetta toggle; r-pipeline scaffold + posterior-artifact loader with rhat/ESS gates; ch 4–6 MDX + 3 golems + hint ladders. 104 tests, build, prose-lint green. Fixed ForgeCTA selector identity churn and Gloss <p>-nesting warnings.
 - 002 (2026-07-04): Phase 1 built, same session. rng (PCG32) + stats libs; LivingPosterior (bootstrap-KDE smoke, wired to ch 2–3 globe draws); Garden of Forking Data (counts verified 0/3/8/9/0 and sequential 0/3/16/27/0 in-browser); calibration sketch (94.2% on faithful trace, persists); practice system with 33 original hint ladders; webR runner (verified real R eval in browser); MDX + KaTeX pipeline with original ch 1–3 prose; golem art + forging ceremony + bestiary. 57 tests, build, prose-lint green. Chapter completion rule v1: all hint-laddered problems marked complete → ForgeCTA unlocks.

@@ -1,0 +1,82 @@
+Here is a fact that should worry you: among funded scientists, the ones who
+are worse researchers tend to be better self-promoters, and vice versa — even
+if the two traits are unrelated in the population. Nobody engineered this
+correlation. Selection did. Grant committees admit people who are strong on
+*either* axis, and once you look only at the admitted, being weak on one
+implies being strong on the other. Condition on a collider and you conjure a
+relationship from thin air. This chapter is a catalogue of ways good golems
+go wrong, and every one is a version of that trick.
+
+## The collider of selection
+
+The scientists story is a collider: talent → funded ← promotion. Funding is
+a common effect of both. Selecting on it — studying only funded people —
+opens the path and correlates the causes. The same shape explains why
+handsome actors seem less talented (both get you cast), why nutritious
+restaurants seem to have worse ambiance, and why controlling for a
+"downstream" variable so often backfires. Open the collider preset in the
+sandbox from the last chapter and watch the association appear the instant
+you condition.
+
+## Post-treatment bias
+
+Suppose you test a fungicide on plants and, being thorough, you control for
+the fungus that remains at harvest. You have just deleted your own treatment
+effect. The treatment works *through* reducing fungus; condition on fungus
+and you block the very pathway you meant to measure.
+
+$$
+H_1 \sim \text{Normal}(\mu, \sigma), \qquad \mu = H_0 \cdot p, \qquad p = f(\text{treatment}, \text{fungus})
+$$
+
+<Gloss>
+Growth depends on fungus, and treatment acts by changing fungus. Put fungus
+in the model and treatment looks useless — not because it is, but because you
+adjusted away its only route.
+</Gloss>
+
+The rule is blunt and worth memorizing: never condition on a variable that
+sits between your cause and your effect. "Control for everything measured" is
+not caution, it is a way to be precisely, defensibly wrong.
+
+## The haunted DAG
+
+The subtlest trap needs no mistake on your part, only an unmeasured cause.
+Grandparents, parents, children: education flows down the generations, and an
+unseen neighborhood effect touches both parents and children. Condition on
+parents — which any sane model of a child would — and you open a path through
+the invisible neighborhood, biasing the grandparent effect you were after.
+The confounder you cannot see reaches through the collider you had to
+condition on.
+
+<Wide><DagSandbox /></Wide>
+
+Select the grandparents preset. The unobserved node is drawn as a dashed
+circle you are not allowed to click, because you cannot condition on what you
+did not measure. The sandbox will tell you the honest truth: with that node
+hidden, no adjustment set closes every door. Sometimes the correct answer is
+"this effect is not identified", and a golem that admits that is worth more
+than one that produces a confident number.
+
+## The four elemental confounds
+
+Everything in this chapter reduces to four shapes between two variables and a
+third: the fork (common cause — condition to close), the pipe (mediator —
+do not condition or you block the effect), the collider (common effect — do
+not condition or you open a fake path), and the descendant (a proxy that
+partially conditions on whatever it descends from). Learn to see these four
+in any DAG and you can read off what to control for without fitting anything.
+That skill — not the regression — is the Haunted DAG Charm.
+
+## Forge it
+
+The 6H problems hand you DAGs and ask for adjustment sets, then confront your
+answer with data. Use the sandbox to check yourself: list the paths, classify
+each node, close the back doors and only the back doors. The charm protects
+the golems you build in every later chapter — measurement error, missing
+data, and multilevel models are all, underneath, careful conditioning.
+
+<LectureCallout
+  n={5}
+  note="Elemental confounds, colliders, and the haunted DAG in full."
+/>

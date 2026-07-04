@@ -10,7 +10,16 @@
       "PowerShell(npm run shot -- /chapter/small-worlds-and-large-worlds)",
       "PowerShell(npm install webr)",
       "PowerShell(npm install -D @mdx-js/rollup @types/mdx)",
-      "PowerShell(npm install @mdx-js/react remark-gfm remark-math rehype-katex katex)"
+      "PowerShell(npm install @mdx-js/react remark-gfm remark-math rehype-katex katex)",
+      "PowerShell(npm run shot -- /bestiary)",
+      "PowerShell(npm run shot -- /chapter/the-golem-of-prague)",
+      "PowerShell(npx vitest run src/components/interactives/dag-sandbox)",
+      "PowerShell(npm run build)",
+      "PowerShell(npx vitest run src/lib/quap.test.ts)",
+      "PowerShell(npx vitest run src/components/interactives/posterior-explorer src/components/interactives/prior-playground)",
+      "PowerShell(npx vitest run src/lib/posterior-artifact.test.ts)",
+      "Bash(npm run *)",
+      "PowerShell(npm run lint:prose)"
     ]
   }
 }

@@ -1,0 +1,104 @@
+Ptolemy's model of the heavens was wrong about almost everything and
+predicted eclipses beautifully. Circles riding on circles — epicycles — can
+trace any closed orbit to arbitrary precision, so the geocentric golem fit
+the sky it was shown while placing the Earth in the middle of nothing. Linear
+regression is our epicycle: a device that approximates almost any mean
+relationship, often useful, rarely a claim about mechanism. Keep the Ptolemy
+warning close as you build this one, because it fits so willingly.
+
+## Why heights are a bell
+
+Add up many small independent nudges — genes, meals, illnesses, a thousand
+of them — and the sum forgets where each nudge came from. All that survives
+is a mean and a spread. That is the Gaussian, and it is not a law of nature
+so much as a law of ignorance: the least committal shape for a quantity
+built from many additions. The golem uses it not because heights *are*
+normal but because, knowing only a mean and a variance, normal is the most
+honest guess.
+
+$$
+h_i \sim \text{Normal}(\mu, \sigma)
+$$
+
+<Gloss>
+Each height is a draw from one bell, with center μ and width σ. No predictor
+yet — just the claim that heights scatter around a typical value.
+</Gloss>
+
+## Priors are claims; simulate them
+
+Before fitting anything, hear what a prior says out loud. A slope prior of
+Normal(0, 10) sounds humble and is in fact unhinged: it cheerfully proposes
+people who shrink to negative height or tower past three metres. Move the
+sliders until the golem stops predicting monsters.
+
+<Wide><PriorPlayground /></Wide>
+
+A LogNormal(0, 1) slope forces the relationship positive and keeps it
+plausible — taller-with-heavier, at a believable rate. This is the whole
+argument for weakly informative priors, and you just watched it rather than
+took it on faith.
+
+## The linear golem
+
+Give the mean a predictor. Center weight on its own mean so the intercept
+stays interpretable — it becomes "the height of an average-weight person",
+not "the height of a weightless one".
+
+$$
+h_i \sim \text{Normal}(\mu_i, \sigma), \qquad \mu_i = \alpha + \beta\,(x_i - \bar{x})
+$$
+
+<Rosetta
+  model="m4.3"
+  book={`m4.3 <- quap(
+  alist(
+    height ~ dnorm(mu, sigma),
+    mu <- a + b * (weight - xbar),
+    a ~ dnorm(178, 20),
+    b ~ dlnorm(0, 1),
+    sigma ~ dunif(0, 50)
+  ),
+  data = d
+)`}
+  brms={`m4.3 <- brm(
+  height ~ 1 + weight_c,
+  data = d, family = gaussian(),
+  prior = c(
+    prior(normal(178, 20), class = Intercept),
+    prior(lognormal(0, 1), class = b, lb = 0),
+    prior(uniform(0, 50), class = sigma, ub = 50)
+  ),
+  seed = 1959, backend = "cmdstanr"
+)`}
+/>
+
+## Reading the posterior
+
+Fit it and the golem hands back not a line but a posterior over lines. Here
+is that posterior for 352 !Kung adults, fit in your browser by quadratic
+approximation — the same method the book uses for this chapter. Marginals
+first, then the model's lines over the data, then a counterfactual: pick a
+weight the census never recorded and ask for a height.
+
+<Wide><HowellExplorer /></Wide>
+
+Watch the two bands. The narrow brass one is uncertainty about the *mean*
+line — it tightens with more data toward a hairline. The wide plum one is
+uncertainty about an actual *person*, and it never collapses, because people
+scatter around the mean no matter how sure you are of the mean. Confusing
+these two bands is how forecasts end up sounding certain about individuals
+when they are only certain about averages.
+
+## Predict before you look
+
+The 4H problems push this golem where it breaks: extrapolate past the data
+and it predicts confidently wrong, because a line is a local approximation
+wearing a global disguise — Ptolemy again. Sketch what you expect the
+weight-height relationship to look like for children before you fit it; the
+curvature will surprise you, and being surprised on purpose is the point.
+
+<LectureCallout
+  n={3}
+  note="Geocentric models: why linear regression is an epicycle, and how to tame its priors."
+/>
