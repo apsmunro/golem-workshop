@@ -1,0 +1,143 @@
+@import './tokens.css';
+@import 'tailwindcss';
+
+/* Map tokens into Tailwind's theme so utilities consume the variables.
+   `inline` keeps var() references live for theme switching. */
+@theme inline {
+  --color-*: initial;
+  --color-ink-950: var(--ink-950);
+  --color-ink-800: var(--ink-800);
+  --color-ink-600: var(--ink-600);
+  --color-bone-100: var(--bone-100);
+  --color-bone-300: var(--bone-300);
+  --color-brass-400: var(--brass-400);
+  --color-brass-200: var(--brass-200);
+  --color-verdigris-400: var(--verdigris-400);
+  --color-clay-500: var(--clay-500);
+  --color-plum-500: var(--plum-500);
+
+  --color-ground: var(--ground);
+  --color-surface: var(--surface);
+  --color-line: var(--line);
+  --color-primary: var(--text-primary);
+  --color-secondary: var(--text-secondary);
+  --color-accent: var(--accent);
+  --color-accent-bright: var(--accent-bright);
+  --color-link: var(--link);
+
+  --color-stat-data: var(--stat-data);
+  --color-stat-prior: var(--stat-prior);
+  --color-stat-posterior: var(--stat-posterior);
+  --color-stat-predictive: var(--stat-predictive);
+  --color-stat-danger: var(--stat-danger);
+
+  --font-*: initial;
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+
+  --text-*: initial;
+  --text-xs: var(--text-xs);
+  --text-sm: var(--text-sm);
+  --text-base: var(--text-base);
+  --text-md: var(--text-md);
+  --text-lg: var(--text-lg);
+  --text-xl: var(--text-xl);
+  --text-2xl: var(--text-2xl);
+  --text-3xl: var(--text-3xl);
+  --text-4xl: var(--text-4xl);
+
+  --radius-*: initial;
+  --radius-card: var(--radius-card);
+  --radius-control: var(--radius-control);
+}
+
+@layer base {
+  html {
+    background-color: var(--ground);
+  }
+
+  body {
+    background-color: var(--ground);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: var(--leading-body);
+    /* old-style figures in prose; tables and mono opt back into tabular */
+    font-feature-settings: 'onum' 1;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  table,
+  code,
+  pre,
+  kbd {
+    font-feature-settings: 'tnum' 1, 'lnum' 1;
+  }
+
+  code,
+  pre,
+  kbd {
+    font-family: var(--font-mono);
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  a {
+    color: var(--link);
+    text-decoration-color: color-mix(in srgb, var(--link) 45%, transparent);
+    text-underline-offset: 3px;
+    transition: text-decoration-color var(--duration-micro) var(--ease-out);
+  }
+
+  a:hover {
+    text-decoration-color: var(--link);
+  }
+
+  :focus-visible {
+    outline: 1.5px solid var(--focus-ring);
+    outline-offset: 2px;
+    box-shadow: 0 0 10px color-mix(in srgb, var(--focus-ring) 35%, transparent);
+    border-radius: var(--radius-card);
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--brass-400) 30%, transparent);
+  }
+
+  hr {
+    border: none;
+    border-top: var(--hairline);
+  }
+}
+
+@layer components {
+  /* Small-caps section labels: "CHAPTER IV · GEOCENTRIC MODELS" */
+  .eyebrow {
+    font-family: var(--font-body);
+    font-variant-caps: all-small-caps;
+    letter-spacing: 0.14em;
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+  }
+
+  .prose-col {
+    max-width: var(--measure-prose);
+    margin-inline: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

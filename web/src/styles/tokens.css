@@ -1,0 +1,87 @@
+/*
+ * tokens.css — the single source of truth for color, type, and rhythm.
+ * Every color in the app resolves to a variable defined here. No raw hex
+ * anywhere else in the codebase (CLAUDE.md §2.2).
+ */
+
+:root {
+  /* ── Palette ─────────────────────────────────────────────── */
+  --ink-950: #0b1220; /* workshop ground */
+  --ink-800: #16223a; /* raised surfaces, cards */
+  --ink-600: #2b3a57; /* borders, hairlines, muted UI */
+  --bone-100: #f3eddf; /* daylight ground / primary text on dark */
+  --bone-300: #d8cfb8; /* secondary text on dark */
+  --brass-400: #c9a227; /* primary accent: actions, highlights, the posterior */
+  --brass-200: #e8ce7a; /* brass highlight / hover glow / small text on ink */
+  --verdigris-400: #3e8e7e; /* secondary accent: the prior, links */
+  --clay-500: #b4552d; /* golem clay: bestiary, warnings, divergences */
+  --plum-500: #6e4a7e; /* tertiary: predictive simulation, rare emphasis */
+
+  /* ── Typography ──────────────────────────────────────────── */
+  --font-display: 'Gloock', 'STIX Two Text', serif;
+  --font-body: 'STIX Two Text', 'Times New Roman', serif;
+  --font-mono: 'IBM Plex Mono', 'Consolas', monospace;
+
+  /* 1.25 modular scale from 17px body */
+  --text-xs: 0.75rem; /* 12px — eyebrows, axis ticks */
+  --text-sm: 0.875rem; /* 14px — captions, UI chrome */
+  --text-base: 1.0625rem; /* 17px — body on reading pages */
+  --text-md: 1.328rem; /* 21px */
+  --text-lg: 1.66rem; /* 27px */
+  --text-xl: 2.075rem; /* 33px — smallest display size */
+  --text-2xl: 2.594rem; /* 41px */
+  --text-3xl: 3.242rem; /* 52px */
+  --text-4xl: 4.053rem; /* 65px — chapter numerals */
+
+  --leading-body: 1.65;
+  --measure-prose: 68ch;
+
+  /* ── Rhythm & shape ──────────────────────────────────────── */
+  --space-section: 7rem; /* 112px vertical rhythm on chapter pages */
+  --radius-card: 2px; /* near-square, instrument-like */
+  --radius-control: 9999px; /* full-round, small controls only */
+  --hairline: 1px solid var(--line);
+
+  /* ── Motion ──────────────────────────────────────────────── */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-micro: 180ms;
+
+  /* ── Semantic: workshop (dark, default) ──────────────────── */
+  --ground: var(--ink-950);
+  --surface: var(--ink-800);
+  --line: var(--ink-600);
+  --text-primary: var(--bone-100);
+  --text-secondary: var(--bone-300);
+  --accent: var(--brass-400);
+  --accent-bright: var(--brass-200);
+  --link: var(--verdigris-400);
+  --focus-ring: var(--brass-400);
+
+  /* ── Semantic: statistical palette (sacred — CLAUDE.md §2.2) ─
+     data → bone · prior → verdigris · posterior → brass
+     predictive simulation → plum · danger → clay              */
+  --stat-data: var(--bone-100);
+  --stat-prior: var(--verdigris-400);
+  --stat-posterior: var(--brass-400);
+  --stat-predictive: var(--plum-500);
+  --stat-danger: var(--clay-500);
+
+  color-scheme: dark;
+}
+
+/* ── Daylight mood: warm bone ground, same accents ─────────── */
+[data-theme='daylight'] {
+  --ground: var(--bone-100);
+  --surface: #faf6ec; /* bone, one step raised — only non-palette hex, derived from bone-100 */
+  --line: var(--bone-300);
+  --text-primary: var(--ink-950);
+  --text-secondary: var(--ink-600);
+  --accent: var(--brass-400);
+  --accent-bright: var(--brass-400); /* no pale brass on bone — fails contrast */
+  --link: var(--verdigris-400);
+  --focus-ring: var(--brass-400);
+
+  --stat-data: var(--ink-950);
+
+  color-scheme: light;
+}

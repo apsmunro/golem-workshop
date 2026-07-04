@@ -3,14 +3,14 @@
 Claude Code: read this first each session. Tick items as completed. Log blockers and plan-§8 decisions under "Decisions needed". Keep entries terse.
 
 ## Phase 0 — Skeleton
-- [ ] Vite + React + TS + Tailwind scaffold in `web/`; strict TS config
-- [ ] tokens.css with full palette/type tokens from CLAUDE.md §2.2; fonts self-hosted (Gloock, STIX Two Text, IBM Plex Mono)
-- [ ] ChapterShell layout + router; ProgressMap stub home
-- [ ] Zustand stores (progress, bestiary, calibration, srs, settings) with localStorage persistence + export/import
-- [ ] plot-theme.ts with semantic stat palette helper
-- [ ] Playwright `npm run shot` script; `npm run lint:prose` from scripts/banned-words.txt
-- [ ] GH Pages deploy workflow green
-- [ ] DESIGN_NOTES entry 002: screenshots of tokens/type specimen page
+- [x] Vite + React + TS + Tailwind scaffold in `web/`; strict TS config
+- [x] tokens.css with full palette/type tokens from CLAUDE.md §2.2; fonts self-hosted (Gloock, STIX Two Text, IBM Plex Mono)
+- [x] ChapterShell layout + router; ProgressMap stub home
+- [x] Zustand stores (progress, bestiary, calibration, srs, settings) with localStorage persistence + export/import
+- [x] plot-theme.ts with semantic stat palette helper
+- [x] Playwright `npm run shot` script; `npm run lint:prose` from scripts/banned-words.txt
+- [ ] GH Pages deploy workflow green — workflow written (.github/workflows/deploy.yml); needs a GitHub remote + Pages enabled to verify
+- [x] DESIGN_NOTES entry 002: screenshots of tokens/type specimen page
 
 ## Phase 1 — Ch. 1–3 vertical slice
 - [ ] LivingPosterior header component (canvas, reduced-motion fallback)
@@ -62,6 +62,8 @@ Claude Code: read this first each session. Tick items as completed. Log blockers
 
 ## Decisions needed
 - (plan §8 items land here when reached)
+- No GitHub remote configured yet. Deploy workflow is committed but unverified; create the repo, push main, enable Pages (Source: GitHub Actions) to close the last Phase 0 box.
 
 ## Session log
 - 000: repo initialized with plan, CLAUDE.md, course data manifests, this file.
+- 001 (2026-07-04): Phase 0 built. git init; web/ scaffold (Vite 6, React 18, TS strict, Tailwind 4); tokens.css + global.css; Layout/ChapterShell/Home/ChapterPage/dev specimen; workshop store (5 slices, persist v1, export/import) with 14 passing tests; plot-theme.ts; shot + prose-lint scripts; deploy workflow. Build, tests, prose-lint all green.

@@ -6,3 +6,13 @@ Append-only. Every UI-touching session adds an entry: what changed, screenshots,
 Direction: "The Astronomer's Workshop" — Prague golem mythology, Orloj, engraved instruments. Midnight ink ground, brass/verdigris/clay/plum accents, Gloock + STIX Two Text + IBM Plex Mono. Signature: LivingPosterior generative chapter headers (real draws as drifting brass curves) + one ceremonial forging animation. Semantic stat palette is load-bearing pedagogy: data=bone, prior=verdigris, posterior=brass, simulation=plum, danger=clay.
 Rejected: cream+terracotta editorial serif look (generic AI default, and clashes with dark-workshop identity); neon-on-black tech aesthetic (wrong world — this is brass and candlelight, not cyberpunk); imitating McElreath's lecture-slide style directly (his identity, not ours).
 Watchpoints for future sessions: brass on ink fails contrast at small sizes — use --brass-200 below ~16px; don't let "engraved" drift into skeuomorphic textures (no paper grain, no leather); density of instrument panels must never leak into reading pages.
+
+## 002 — Phase 0: tokens, type specimen, home stub (2026-07-04)
+Shipped: tokens.css (palette + semantic + stat variables, workshop/daylight via `data-theme`), Tailwind v4 theme mapped to the variables, fonts self-hosted via Fontsource, specimen page at `/dev/specimen`, home as a bench ledger (roman numerals in brass, hairline rows, status marks as tiny engraved circles).
+Screenshots: `web/shots/dev-specimen-{desktop,mobile}.png`, `web/shots/home-{desktop,mobile}.png` (regenerate with `npm run shot -- /route`; gitignored).
+Decisions:
+- Semantic layer (`--ground`, `--surface`, `--text-primary`…) sits between palette and components so daylight is a variable swap, not a class swap. Daylight maps `--accent-bright` back to brass-400 — pale brass on bone fails contrast.
+- Two hex values live outside the palette table, both documented in place: the `#0B1220` flash guard inline in index.html (first paint before CSS), and daylight `--surface` (#faf6ec), a half-step off bone-100 because ink-800 makes no sense on a bone ground.
+- Density curves on the specimen use the exact house treatment from `densityStyle()` so the specimen is contract, not illustration.
+Rejected (Chanel rule): "Statistical Rethinking · brms" eyebrow in the top nav — duplicated the hero eyebrow and wrapped to three lines at 390px. The nav is now wordmark + theme toggle only.
+Watchpoints: unforged status circles in `--line` are nearly invisible at a glance — deliberate for now (quiet until forged), revisit when real golem SVGs land; daylight mood has no dedicated screenshot pass yet — do one when the first reading page exists.
