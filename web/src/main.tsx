@@ -14,6 +14,7 @@ import { Layout } from './components/core/Layout'
 import { ChapterPage } from './pages/ChapterPage'
 import { Home } from './pages/Home'
 import { DevIndex } from './pages/dev/DevIndex'
+import { LivingPosteriorDemo } from './pages/dev/LivingPosteriorDemo'
 import { Specimen } from './pages/dev/Specimen'
 
 const router = createBrowserRouter(
@@ -25,6 +26,7 @@ const router = createBrowserRouter(
         { path: '/chapter/:slug', element: <ChapterPage /> },
         { path: '/dev', element: <DevIndex /> },
         { path: '/dev/specimen', element: <Specimen /> },
+        { path: '/dev/living-posterior', element: <LivingPosteriorDemo /> },
       ],
     },
   ],

@@ -5,7 +5,9 @@
       "PowerShell(npm --version)",
       "PowerShell(npm run shot -- /)",
       "PowerShell(npm test)",
-      "PowerShell(git add -A)"
+      "PowerShell(git add -A)",
+      "PowerShell(npm run shot -- /dev/living-posterior)",
+      "PowerShell(npm run shot -- /chapter/small-worlds-and-large-worlds)"
     ]
   }
 }

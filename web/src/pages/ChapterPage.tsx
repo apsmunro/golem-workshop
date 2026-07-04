@@ -1,7 +1,9 @@
 import { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { ChapterShell } from '../components/core/ChapterShell'
+import { LivingPosterior } from '../components/core/LivingPosterior'
 import { chapterBySlug } from '../content/chapters'
+import { drawsForChapter } from '../content/chapter-draws'
 import { useWorkshopStore } from '../store'
 
 export function ChapterPage() {
@@ -30,8 +32,19 @@ export function ChapterPage() {
     )
   }
 
+  const living = drawsForChapter(chapter.n)
+
   return (
-    <ChapterShell n={chapter.n} title={chapter.title} golem={chapter.golem}>
+    <ChapterShell
+      n={chapter.n}
+      title={chapter.title}
+      golem={chapter.golem}
+      header={
+        living ? (
+          <LivingPosterior draws={living.draws} range={living.range} />
+        ) : undefined
+      }
+    >
       <p className="eyebrow">Bench under construction</p>
       <p className="mt-4 text-secondary">
         The tools for this chapter are still being forged. When the bench is

@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom'
 
-const demos = [{ path: '/dev/specimen', name: 'Tokens & type specimen' }]
+const demos = [
+  { path: '/dev/specimen', name: 'Tokens & type specimen' },
+  { path: '/dev/living-posterior', name: 'Living posterior header' },
+]
 
 export function DevIndex() {
   return (
