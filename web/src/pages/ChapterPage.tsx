@@ -2,8 +2,10 @@ import { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { ChapterShell } from '../components/core/ChapterShell'
 import { LivingPosterior } from '../components/core/LivingPosterior'
+import { ChapterPractice } from '../components/practice/ChapterPractice'
 import { chapterBySlug } from '../content/chapters'
 import { drawsForChapter } from '../content/chapter-draws'
+import { hintsByChapter } from '../content/practice'
 import { useWorkshopStore } from '../store'
 
 export function ChapterPage() {
@@ -59,7 +61,17 @@ export function ChapterPage() {
         )}
         .
       </p>
-      <p className="mt-6">
+      {hintsByChapter[chapter.n] ? (
+        <section className="mt-16">
+          <h2 className="eyebrow border-b border-line pb-3">
+            Practice · work from your copy of the book
+          </h2>
+          <div className="mt-6">
+            <ChapterPractice chapter={chapter.n} hints={hintsByChapter[chapter.n]!} />
+          </div>
+        </section>
+      ) : null}
+      <p className="mt-16">
         <Link to="/">Back to the workshop floor</Link>
       </p>
     </ChapterShell>
