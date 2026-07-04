@@ -1,0 +1,212 @@
+{
+ "playlist": "PLDcUM9US4XdPz-KxHM4XHt7uUVGWWVSus",
+ "year": 2023,
+ "source": "https://github.com/rmcelreath/stat_rethinking_2023",
+ "lectures": [
+  {
+   "n": 1,
+   "title": "Science Before Statistics",
+   "videoId": "FdnMWdICdRs",
+   "url": "https://www.youtube.com/watch?v=FdnMWdICdRs",
+   "chapters": [
+    1
+   ],
+   "slides": "https://speakerdeck.com/rmcelreath/statistical-rethinking-2023-lecture-01"
+  },
+  {
+   "n": 2,
+   "title": "Garden of Forking Data",
+   "videoId": "R1vcdhPBlXA",
+   "url": "https://www.youtube.com/watch?v=R1vcdhPBlXA",
+   "chapters": [
+    2,
+    3
+   ],
+   "slides": "https://speakerdeck.com/rmcelreath/statistical-rethinking-2023-lecture-02"
+  },
+  {
+   "n": 3,
+   "title": "Geocentric Models",
+   "videoId": "tNOu-SEacNU",
+   "url": "https://www.youtube.com/watch?v=tNOu-SEacNU",
+   "chapters": [
+    4
+   ],
+   "slides": "https://speakerdeck.com/rmcelreath/statistical-rethinking-2023-lecture-03"
+  },
+  {
+   "n": 4,
+   "title": "Categories and Curves",
+   "videoId": "F0N4b7K_iYQ",
+   "url": "https://www.youtube.com/watch?v=F0N4b7K_iYQ",
+   "chapters": [
+    4
+   ],
+   "slides": "https://speakerdeck.com/rmcelreath/statistical-rethinking-2023-lecture-04"
+  },
+  {
+   "n": 5,
+   "title": "Elemental Confounds",
+   "videoId": "mBEA7PKDmiY",
+   "url": "https://www.youtube.com/watch?v=mBEA7PKDmiY",
+   "chapters": [
+    5,
+    6
+   ],
+   "slides": "https://speakerdeck.com/rmcelreath/statistical-rethinking-2023-lecture-05"
+  },
+  {
+   "n": 6,
+   "title": "Good and Bad Controls",
+   "videoId": "uanZZLlzKHw",
+   "url": "https://www.youtube.com/watch?v=uanZZLlzKHw",
+   "chapters": [
+    5,
+    6
+   ],
+   "slides": "https://speakerdeck.com/rmcelreath/statistical-rethinking-2023-lecture-06"
+  },
+  {
+   "n": 7,
+   "title": "Overfitting",
+   "videoId": "1VgYIsANQck",
+   "url": "https://www.youtube.com/watch?v=1VgYIsANQck",
+   "chapters": [
+    7
+   ],
+   "slides": "https://speakerdeck.com/rmcelreath/statistical-rethinking-2023-lecture-07"
+  },
+  {
+   "n": 8,
+   "title": "MCMC",
+   "videoId": "rZk2FqX2XnY",
+   "url": "https://www.youtube.com/watch?v=rZk2FqX2XnY",
+   "chapters": [
+    8,
+    9
+   ],
+   "slides": "https://speakerdeck.com/rmcelreath/statistical-rethinking-2023-lecture-08"
+  },
+  {
+   "n": 9,
+   "title": "Modeling Events",
+   "videoId": "Zi6N3GLUJmw",
+   "url": "https://www.youtube.com/watch?v=Zi6N3GLUJmw",
+   "chapters": [
+    10,
+    11
+   ],
+   "slides": "https://speakerdeck.com/rmcelreath/statistical-rethinking-2023-lecture-09"
+  },
+  {
+   "n": 10,
+   "title": "Counts and Confounds",
+   "videoId": "jokxu18egu0",
+   "url": "https://www.youtube.com/watch?v=jokxu18egu0",
+   "chapters": [
+    11
+   ],
+   "slides": "https://speakerdeck.com/rmcelreath/statistical-rethinking-2023-lecture-10"
+  },
+  {
+   "n": 11,
+   "title": "Ordered Categories",
+   "videoId": "VVQaIkom5D0",
+   "url": "https://www.youtube.com/watch?v=VVQaIkom5D0",
+   "chapters": [
+    12
+   ],
+   "slides": "https://speakerdeck.com/rmcelreath/statistical-rethinking-2023-lecture-11"
+  },
+  {
+   "n": 12,
+   "title": "Multilevel Models",
+   "videoId": "iwVqiiXYeC4",
+   "url": "https://www.youtube.com/watch?v=iwVqiiXYeC4",
+   "chapters": [
+    13
+   ],
+   "slides": "https://speakerdeck.com/rmcelreath/statistical-rethinking-2023-lecture-12"
+  },
+  {
+   "n": 13,
+   "title": "Multilevel Adventures",
+   "videoId": "sgqMkZeslxA",
+   "url": "https://www.youtube.com/watch?v=sgqMkZeslxA",
+   "chapters": [
+    13
+   ],
+   "slides": "https://speakerdeck.com/rmcelreath/statistical-rethinking-2023-lecture-13"
+  },
+  {
+   "n": 14,
+   "title": "Correlated Features",
+   "videoId": "Es44-Bp1aKo",
+   "url": "https://www.youtube.com/watch?v=Es44-Bp1aKo",
+   "chapters": [
+    14
+   ],
+   "slides": "https://speakerdeck.com/rmcelreath/statistical-rethinking-2023-lecture-14"
+  },
+  {
+   "n": 15,
+   "title": "Social Networks",
+   "videoId": "hnYhJzYAQ60",
+   "url": "https://www.youtube.com/watch?v=hnYhJzYAQ60",
+   "chapters": [
+    14
+   ],
+   "slides": "https://speakerdeck.com/rmcelreath/statistical-rethinking-2023-lecture-15"
+  },
+  {
+   "n": 16,
+   "title": "Gaussian Processes",
+   "videoId": "Y2ZLt4iOrXU",
+   "url": "https://www.youtube.com/watch?v=Y2ZLt4iOrXU",
+   "chapters": [
+    14
+   ],
+   "slides": "https://speakerdeck.com/rmcelreath/statistical-rethinking-2023-lecture-16"
+  },
+  {
+   "n": 17,
+   "title": "Measurement",
+   "videoId": "mt9WKbQJrI4",
+   "url": "https://www.youtube.com/watch?v=mt9WKbQJrI4",
+   "chapters": [
+    15
+   ],
+   "slides": "https://speakerdeck.com/rmcelreath/statistical-rethinking-2023-lecture-17"
+  },
+  {
+   "n": 18,
+   "title": "Missing Data",
+   "videoId": "Oeq6GChHOzc",
+   "url": "https://www.youtube.com/watch?v=Oeq6GChHOzc",
+   "chapters": [
+    15
+   ],
+   "slides": "https://speakerdeck.com/rmcelreath/statistical-rethinking-2023-lecture-18"
+  },
+  {
+   "n": 19,
+   "title": "Generalized Linear Madness",
+   "videoId": "zffwg0xDOgE",
+   "url": "https://www.youtube.com/watch?v=zffwg0xDOgE",
+   "chapters": [
+    16
+   ],
+   "slides": "https://speakerdeck.com/rmcelreath/statistical-rethinking-2023-lecture-19"
+  },
+  {
+   "n": 20,
+   "title": "Horoscopes",
+   "videoId": "qwF-st2NGTU",
+   "url": "https://www.youtube.com/watch?v=qwF-st2NGTU",
+   "chapters": [
+    17
+   ],
+   "slides": "https://speakerdeck.com/rmcelreath/statistical-rethinking-2023-lecture-20"
+  }
+ ]
+}

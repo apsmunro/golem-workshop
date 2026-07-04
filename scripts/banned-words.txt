@@ -1,0 +1,47 @@
+# prose-lint seed list — one pattern per line, case-insensitive, applied to content/, UI strings, hints/solutions
+# vocabulary
+delve
+dive into
+deep dive
+crucial
+leverage
+utilize
+harness
+unlock
+unleash
+empower
+elevate
+supercharge
+streamline
+game-changer
+cutting-edge
+tapestry
+treasure trove
+myriad
+plethora
+holistic
+synergy
+foster
+facilitate
+embark
+testament to
+underscore
+pivotal
+realm
+seamless
+robust
+# phrases / moves
+it's important to note
+worth noting
+keep in mind
+let's explore
+let's dive
+in this chapter, we will
+in conclusion
+to summarize
+whether you're a
+ever wondered
+not just .* but
+it's not about .* it's about
+incredibly powerful
+truly remarkable

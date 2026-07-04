@@ -1,0 +1,1105 @@
+{
+ "2": [
+  {
+   "id": "2E1",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "2E2",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "2E3",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "2E4",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "2M1",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "2M2",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "2M3",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "2M4",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "2M5",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "2M6",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "2M7",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "2H1",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "2H2",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "2H3",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "2H4",
+   "tier": "hard",
+   "hasSolution": true
+  }
+ ],
+ "3": [
+  {
+   "id": "3E1",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "3E2",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "3E3",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "3E4",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "3E5",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "3E6",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "3E7",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "3M1",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "3M2",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "3M3",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "3M4",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "3M5",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "3M6",
+   "tier": "medium",
+   "hasSolution": false
+  },
+  {
+   "id": "3H1",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "3H2",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "3H3",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "3H4",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "3H5",
+   "tier": "hard",
+   "hasSolution": true
+  }
+ ],
+ "4": [
+  {
+   "id": "4E1",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "4E2",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "4E3",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "4E4",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "4E5",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "4M1",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "4M2",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "4M3",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "4M4",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "4M5",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "4M6",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "4M7",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "4M8",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "4H1",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "4H2",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "4H3",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "4H4",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "4H5",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "4H6",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "4H8",
+   "tier": "hard",
+   "hasSolution": false
+  }
+ ],
+ "5": [
+  {
+   "id": "5E1",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "5E2",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "5E3",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "5E4",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "5M1",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "5M2",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "5M3",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "5M4",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "5M5",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "5H1",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "5H2",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "5H3",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "5H4",
+   "tier": "hard",
+   "hasSolution": true
+  }
+ ],
+ "6": [
+  {
+   "id": "6E1",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "6E2",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "6E3",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "6E4",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "6M1",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "6M2",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "6M3",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "6H1",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "6H2",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "6H3",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "6H4",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "6H5",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "6H6",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "6H7",
+   "tier": "hard",
+   "hasSolution": true
+  }
+ ],
+ "7": [
+  {
+   "id": "7E1",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "7E2",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "7E3",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "7E4",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "7M1",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "7M2",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "7M3",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "7M4",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "7M5",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "7M6",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "7H1",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "7H2",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "7H3",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "7H4",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "7H5",
+   "tier": "hard",
+   "hasSolution": true
+  }
+ ],
+ "8": [
+  {
+   "id": "8E1",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "8E2",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "8E3",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "8M1",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "8M2",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "8M3",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "8M4",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "8H1",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "8H2",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "8H3",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "8H4",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "8H5",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "8H6",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "8H7",
+   "tier": "hard",
+   "hasSolution": true
+  }
+ ],
+ "9": [
+  {
+   "id": "9E1",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "9E2",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "9E3",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "9E4",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "9E5",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "9E6",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "9E7",
+   "tier": "easy",
+   "hasSolution": false
+  },
+  {
+   "id": "9M1",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "9M2",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "9M3",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "9H1",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "9H2",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "9H3",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "9H4",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "9H5",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "9H6",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "9H7",
+   "tier": "hard",
+   "hasSolution": true
+  }
+ ],
+ "11": [
+  {
+   "id": "11E1",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "11E2",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "11E3",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "11E4",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "11M1",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "11M2",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "11M3",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "11M4",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "11M5",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "11M6",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "11M7",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "11M8",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "11H1",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "11H2",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "11H3",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "11H4",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "11H5",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "11H6",
+   "tier": "hard",
+   "hasSolution": true
+  }
+ ],
+ "12": [
+  {
+   "id": "12E1",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "12E2",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "12E3",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "12E4",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "12M1",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "12M2",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "12M3",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "12H1",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "12H2",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "12H3",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "12H4",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "12H5",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "12H6",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "12H7",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "12H8",
+   "tier": "hard",
+   "hasSolution": true
+  }
+ ],
+ "13": [
+  {
+   "id": "13E1",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "13E2",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "13E3",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "13E4",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "13E5",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "13M1",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "13M2",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "13M3",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "13M4",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "13M5",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "13M6",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "13H1",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "13H2",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "13H3",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "13H4",
+   "tier": "hard",
+   "hasSolution": true
+  }
+ ],
+ "14": [
+  {
+   "id": "14E1",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "14E2",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "14E3",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "14M1",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "14M2",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "14M3",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "14M4",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "14M5",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "14H1",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "14H2",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "14H3",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "14H4",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "14H5",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "14H6",
+   "tier": "hard",
+   "hasSolution": true
+  }
+ ],
+ "15": [
+  {
+   "id": "15E1",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "15E2",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "15M1",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "15M2",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "15M3",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "15M4",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "15M5",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "15M6",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "15H1",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "15H2",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "15H3",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "15H4",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "15H5",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "15H6",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "15H7",
+   "tier": "hard",
+   "hasSolution": true
+  }
+ ],
+ "16": [
+  {
+   "id": "16E1",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "16E2",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "16E3",
+   "tier": "easy",
+   "hasSolution": true
+  },
+  {
+   "id": "16M1",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "16M2",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "16M3",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "16M4",
+   "tier": "medium",
+   "hasSolution": true
+  },
+  {
+   "id": "16H1",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "16H2",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "16H3",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "16H4",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "16H5",
+   "tier": "hard",
+   "hasSolution": true
+  }
+ ]
+}

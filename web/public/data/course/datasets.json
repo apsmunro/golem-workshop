@@ -1,0 +1,161 @@
+{
+ "source": "https://github.com/rmcelreath/rethinking (data/ directory)",
+ "datasets": [
+  {
+   "name": "Boxes",
+   "mentions": 2
+  },
+  {
+   "name": "Boxes_model",
+   "mentions": 1
+  },
+  {
+   "name": "Boxes_model_age",
+   "mentions": 1
+  },
+  {
+   "name": "Boxes_model_gender",
+   "mentions": 1
+  },
+  {
+   "name": "Fish",
+   "mentions": 1
+  },
+  {
+   "name": "Howell1",
+   "mentions": 9
+  },
+  {
+   "name": "Hurricanes",
+   "mentions": 1
+  },
+  {
+   "name": "Kline",
+   "mentions": 3
+  },
+  {
+   "name": "Kline2",
+   "mentions": 1
+  },
+  {
+   "name": "KosterLeckie",
+   "mentions": 3
+  },
+  {
+   "name": "Laffer",
+   "mentions": 1
+  },
+  {
+   "name": "Lynx_Hare",
+   "mentions": 2
+  },
+  {
+   "name": "Lynx_Hare_model",
+   "mentions": 2
+  },
+  {
+   "name": "Mites",
+   "mentions": 1
+  },
+  {
+   "name": "Moralizing_gods",
+   "mentions": 1
+  },
+  {
+   "name": "NWOGrants",
+   "mentions": 1
+  },
+  {
+   "name": "Oxboys",
+   "mentions": 1
+  },
+  {
+   "name": "Panda_nuts",
+   "mentions": 3
+  },
+  {
+   "name": "Primates301",
+   "mentions": 5
+  },
+  {
+   "name": "Primates301_nex",
+   "mentions": 1
+  },
+  {
+   "name": "Trolley",
+   "mentions": 4
+  },
+  {
+   "name": "UCBadmit",
+   "mentions": 3
+  },
+  {
+   "name": "WaffleDivorce",
+   "mentions": 7
+  },
+  {
+   "name": "Wines2012",
+   "mentions": 1
+  },
+  {
+   "name": "bangladesh",
+   "mentions": 3
+  },
+  {
+   "name": "cars",
+   "mentions": 2
+  },
+  {
+   "name": "cherry_blossoms",
+   "mentions": 2
+  },
+  {
+   "name": "chimpanzees",
+   "mentions": 7
+  },
+  {
+   "name": "eagles",
+   "mentions": 1
+  },
+  {
+   "name": "elephants",
+   "mentions": 1
+  },
+  {
+   "name": "foxes",
+   "mentions": 2
+  },
+  {
+   "name": "homeworkch3",
+   "mentions": 1
+  },
+  {
+   "name": "islandsDistMatrix",
+   "mentions": 1
+  },
+  {
+   "name": "milk",
+   "mentions": 7
+  },
+  {
+   "name": "nettle",
+   "mentions": 1
+  },
+  {
+   "name": "reedfrogs",
+   "mentions": 3
+  },
+  {
+   "name": "rugged",
+   "mentions": 3
+  },
+  {
+   "name": "salamanders",
+   "mentions": 1
+  },
+  {
+   "name": "tulips",
+   "mentions": 2
+  }
+ ]
+}
