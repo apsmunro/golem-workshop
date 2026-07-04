@@ -14,6 +14,7 @@ import { Layout } from './components/core/Layout'
 import { ChapterPage } from './pages/ChapterPage'
 import { Home } from './pages/Home'
 import { DevIndex } from './pages/dev/DevIndex'
+import { GardenDemo } from './pages/dev/GardenDemo'
 import { LivingPosteriorDemo } from './pages/dev/LivingPosteriorDemo'
 import { Specimen } from './pages/dev/Specimen'
 
@@ -27,6 +28,7 @@ const router = createBrowserRouter(
         { path: '/dev', element: <DevIndex /> },
         { path: '/dev/specimen', element: <Specimen /> },
         { path: '/dev/living-posterior', element: <LivingPosteriorDemo /> },
+        { path: '/dev/garden', element: <GardenDemo /> },
       ],
     },
   ],
