@@ -1,9 +1,12 @@
 import type { ComponentType } from 'react'
 import type { GolemArtState } from './golem-art'
 import {
+  CompassOfUlysses,
   GaussianGolem,
   GlobeTossingGolem,
   HauntedDagGolem,
+  ManateeGolem,
+  McmcEngineCore,
   MultivariableGolem,
   SamplerSprite,
 } from './golem-art'
@@ -59,6 +62,30 @@ export const golems: GolemMeta[] = [
     signature: 'condition wisely — colliders bite',
     epithet: 'Wards against the confounder you cannot see.',
     Art: HauntedDagGolem,
+  },
+  {
+    id: 'compass-of-ulysses',
+    name: 'Compass of Ulysses',
+    chapter: 7,
+    signature: 'loo(m1, m2, m3) · elpd, pareto k',
+    epithet: 'Steers between the monsters of overfitting and underfitting.',
+    Art: CompassOfUlysses,
+  },
+  {
+    id: 'manatee-golem',
+    name: 'Manatee Golem',
+    chapter: 8,
+    signature: 'y ~ x * m · the slope has a slope',
+    epithet: 'Gentle, rounded, and conditional on everything.',
+    Art: ManateeGolem,
+  },
+  {
+    id: 'mcmc-engine-core',
+    name: 'MCMC Engine Core',
+    chapter: 9,
+    signature: 'brm(..., chains = 4, cores = 4) · R̂ < 1.01',
+    epithet: 'A marble that rolls where the posterior is deep.',
+    Art: McmcEngineCore,
   },
 ]
 

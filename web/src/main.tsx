@@ -19,8 +19,12 @@ import { CeremonyDemo } from './pages/dev/CeremonyDemo'
 import { DagDemo } from './pages/dev/DagDemo'
 import { DevIndex } from './pages/dev/DevIndex'
 import { ExplorerDemo } from './pages/dev/ExplorerDemo'
+import { HmcDemo } from './pages/dev/HmcDemo'
+import { InteractionDemo } from './pages/dev/InteractionDemo'
+import { OverfitDemo } from './pages/dev/OverfitDemo'
 import { PriorDemo } from './pages/dev/PriorDemo'
 import { GardenDemo } from './pages/dev/GardenDemo'
+import { TriageDemo } from './pages/dev/TriageDemo'
 import { LivingPosteriorDemo } from './pages/dev/LivingPosteriorDemo'
 import { Specimen } from './pages/dev/Specimen'
 import { WebRDemo } from './pages/dev/WebRDemo'
@@ -43,6 +47,10 @@ const router = createBrowserRouter(
         { path: '/dev/dag', element: <DagDemo /> },
         { path: '/dev/prior', element: <PriorDemo /> },
         { path: '/dev/explorer', element: <ExplorerDemo /> },
+        { path: '/dev/overfit', element: <OverfitDemo /> },
+        { path: '/dev/interaction', element: <InteractionDemo /> },
+        { path: '/dev/hmc', element: <HmcDemo /> },
+        { path: '/dev/triage', element: <TriageDemo /> },
       ],
     },
   ],

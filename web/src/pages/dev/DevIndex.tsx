@@ -10,6 +10,10 @@ const demos = [
   { path: '/dev/dag', name: 'DAG sandbox' },
   { path: '/dev/prior', name: 'Prior predictive playground' },
   { path: '/dev/explorer', name: 'Posterior explorer (m4.3)' },
+  { path: '/dev/overfit', name: 'Overfit the polynomial' },
+  { path: '/dev/interaction', name: 'Interaction surface (rugged, tulips)' },
+  { path: '/dev/hmc', name: 'HMC physics toy' },
+  { path: '/dev/triage', name: 'Trace-plot triage' },
 ]
 
 export function DevIndex() {

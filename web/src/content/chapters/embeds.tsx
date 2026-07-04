@@ -6,11 +6,17 @@ import { useEffect, useMemo, useState } from 'react'
 import { CalibrationSketch } from '../../components/interactives/calibration-sketch/CalibrationSketch'
 import { PriorPlayground } from '../../components/interactives/prior-playground/PriorPlayground'
 import { DagSandbox } from '../../components/interactives/dag-sandbox/DagSandbox'
+import { HmcToy } from '../../components/interactives/hmc-toy/HmcToy'
+import { InteractionSurface } from '../../components/interactives/interaction-surface/InteractionSurface'
+import type { XYM } from '../../components/interactives/interaction-surface/engine'
+import { OverfitGame } from '../../components/interactives/overfit-game/OverfitGame'
 import { PosteriorExplorer } from '../../components/interactives/posterior-explorer/PosteriorExplorer'
 import type { ExplorerDraws } from '../../components/interactives/posterior-explorer/PosteriorExplorer'
+import { TraceTriage } from '../../components/interactives/trace-triage/TraceTriage'
 import { RNG } from '../../lib/rng'
 import { drawsForChapter } from '../chapter-draws'
 import { adults, fitM43, loadHowell } from '../models/howell'
+import { loadRugged, loadTulips } from '../models/interactions'
 import { kde } from '../../lib/stats'
 
 /** Guess the globe-tossing posterior (6 W in 9) before seeing it. */
@@ -29,7 +35,55 @@ export function GlobeCalibration() {
   )
 }
 
-export { PriorPlayground, DagSandbox }
+export { PriorPlayground, DagSandbox, OverfitGame, HmcToy, TraceTriage }
+
+/** Chapter 8: terrain ruggedness and GDP, moderated by continent. */
+export function RuggedSurface() {
+  const [data, setData] = useState<XYM[] | null>(null)
+  useEffect(() => {
+    let cancelled = false
+    loadRugged().then((rows) => {
+      if (!cancelled) setData(rows)
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [])
+  if (!data) return <p className="text-sm text-secondary">Surveying 170 nations…</p>
+  return (
+    <InteractionSurface
+      data={data}
+      xLabel="ruggedness"
+      yLabel="log GDP (rel.)"
+      mLabel="continent"
+      moderator={{ kind: 'binary', labels: ['not Africa', 'Africa'] }}
+    />
+  )
+}
+
+/** Chapter 8: the tulip greenhouse, water throttled by shade. */
+export function TulipsSurface() {
+  const [data, setData] = useState<XYM[] | null>(null)
+  useEffect(() => {
+    let cancelled = false
+    loadTulips().then((rows) => {
+      if (!cancelled) setData(rows)
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [])
+  if (!data) return <p className="text-sm text-secondary">Watering 27 tulip beds…</p>
+  return (
+    <InteractionSurface
+      data={data}
+      xLabel="water (centered)"
+      yLabel="blooms (rel.)"
+      mLabel="shade (centered)"
+      moderator={{ kind: 'range', lo: -1, hi: 1, step: 1 }}
+    />
+  )
+}
 
 /** The chapter-4 posterior explorer, fit in the browser from Howell1. */
 export function HowellExplorer() {

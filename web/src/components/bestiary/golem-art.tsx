@@ -283,3 +283,137 @@ export function HauntedDagGolem({
     </svg>
   )
 }
+
+export function CompassOfUlysses({
+  state = 'forged',
+  dismembered = false,
+  className,
+}: GolemArtProps) {
+  const clay = state === 'forged' ? 'var(--clay-500)' : 'var(--line)'
+  const bone = state === 'forged' ? 'var(--bone-300)' : 'var(--line)'
+  const brass = state === 'forged' ? 'var(--brass-400)' : 'var(--line)'
+  const sw = 1.5
+
+  return (
+    <svg viewBox="0 0 120 150" className={className} role="img" aria-label={`Compass of Ulysses, ${state}`}>
+      {/* gimbal ring with degree ticks */}
+      <Fragment offset="translate(-24px, -16px) rotate(-30deg)" dismembered={dismembered}>
+        <circle cx="60" cy="66" r="34" fill="none" stroke={bone} strokeWidth={sw} />
+        <circle cx="60" cy="66" r="28" fill="none" stroke={bone} strokeWidth="0.8" />
+        {Array.from({ length: 16 }, (_, i) => {
+          const a = (i * Math.PI) / 8
+          const x1 = 60 + 34 * Math.cos(a)
+          const y1 = 66 + 34 * Math.sin(a)
+          const x2 = 60 + 31 * Math.cos(a)
+          const y2 = 66 + 31 * Math.sin(a)
+          return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke={bone} strokeWidth="0.8" />
+        })}
+      </Fragment>
+
+      {/* the rose: two scylla-and-charybdis points, overfit and underfit */}
+      <Fragment offset="translate(26px, 12px) rotate(38deg)" dismembered={dismembered}>
+        <path d="M60 44 L64 62 L60 66 L56 62 Z" fill="none" stroke={clay} strokeWidth={sw} strokeLinejoin="round" />
+        <path d="M60 88 L64 70 L60 66 L56 70 Z" fill="none" stroke={clay} strokeWidth={sw} strokeLinejoin="round" />
+        <path d="M38 66 L56 62 L60 66 L56 70 Z" fill="none" stroke={clay} strokeWidth="1" strokeLinejoin="round" />
+        <path d="M82 66 L64 62 L60 66 L64 70 Z" fill="none" stroke={clay} strokeWidth="1" strokeLinejoin="round" />
+      </Fragment>
+
+      {/* the needle, steering between the monsters */}
+      <Fragment offset="translate(-14px, 24px) rotate(-52deg)" dismembered={dismembered}>
+        <path d="M44 82 L76 50" stroke={brass} strokeWidth={sw} />
+        <path d="M76 50 l-7 2 l4 4 Z" fill={brass} />
+        <circle cx="60" cy="66" r="3" fill={brass} />
+      </Fragment>
+
+      {/* stand and keel */}
+      <Fragment offset="translate(8px, 28px) rotate(16deg)" dismembered={dismembered}>
+        <path d="M60 100 L60 116 M44 128 Q60 118 76 128" fill="none" stroke={clay} strokeWidth={sw} />
+        <path d="M40 132 L80 132 L76 140 L44 140 Z" fill="none" stroke={clay} strokeWidth={sw} strokeLinejoin="round" />
+        <path d="M48 136 L72 136" stroke={bone} strokeWidth="0.8" />
+      </Fragment>
+    </svg>
+  )
+}
+
+export function ManateeGolem({
+  state = 'forged',
+  dismembered = false,
+  className,
+}: GolemArtProps) {
+  const clay = state === 'forged' ? 'var(--clay-500)' : 'var(--line)'
+  const bone = state === 'forged' ? 'var(--bone-300)' : 'var(--line)'
+  const brass = state === 'forged' ? 'var(--brass-400)' : 'var(--line)'
+  const sw = 1.5
+
+  return (
+    <svg viewBox="0 0 120 150" className={className} role="img" aria-label={`Manatee Golem, ${state}`}>
+      {/* head and whiskered snout */}
+      <Fragment offset="translate(-20px, -22px) rotate(-26deg)" dismembered={dismembered}>
+        <path d="M34 52 Q34 34 52 34 Q66 34 68 46" fill="none" stroke={clay} strokeWidth={sw} />
+        <circle cx="46" cy="46" r="1.8" fill={brass} />
+        <path d="M34 52 Q30 56 33 60 M38 54 L34 58 M42 55 L39 60" fill="none" stroke={bone} strokeWidth="0.8" />
+      </Fragment>
+
+      {/* the round, unhurried body with engraved currents */}
+      <Fragment offset="translate(24px, 4px) rotate(20deg)" dismembered={dismembered}>
+        <path d="M34 52 Q28 78 44 96 Q58 110 76 102 Q92 94 90 72 Q88 52 68 46" fill="none" stroke={clay} strokeWidth={sw} />
+        <path d="M44 62 Q58 70 74 64" fill="none" stroke={bone} strokeWidth="0.8" />
+        <path d="M42 76 Q58 84 78 76" fill="none" stroke={bone} strokeWidth="0.8" />
+        <path d="M46 90 Q60 96 76 90" fill="none" stroke={bone} strokeWidth="0.8" />
+      </Fragment>
+
+      {/* flipper, folded like a spline knot */}
+      <Fragment offset="translate(-26px, 18px) rotate(-34deg)" dismembered={dismembered}>
+        <path d="M52 74 Q42 84 48 94 Q54 100 60 94" fill="none" stroke={clay} strokeWidth={sw} />
+      </Fragment>
+
+      {/* paddle tail */}
+      <Fragment offset="translate(18px, 30px) rotate(30deg)" dismembered={dismembered}>
+        <path d="M76 102 Q84 112 80 124 Q70 138 56 130 Q48 124 54 114" fill="none" stroke={clay} strokeWidth={sw} />
+        <path d="M62 118 Q68 124 74 118" fill="none" stroke={bone} strokeWidth="0.8" />
+      </Fragment>
+    </svg>
+  )
+}
+
+export function McmcEngineCore({
+  state = 'forged',
+  dismembered = false,
+  className,
+}: GolemArtProps) {
+  const clay = state === 'forged' ? 'var(--clay-500)' : 'var(--line)'
+  const bone = state === 'forged' ? 'var(--bone-300)' : 'var(--line)'
+  const brass = state === 'forged' ? 'var(--brass-400)' : 'var(--line)'
+  const sw = 1.5
+
+  return (
+    <svg viewBox="0 0 120 150" className={className} role="img" aria-label={`MCMC Engine Core, ${state}`}>
+      {/* outer gimbal */}
+      <Fragment offset="translate(-26px, -14px) rotate(-36deg)" dismembered={dismembered}>
+        <ellipse cx="60" cy="66" rx="36" ry="36" fill="none" stroke={clay} strokeWidth={sw} />
+        <circle cx="60" cy="30" r="2.4" fill="none" stroke={bone} strokeWidth="1" />
+        <circle cx="60" cy="102" r="2.4" fill="none" stroke={bone} strokeWidth="1" />
+      </Fragment>
+
+      {/* inner rings, tilted */}
+      <Fragment offset="translate(28px, -8px) rotate(40deg)" dismembered={dismembered}>
+        <ellipse cx="60" cy="66" rx="28" ry="12" fill="none" stroke={bone} strokeWidth="1" transform="rotate(-24 60 66)" />
+        <ellipse cx="60" cy="66" rx="12" ry="26" fill="none" stroke={bone} strokeWidth="1" transform="rotate(18 60 66)" />
+      </Fragment>
+
+      {/* the marble mid-trajectory */}
+      <Fragment offset="translate(-16px, 26px) rotate(-20deg)" dismembered={dismembered}>
+        <path d="M38 84 Q46 60 60 58 Q74 56 78 44" fill="none" stroke={brass} strokeWidth="1" strokeDasharray="2 3" />
+        <circle cx="78" cy="44" r="4" fill={brass} />
+      </Fragment>
+
+      {/* mount and furnace base */}
+      <Fragment offset="translate(10px, 30px) rotate(18deg)" dismembered={dismembered}>
+        <path d="M60 102 L60 116" stroke={clay} strokeWidth={sw} />
+        <path d="M42 116 L78 116 L84 138 L36 138 Z" fill="none" stroke={clay} strokeWidth={sw} strokeLinejoin="round" />
+        <path d="M46 124 L74 124 M48 131 L72 131" stroke={bone} strokeWidth="0.8" />
+      </Fragment>
+    </svg>
+  )
+}
+

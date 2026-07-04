@@ -1,0 +1,115 @@
+A sixth-degree polynomial can pass through twelve points almost perfectly.
+It will also predict the thirteenth worse than a straight line would. Both
+halves of that sentence are true at once, and the whole chapter lives in the
+gap between them. Fit to the sample you have is cheap. Skill on the sample
+you don't have yet is the only thing a golem is for.
+
+Ulysses had to sail between two monsters. Ours are overfitting, the golem
+that memorizes its training data down to the noise, and underfitting, the
+golem too rigid to learn even the signal. Neither monster announces itself:
+the overfit golem arrives waving its excellent in-sample scores.
+
+## Play it before you believe it
+
+Twelve points from a process you cannot see. Six polynomial golems, degree
+one through six. Fit them, watch train deviance fall with every degree —
+and then commit to the one you would trust with tomorrow's data, before
+tomorrow's data arrives.
+
+<Wide><OverfitGame /></Wide>
+
+Forge a few new samples and watch the degree-six curve convulse while the
+degree-two curve barely shivers. That tremor has a name — variance — and
+fresh data always sends the bill.
+
+## Scoring a golem honestly
+
+To say "predicts well" out loud you need a currency. Information theory
+supplies it. The uncertainty in a distribution of outcomes is its entropy:
+
+$$
+H(p) = -\sum_i p_i \log p_i
+$$
+
+<Gloss>
+Add up, for each possible outcome, how surprising it is — weighted by how
+often it happens. Rare events are big surprises; certain events are none.
+</Gloss>
+
+From entropy comes the distance between your model and the truth, the
+Kullback–Leibler divergence: the extra surprise you suffer by using the
+wrong distribution to predict the world. You never know the truth, so you
+can never compute your distance to it — but you can compare two models'
+distances, because the unknowable part cancels. What remains is the log
+score: the log probability your golem assigned to what actually happened.
+Deviance is that score times −2, an accounting convention from older wars.
+Lower is better, and in-sample deviance lies in exactly the direction you'd
+expect: more parameters, lower deviance, always.
+
+## Estimating skill without new data
+
+You rarely get to wait for the thirteenth point. Two families of tricks
+estimate out-of-sample skill from the sample you have.
+
+Cross-validation holds points out, fits without them, and scores the golem
+on what it never saw. The game above does this exactly — leave one out,
+refit, repeat. At scale, refitting is too slow, so Pareto-smoothed
+importance sampling (PSIS) approximates leave-one-out from a single fit,
+and complains — through its Pareto k diagnostic — about the specific points
+it cannot vouch for. Those complaints are useful: a big k marks an outlier
+your model finds unbelievable.
+
+Information criteria take the other road: start from the training score and
+charge a penalty for flexibility. WAIC's penalty is the summed variance of
+each point's log score across the posterior — parameters only cost you to
+the extent the data left them free to wiggle. In practice PSIS-LOO and WAIC
+agree so often that disagreement is itself a diagnostic.
+
+<Rosetta
+  model="comparing golems"
+  book={`m5.1 <- quap(...)   # divorce ~ age at marriage
+m5.2 <- quap(...)   # divorce ~ marriage rate
+m5.3 <- quap(...)   # divorce ~ both
+
+compare(m5.1, m5.2, m5.3, func = PSIS)`}
+  brms={`m5.1 <- add_criterion(m5.1, "loo")
+m5.2 <- add_criterion(m5.2, "loo")
+m5.3 <- add_criterion(m5.3, "loo")
+
+loo_compare(m5.1, m5.2, m5.3)
+model_weights(m5.1, m5.2, m5.3, weights = "loo")`}
+/>
+
+## Regularization, or teaching the golem doubt
+
+A prior that gently disbelieves large coefficients makes a golem harder to
+impress with noise. Tighten the slope priors in any model from chapter 4
+and its train deviance worsens while its test deviance improves — up to a
+point, past which the golem is too skeptical to learn the signal. Priors
+are a dial, and the dial trades the two monsters against each other. This
+is why the multilevel models of chapter 13 predict so well: they learn how
+much to regularize from the data itself.
+
+## The compass is not a captain
+
+The sharpest lesson in the chapter: predictive skill and causal truth are
+different targets. The fungus experiment from chapter 6 makes the point
+brutally — the model that conditions on the post-treatment variable
+*predicts better* (fungus really does tell you about growth) while being
+causally useless for deciding whether to treat. LOO and WAIC rank golems by
+prediction. If your question is intervention, the DAG outranks the compass.
+Compare models to understand them; do not let a score pick your model for
+you.
+
+## Forge it
+
+The 7E problems drill entropy by hand — do them with a calculator, they
+take minutes. 7M asks you to reason about WAIC's parts. The 7H problems fit
+real curves (the Laffer data, the birds, the foxes) and read comparison
+tables the way you just learned to: as measurements of predictive distance,
+not verdicts on truth.
+
+<LectureCallout
+  n={7}
+  note="Overfitting, cross-validation, and the two monsters at full length."
+/>

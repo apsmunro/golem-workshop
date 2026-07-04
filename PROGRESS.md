@@ -31,11 +31,11 @@ Claude Code: read this first each session. Tick items as completed. Log blockers
 - [x] Ch. 4–6 content, practice (full ladders 4E–4H4, 5E–5H4, 6E–6H5), golems (Gaussian, Multivariable, Haunted-DAG)
 
 ## Phase 3 — Ch. 7–9
-- [ ] Overfit-the-polynomial game; LOO/WAIC comparison UI
-- [ ] Interaction surface visualizer (tulips, rugged)
-- [ ] HMC Physics Toy (leapfrog viz, ε/L knobs, divergence behavior)
-- [ ] Trace-plot triage game
-- [ ] Pipeline m7–m9; Ch. 7–9 content, practice, golems
+- [x] Overfit-the-polynomial game; LOO/WAIC comparison UI (exact LOO by refitting; ModelComparison table reusable for T3)
+- [x] Interaction surface visualizer (tulips, rugged; OLS engine with honest bands; quote-aware CSV parser)
+- [x] HMC Physics Toy (leapfrog viz, ε/L knobs, divergence behavior; funnel preset ready for ch 13)
+- [x] Trace-plot triage game (real split-R̂ + ESS computed per round)
+- [x] Pipeline m7–m9 scripts; Ch. 7–9 content, practice (46 ladders), golems. NOTE: like Phase 2, fit scripts written but not executed (needs R+cmdstan); ch 8 interactives run on the in-browser OLS engine meanwhile.
 
 ## Phase 4 — Ch. 10–12
 - [ ] Entropy pebble simulator; link-function morpher
@@ -65,6 +65,7 @@ Claude Code: read this first each session. Tick items as completed. Log blockers
 - No GitHub remote configured yet. Deploy workflow is committed but unverified; create the repo, push main, enable Pages (Source: GitHub Actions) to close the last Phase 0 box.
 
 ## Session log
+- 004 (2026-07-04): Phase 3 built. Overfit game (OLS polys + exact LOO, verified reveal flow + comparison table in browser); interaction surface (verified rugged sign flip −0.15 → +0.14 and tulips water slope +0.21 in browser; fixed rugged.csv quoted-semicolon parsing); HMC toy (leapfrog + Metropolis + |ΔH|>50 divergences, verified 100% acceptance at ε=0.18 and 8/9 divergences at ε=2.6; smooth bitmap density background); trace triage (5 ailments, split-R̂/ESS engines); ch 7–9 MDX + 46 hint ladders + 3 golems (compass/manatee/engine core); ch 9 living posterior runs the toy's own HMC; r-pipeline extended m8.1–m8.5, m9.1, ch7 loo criteria + comparison artifact. 144 tests, build, prose-lint green.
 - 000: repo initialized with plan, CLAUDE.md, course data manifests, this file.
 - 001 (2026-07-04): Phase 0 built. git init; web/ scaffold (Vite 6, React 18, TS strict, Tailwind 4); tokens.css + global.css; Layout/ChapterShell/Home/ChapterPage/dev specimen; workshop store (5 slices, persist v1, export/import) with 14 passing tests; plot-theme.ts; shot + prose-lint scripts; deploy workflow. Build, tests, prose-lint all green.
 - 003 (2026-07-04): Phase 2 built. DAG engine (d-sep + minimal backdoor sets, validated: waffles → {S},{A,M}; milk → {M}; fungus/grandparents); DAG sandbox with linear-Gaussian simulate + OLS bias readout (verified waffles unadjusted 1.52 → adjusted-on-S 0.01 in browser); quap engine (Nelder-Mead MAP + numeric Hessian + Cholesky MVN, matches m4.1/m4.3 published numbers); Prior Predictive Playground; Posterior Explorer (m4.3, verified a/b/sigma marginals + 50kg→159cm counterfactual); Rosetta toggle; r-pipeline scaffold + posterior-artifact loader with rhat/ESS gates; ch 4–6 MDX + 3 golems + hint ladders. 104 tests, build, prose-lint green. Fixed ForgeCTA selector identity churn and Gloss <p>-nesting warnings.

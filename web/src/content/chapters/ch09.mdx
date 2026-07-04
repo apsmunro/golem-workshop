@@ -1,0 +1,113 @@
+Every posterior so far came from a polite fiction: that the whole
+distribution is one multivariate Gaussian hill, measurable by its peak and
+curvature. Chapters 4 through 8 got away with it because their posteriors
+really are that shape. The models ahead — hundreds of parameters, funnels,
+ridges — are not, and no formula will hand you their posteriors. What
+remains is to *visit* the posterior instead of solving it: take samples
+whose long-run frequencies match the distribution, then work with samples
+exactly as you have since chapter 3.
+
+The book tells this as the parable of a king condemned to visit islands in
+proportion to their populations, with a coin-flip rule that needs no map of
+the whole archipelago. That rule — propose, compare, sometimes move — is
+the Metropolis algorithm, and it works. Slowly. Each proposal is blind, and
+in high dimensions blind proposals land in probabilistic nowhere almost
+every time. The random walk dawdles; consecutive samples barely differ;
+a million draws can carry a few hundred draws' worth of information.
+
+## Roll, don't stumble
+
+Hamiltonian Monte Carlo stops guessing. Turn the posterior upside down so
+probability becomes depth: now it is a bowl, and the current sample is a
+marble resting in it. Flick the marble with random momentum and let physics
+run. The marble rolls fast through the deep, banks up the walls, slows in
+the shallows — and wherever it stops is the next proposal, likely far from
+where it started yet still in credible territory, because gravity did the
+navigation. The cost is that you must know the slope under the marble at
+every instant: HMC needs gradients, which is why it lives inside Stan and
+not inside a coin flip.
+
+<Wide><HmcToy /></Wide>
+
+The simulation is discrete: the marble advances in L leapfrog steps of size
+ε. Set ε small with generous L and trajectories hug the bowl beautifully at
+real computational cost. Push ε up and the discretization stops conserving
+energy — the marble gains speed from nowhere and flies out of the bowl.
+That is a divergence. It is not a warning label; it is a physical event you
+just watched, and when Stan reports one it means exactly this. Try the
+funnel: divergences pile up in the neck, where curvature changes too fast
+for any single ε. Chapter 13 meets that geometry in earnest and learns to
+melt it away by reparameterization.
+
+## From quap to chains
+
+In brms nothing about the model changes — the formula and priors carry
+over; the engine underneath becomes Stan's adaptive HMC.
+
+<Rosetta
+  model="m9.1"
+  book={`m9.1 <- ulam(
+  alist(
+    log_gdp_std ~ dnorm(mu, sigma),
+    mu <- a[cid] + b[cid] * (rugged_std - 0.215),
+    a[cid] ~ dnorm(1, 0.1),
+    b[cid] ~ dnorm(0, 0.3),
+    sigma ~ dexp(1)
+  ), data = dat_slim, chains = 4, cores = 4)`}
+  brms={`m9.1 <- brm(
+  log_gdp_std ~ 0 + cid + cid:rugged_std_c,
+  data = dd, family = gaussian(),
+  prior = c(
+    prior(normal(1, 0.1), class = b, coef = cid1),
+    prior(normal(1, 0.1), class = b, coef = cid2),
+    prior(normal(0, 0.3), class = b, coef = "cid1:rugged_std_c"),
+    prior(normal(0, 0.3), class = b, coef = "cid2:rugged_std_c"),
+    prior(exponential(1), class = sigma)
+  ),
+  chains = 4, cores = 4, warmup = 1000, iter = 2000,
+  backend = "cmdstanr", seed = 1959
+)`}
+/>
+
+Warm-up is not burn-in with better branding — during those first thousand
+iterations Stan is *tuning the sampler itself*, adapting ε and the mass
+matrix to the posterior's shape, and those draws are discarded because they
+were taken with the wrong instrument. Run several chains from dispersed
+starts. Agreement among strangers is the only convergence evidence there
+is.
+
+## Chain care
+
+Two numbers summarize the health of a run. R̂ compares variance between
+chains to variance within them; at convergence the chains are
+indistinguishable and R̂ approaches 1 (this workshop's pipeline refuses
+anything above 1.01). Effective sample size counts draws after discounting
+autocorrelation — a thousand sticky draws may be worth fifty independent
+ones. But numbers are summaries of pictures, and you should be able to read
+the pictures. Diagnose these patients:
+
+<Wide><TraceTriage /></Wide>
+
+A healthy trace is a hairy caterpillar: stationary, well-mixed, three
+chains braided into one band. The ailments each have a silhouette — a
+flatline, ribbons that never meet, clay ticks crowding one region, an
+approach path left in the sample. When a chain misbehaves, the fix is
+rarely "more iterations". It is better geometry: tighter priors,
+reparameterization, a model that says what you actually believe. A golem
+that samples badly is usually a golem that was asked a badly posed
+question.
+
+## Forge it
+
+The 9E problems check that you can say *why* — why HMC beats a random walk,
+why discrete parameters are off the menu, why R̂ near 1 is necessary but
+never sufficient. 9M has you refit m9.1 under different priors and warm-up
+budgets and watch the diagnostics move. The 9H problems include the
+devil's funnel and the two-legs model that HMC diagnoses honestly where
+quap would have smiled and lied. From this chapter on, every golem in the
+workshop runs on this engine.
+
+<LectureCallout
+  n={8}
+  note="The second half of this lecture is chapter 9: Metropolis, HMC, and chain care."
+/>

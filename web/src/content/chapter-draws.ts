@@ -2,10 +2,12 @@
  * chapter-draws.ts — the real draws behind each chapter's living posterior.
  *
  * Early chapters run on JS simulation, generated here deterministically
- * from the chapter's actual model. Chapters 4–6 use synthetic draws whose
- * parameters match the quap/brms fits; once the r-pipeline artifacts land,
- * these swap to loadArtifact() without touching the header component.
+ * from the chapter's actual model. Chapters 4–8 use synthetic draws whose
+ * parameters match the quap/brms fits; chapter 9 samples its ridge with
+ * the HMC toy's own engine. Once the r-pipeline artifacts land, these
+ * swap to loadArtifact() without touching the header component.
  */
+import { correlatedGaussian, runChain } from '../components/interactives/hmc-toy/engine'
 import { HOUSE_SEED, RNG } from '../lib/rng'
 
 interface ChapterDraws {
@@ -47,6 +49,28 @@ export function drawsForChapter(chapter: number): ChapterDraws | null {
     case 6:
       result = { draws: normalDraws(2000, 0.0, 0.22, 6), range: [-0.8, 0.8] }
       break
+    // ch7: sampling spread of the overfit game's linear coefficient
+    // (true slope 0.7, OLS se ≈ 0.17 at n = 12, σ = 0.35)
+    case 7:
+      result = { draws: normalDraws(2000, 0.7, 0.17, 7), range: [0.05, 1.35] }
+      break
+    // m8.3: ruggedness slope inside Africa ≈ 0.13 ± 0.07 (sign flip made visible)
+    case 8:
+      result = { draws: normalDraws(2000, 0.13, 0.074, 8), range: [-0.15, 0.41] }
+      break
+    // ch9 breathes with real HMC: q1 draws from the toy's own ridge
+    case 9: {
+      const chain = runChain(
+        correlatedGaussian(0.9),
+        [0, 0],
+        0.15,
+        15,
+        2000,
+        new RNG(HOUSE_SEED, 9),
+      )
+      result = { draws: chain.samples.map((q) => q[0]), range: [-3, 3] }
+      break
+    }
     default:
       result = null
   }

@@ -1,0 +1,100 @@
+Rough terrain makes a country poorer. Bad soils, high transport costs,
+isolation from trade — the mechanism is not mysterious, and outside Africa
+the data agree: more ruggedness, less GDP. Inside Africa the slope points
+the other way. Rugged highlands were harder for slave raiders to reach, and
+that grim protection shows up in national income centuries later. One
+predictor, two opposite effects, and no single line can say both things.
+
+A golem that must give ruggedness one slope for the whole world will split
+the difference and be wrong everywhere. What it needs is permission for the
+slope to depend on something else. That permission is an interaction.
+
+## One dataset, two worlds
+
+$$
+\mu_i = \alpha_{\text{cid}[i]} + \beta_{\text{cid}[i]} \left( r_i - \bar{r} \right)
+$$
+
+<Gloss>
+Each continent group gets its own intercept and its own ruggedness slope.
+The interaction is the difference between the two betas.
+</Gloss>
+
+<Wide><RuggedSurface /></Wide>
+
+Flip between the continents and watch the right-hand panel: the slope of
+ruggedness is itself a line, and it crosses zero on the way from one world
+to the other. That crossing is the whole finding. Note what splitting the
+data by hand would have cost you instead: separate σ estimates, no shared
+strength, and no way to say how confident you are that the slopes differ.
+
+<Rosetta
+  model="m8.3"
+  book={`m8.3 <- quap(
+  alist(
+    log_gdp_std ~ dnorm(mu, sigma),
+    mu <- a[cid] + b[cid] * (rugged_std - 0.215),
+    a[cid] ~ dnorm(1, 0.1),
+    b[cid] ~ dnorm(0, 0.3),
+    sigma ~ dexp(1)
+  ), data = dd)`}
+  brms={`m8.3 <- brm(
+  log_gdp_std ~ 0 + cid + cid:rugged_std_c,
+  data = dd, family = gaussian(),
+  prior = c(
+    prior(normal(1, 0.1), class = b, coef = cid1),
+    prior(normal(1, 0.1), class = b, coef = cid2),
+    prior(normal(0, 0.3), class = b, coef = "cid1:rugged_std_c"),
+    prior(normal(0, 0.3), class = b, coef = "cid2:rugged_std_c"),
+    prior(exponential(1), class = sigma)
+  ),
+  backend = "cmdstanr", seed = 1959
+)`}
+/>
+
+## When both dials are continuous
+
+The tulips make the harder case. Blooms respond to water and to shade, but
+water can do nothing for a plant in the dark: light and water are joint
+requirements, not independent contributions. So the effect of water must
+shrink as shade deepens — a continuous interaction, one slope sliding along
+another variable's whole range.
+
+<Wide><TulipsSurface /></Wide>
+
+Drag the shade slider. In full sun the water slope is steep; two steps of
+shade later it has flattened toward nothing. The model behind this adds a
+single term, β<sub>ws</sub>·water·shade, and that one product carries the
+whole biology.
+
+## Interactions are symmetric
+
+The golem holds one equation, so "shade changes the effect of water" and
+"water changes the effect of shade" are the same claim — µ contains
+β<sub>ws</sub>·water·shade either way you read it. Which telling is useful
+depends on your question, not on the math. This symmetry is also a warning:
+you cannot read an interaction off a table of coefficients. The effect of
+water is now β<sub>w</sub> + β<sub>ws</sub>·shade, a quantity that does not
+sit in any single row of a summary. Plot conditional predictions, as both
+panels above do, or you are interpreting numbers you cannot see.
+
+Two habits make interactions tractable. Center your predictors, so the
+"main effect" coefficients mean something at a real point of the data
+rather than at an imaginary zero. And run prior predictive simulations:
+interaction terms compound, and priors that look tame on each coefficient
+can imply tulip beds that bloom at negative rates.
+
+## Forge it
+
+8E and 8M are reasoning problems — name the third variable, write the
+model, say what the product term claims about the world. The 8H problems
+take you back to the tulips (add the greenhouse bed), back to rugged (find
+the one country PSIS keeps complaining about, then decide what to do about
+it), and out to new data on languages and wine. Every one of them comes
+down to the same move: let the slope have a slope, then plot what the golem
+actually believes.
+
+<LectureCallout
+  n={8}
+  note="Interactions open this lecture before it turns to MCMC — the first half is chapter 8."
+/>

@@ -11,8 +11,13 @@ import { GardenOfForkingData } from '../interactives/garden-of-forking-data/Gard
 import {
   DagSandbox,
   GlobeCalibration,
+  HmcToy,
   HowellExplorer,
+  OverfitGame,
   PriorPlayground,
+  RuggedSurface,
+  TraceTriage,
+  TulipsSurface,
 } from '../../content/chapters/embeds'
 import { LectureCallout } from './LectureCallout'
 
@@ -51,6 +56,11 @@ export const mdxComponents: MDXComponents = {
   PriorPlayground,
   DagSandbox,
   HowellExplorer,
+  OverfitGame,
+  RuggedSurface,
+  TulipsSurface,
+  HmcToy,
+  TraceTriage,
   Rosetta,
   WebRRunner,
 }
