@@ -1,0 +1,75 @@
+In the old story, Rabbi Judah Loew ben Bezalel shaped a man from Vltava clay
+and wrote truth on its forehead — *emet* — and the thing stood up and worked.
+It guarded the ghetto. It carried water. It followed instructions with total
+fidelity and zero judgment, which is why the story ends with the rabbi
+scraping one letter off its forehead, turning truth into death, and letting
+the clay fall still. A servant that cannot tell a good order from a bad one
+is dangerous exactly in proportion to its obedience.
+
+You are here to build such servants. Every statistical model is a golem:
+tireless, literal, incapable of noticing that the question you asked is a
+silly one. It will estimate the effect you specified from the data you
+handed it, and it will do so with the same untroubled confidence whether
+your design is sound or an elaborate way of fooling yourself. The golem
+never lies. It also never tells you the truth, exactly — it tells you what
+follows from the clay you shaped.
+
+This first bench holds no tools, only a warning label written in someone
+else's handwriting a century ago and never revised.
+
+## The tests are not the science
+
+Somewhere in your education you probably met a flowchart: which statistical
+test goes with which kind of data. That chart is a bestiary of pre-built
+golems — the t-test, the chi-squared, ANOVA — each forged long ago for a
+narrow chore, each still obeying. The chart teaches you to pick a servant.
+It does not teach you to build one, so when your problem wanders off the
+chart (it will, by roughly Chapter 5), you are left knocking on the doors
+of dead engineers.
+
+The deeper trouble is that the chart quietly claims statistical tests can
+falsify hypotheses. They can't, except in cartoons. Any interesting
+hypothesis is consistent with several process models; each process model
+maps to several statistical models; the arrows run both directions and
+cross. Reject a null and you have learned that one particular golem, fed
+one particular dataset, produced a surprising number. Which scientific
+claim died? Frequently: none.
+
+## What we do instead
+
+This workshop teaches golem engineering, one owner's manual at a time:
+
+- **Bayesian data analysis.** Count all the ways the data could have
+  happened; prefer the explanations with more ways. Chapter 2 does this
+  literally, with marbles.
+- **Multilevel models.** Golems with memory, which resist the amnesia of
+  treating every cluster as brand new. The course's own author calls
+  single-level regression the exception, and by Chapter 13 you will agree.
+- **Model comparison by predictive accuracy.** Information theory, minus
+  the mysticism: how wrong will this golem be about data it has not seen?
+- **Graphical causal models.** Because a golem that predicts well can still
+  answer a *why* question backwards. Prediction and causation part ways in
+  Chapter 5, loudly.
+
+The engine under everything is **brms**: you will write models as formulas,
+state priors out loud, and let Stan do the heavy lifting. Book code appears
+only as a dialect toggle for cross-reference.
+
+## How a bench works
+
+Every chapter in this workshop runs the same loop. You **predict** — sketch
+a posterior, pick a direction, commit — before any answer is shown, and the
+app scores your calibration over the whole course. You **simulate**,
+because pushing numbers through a model teaches more than reading about
+the model ever will. Then you **forge**: finish the work and the chapter's
+golem joins your bestiary, permanently, with its formula stamped on its
+chest.
+
+Your first golem waits at the next bench, and it is small: a fist of clay
+that does nothing except toss a globe and count. Build it well. Every
+monster you make afterward is this one with more letters on its forehead.
+
+<LectureCallout
+  n={1}
+  note="McElreath's opening lecture: golems, flowcharts, and why the tests are not the science."
+/>

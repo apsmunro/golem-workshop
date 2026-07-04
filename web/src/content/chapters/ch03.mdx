@@ -1,0 +1,96 @@
+Chapter 2 left you holding a posterior — a whole curve of plausibility over
+$p$. Now comes the awkward question every client, reviewer, and coauthor
+will ask: *so what's the answer?* A curve is a bad sentence. This bench
+teaches the honest compression: draw samples from the posterior, then ask
+your questions of the samples.
+
+The move sounds like a shortcut and is actually a philosophy. Integrals
+become head-counts. Tail areas become `mean(samples < 0.2)`. Every summary
+you will ever need — intervals, point estimates, predictions — is a one-liner
+over a vector of draws. MCMC, waiting in Chapter 9, produces *only*
+samples, so you are learning the permanent interface early.
+
+## Draw ten thousand globes
+
+<WebRRunner
+  caption="Sampling the globe posterior (6 W in 9, flat prior)"
+  code={`p_grid <- seq(0, 1, length.out = 1000)
+posterior <- dbinom(6, size = 9, prob = p_grid)
+posterior <- posterior / sum(posterior)
+set.seed(100)
+samples <- sample(p_grid, prob = posterior, size = 1e4, replace = TRUE)
+
+mean(samples)                      # posterior mean
+mean(samples > 0.5)                # Pr(mostly water)
+quantile(samples, c(0.055, 0.945)) # 89% percentile interval`}
+  rows={10}
+/>
+
+Each sample is a candidate globe, drawn as often as the posterior finds it
+plausible. The vector `samples` *is* your posterior now, for every
+practical purpose. Interrogate it rudely.
+
+## Intervals are summaries, never estimates
+
+Two interval species live in the wild. A **percentile interval** chops
+equal mass off both tails; it is symmetric in probability and what most
+people mean by default. A **highest posterior density interval** is the
+narrowest region holding the stated mass; it hugs the peak and matters when
+the posterior is lopsided. For the globe they nearly coincide. For skewed
+posteriors they part company, and which one you report becomes a real
+choice — so report which you chose.
+
+Two habits worth adopting from day one. First, the interval is a summary
+of the posterior, never the inference itself; when the two conflict, the
+posterior wins. Second, 89% is as defensible as 95% — the only virtue 95%
+has is seniority, and seniority is how the flowchart happened.
+
+## Simulating prediction
+
+The posterior speaks about parameters. To speak about *future data*, push
+whole posterior draws through the likelihood — every plausible globe gets
+tossed again, in proportion to its plausibility:
+
+<WebRRunner
+  caption="Posterior predictive for nine new tosses"
+  code={`p_grid <- seq(0, 1, length.out = 1000)
+posterior <- dbinom(6, size = 9, prob = p_grid)
+posterior <- posterior / sum(posterior)
+set.seed(100)
+samples <- sample(p_grid, prob = posterior, size = 1e4, replace = TRUE)
+
+w <- rbinom(1e4, size = 9, prob = samples)
+table(w) / 1e4`}
+  rows={9}
+/>
+
+Compare that spread against `rbinom(1e4, 9, 0.64)` — prediction from the
+single best $p$. The predictive distribution is wider, because it carries
+two uncertainties at once: the binomial's ordinary noise *and* your doubt
+about $p$ itself. Golems that report only the first kind are how confident
+nonsense gets published.
+
+$$
+\Pr(\tilde{W} \mid \text{data}) = \int \Pr(\tilde{W} \mid p)\,\Pr(p \mid \text{data})\,dp
+$$
+
+<Gloss>
+Future tosses, averaged over every globe the posterior still believes in.
+The integral looks solemn; `rbinom(1e4, 9, samples)` is the same sentence
+in a working-class accent.
+</Gloss>
+
+## The dungeon: births
+
+The 3H problems hand you real data — first and second births from one
+hundred two-child families — and walk you from a comfortable fit into a
+model check that fails in a specific, instructive way. Do them in order.
+The final one is this course in one exercise: the golem answered every
+question correctly and was wrong, and only a check *you designed* caught
+it.
+
+<LectureCallout
+  n={2}
+  at="42m"
+  note="Sampling the posterior, intervals, and simulation — second half of lecture 2."
+/>

@@ -1,0 +1,106 @@
+Hold a globe at arm's length and toss it. Catch it. Look at the spot under
+your right index finger: water or land? Toss again. After nine tosses you
+have a record — say W L W W W L W L W — and one question: how much of this
+globe is covered in water?
+
+That little ritual is the whole of Bayesian inference in miniature, and
+this bench builds it twice. Once with your hands, counting paths through a
+garden. Once with twenty lines of R.
+
+## Small worlds and large worlds
+
+The globe in your hands is the large world: wet, dented, indifferent to
+your model. The golem lives somewhere else — a small world where exactly
+one number, the proportion of water $p$, governs everything, every toss is
+independent, and nothing exists that the model didn't name. Inside that
+small world the golem's logic is flawless. Whether the small world has
+anything to do with the large one is your problem, never the golem's, and
+no amount of arithmetic will make that judgment for you.
+
+Keep both worlds in view at once. The chapters ahead are full of golems
+that were perfect in their small worlds and wrong about ours.
+
+## The garden of forking data
+
+Strip the machinery away and Bayesian updating is counting. Consider every
+way the world could be; for each one, count the paths that produce exactly
+the data you saw; believe each world in proportion to its surviving paths.
+
+Try it. Pick a conjecture below, draw data, and watch the incompatible
+paths wither. When you press "update again", this round's counts become the
+next round's starting weights — which is the entire theory of learning from
+experience, in one button.
+
+<Wide><GardenOfForkingData /></Wide>
+
+Notice what you never needed: no formula, no derivation, no "statistics".
+Relative numbers of ways. That is what a probability is about to be.
+
+## From counting to the globe
+
+Counts get unwieldy when the conjectures form a continuum, so we rename.
+The paths-per-conjecture, standardized, becomes a **likelihood**. The
+starting weights become a **prior**. The surviving plausibility becomes the
+**posterior**. For $W$ waters in $N$ tosses:
+
+$$
+\Pr(p \mid W, N) = \frac{\binom{N}{W} p^{W} (1-p)^{N-W} \times \Pr(p)}{\Pr(W)}
+$$
+
+<Gloss>
+Read it as the garden: (ways this p produces the data) × (prior weight on
+this p), normalized so all the plausibility sums to one. The denominator is
+only the normalizing chore.
+</Gloss>
+
+The golem for this chapter has three parts and you should be able to point
+at each: a likelihood (binomial — tosses are exchangeable coin flips with
+stickiness $p$), a parameter to learn ($p$), and a prior (flat, for now —
+every $p$ starts with equal path counts, an assumption we will outgrow
+within a chapter).
+
+## Making it go: grid approximation
+
+The continuum version of "list every conjecture" is a grid. Score each grid
+point by likelihood × prior, normalize, done — a posterior you computed by
+brute honesty. Run it; the code is editable, so break it and see.
+
+<WebRRunner
+  caption="The globe posterior on a 20-point grid"
+  code={`p_grid <- seq(0, 1, length.out = 20)
+prior <- rep(1, 20)
+likelihood <- dbinom(6, size = 9, prob = p_grid)
+posterior <- likelihood * prior
+posterior <- posterior / sum(posterior)
+round(posterior, 3)`}
+  expect={['0.140 0.143']}
+/>
+
+Twenty points is coarse on purpose: you can read the whole posterior as a
+list. Push `length.out` to 1000 and the list becomes a curve; nothing else
+changes. Grid approximation dies of the curse of dimensionality around two
+or three parameters, which is why sturdier engines arrive in Chapter 9 —
+same posterior, better plumbing.
+
+## Predict before you look
+
+Six waters in nine tosses, flat prior. Before running anything: where does
+the posterior for $p$ pile up, and how wide is the pile? Draw it.
+
+<GlobeCalibration />
+
+Whatever your overlap score, it goes in your calibration ledger, and the
+ledger is the point. Being well calibrated about uncertainty is a skill,
+it is trainable, and almost nobody arrives with it.
+
+## Forge it
+
+The practice problems below are the forge. The 2E set checks the grammar of
+conditional probability; 2M runs the grid until it is boring (boring is the
+goal); 2H — pandas, cards, factories — makes counting carry real weight.
+Finish them and the Globe-Tossing Golem is yours.
+
+<LectureCallout
+  n={2}
+  note="The garden of forking data, drawn by the man himself."
+/>

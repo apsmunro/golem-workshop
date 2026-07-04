@@ -8,7 +8,9 @@
       "PowerShell(git add -A)",
       "PowerShell(npm run shot -- /dev/living-posterior)",
       "PowerShell(npm run shot -- /chapter/small-worlds-and-large-worlds)",
-      "PowerShell(npm install webr)"
+      "PowerShell(npm install webr)",
+      "PowerShell(npm install -D @mdx-js/rollup @types/mdx)",
+      "PowerShell(npm install @mdx-js/react remark-gfm remark-math rehype-katex katex)"
     ]
   }
 }
