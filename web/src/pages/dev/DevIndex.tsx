@@ -4,6 +4,7 @@ const demos = [
   { path: '/dev/specimen', name: 'Tokens & type specimen' },
   { path: '/dev/living-posterior', name: 'Living posterior header' },
   { path: '/dev/garden', name: 'Garden of Forking Data' },
+  { path: '/dev/calibration', name: 'Calibration sketch' },
 ]
 
 export function DevIndex() {

@@ -13,6 +13,7 @@ import './styles/global.css'
 import { Layout } from './components/core/Layout'
 import { ChapterPage } from './pages/ChapterPage'
 import { Home } from './pages/Home'
+import { CalibrationDemo } from './pages/dev/CalibrationDemo'
 import { DevIndex } from './pages/dev/DevIndex'
 import { GardenDemo } from './pages/dev/GardenDemo'
 import { LivingPosteriorDemo } from './pages/dev/LivingPosteriorDemo'
@@ -29,6 +30,7 @@ const router = createBrowserRouter(
         { path: '/dev/specimen', element: <Specimen /> },
         { path: '/dev/living-posterior', element: <LivingPosteriorDemo /> },
         { path: '/dev/garden', element: <GardenDemo /> },
+        { path: '/dev/calibration', element: <CalibrationDemo /> },
       ],
     },
   ],
