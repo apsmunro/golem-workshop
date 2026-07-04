@@ -3,7 +3,9 @@
     "allow": [
       "PowerShell(node --version)",
       "PowerShell(npm --version)",
-      "PowerShell(npm run shot -- /)"
+      "PowerShell(npm run shot -- /)",
+      "PowerShell(npm test)",
+      "PowerShell(git add -A)"
     ]
   }
 }
