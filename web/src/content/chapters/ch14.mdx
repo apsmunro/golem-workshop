@@ -1,0 +1,148 @@
+Chapter 13 gave every cluster its own intercept. But clusters rarely differ
+in only one way. A café that is slow in the morning is usually the café
+whose afternoon rush hits hardest — its intercept and its slope move
+together. If the model learns each varying effect in its own sealed box, it
+throws that away. Adventures in covariance is about teaching the prior to
+notice when parameters travel in pairs, and then letting one estimate inform
+the other.
+
+## Effects that travel together
+
+Give each café two numbers, an intercept and a slope, and draw the pair from
+a single two-dimensional Gaussian:
+
+$$
+\begin{bmatrix} \alpha_j \\ \beta_j \end{bmatrix} \sim \text{MVNormal}\!\left( \begin{bmatrix} \bar\alpha \\ \bar\beta \end{bmatrix}, \; \mathbf{S} \right), \quad \mathbf{S} = \begin{bmatrix} \sigma_\alpha & 0 \\ 0 & \sigma_\beta \end{bmatrix} \mathbf{R} \begin{bmatrix} \sigma_\alpha & 0 \\ 0 & \sigma_\beta \end{bmatrix}
+$$
+
+<Gloss>
+Two standard deviations set how far intercepts and slopes spread; the
+correlation matrix R sets whether they lean the same way. Together they make
+a tilted ellipse, and that ellipse is the prior the cafés share.
+</Gloss>
+
+Partial pooling now shrinks in two dimensions. A noisy café is pulled toward
+the ellipse, not toward a point, and when the correlation is real the pull
+runs along the tilt. That is the sideways channel: observe only that a café
+is slow in the morning, and the negative correlation drags its slope estimate
+downward too, because the model has learned that morning-slow cafés swing
+hard in the afternoon.
+
+<Wide><CafeEllipse /></Wide>
+
+Flatten the correlation to zero and the ellipse becomes axis-aligned; the two
+coordinates pool separately and the sideways channel closes. Every bit of the
+extra work a varying-slopes model does over two independent varying-intercept
+models is stored in that off-diagonal number.
+
+<Rosetta
+  model="m14.1"
+  book={`m14.1 <- ulam(
+  alist(
+    wait ~ dnorm(mu, sigma),
+    mu <- a[cafe] + b[cafe] * afternoon,
+    c(a, b)[cafe] ~ multi_normal(c(a_bar, b_bar), Rho, sigma_cafe),
+    a_bar ~ dnorm(5, 2),
+    b_bar ~ dnorm(-1, 0.5),
+    sigma_cafe ~ dexp(1),
+    sigma ~ dexp(1),
+    Rho ~ lkj_corr(2)
+  ), data = d, chains = 4, cores = 4)`}
+  brms={`m14.1 <- brm(
+  wait ~ 1 + afternoon + (1 + afternoon | cafe),
+  data = d, family = gaussian(),
+  prior = c(
+    prior(normal(5, 2), class = Intercept),
+    prior(normal(-1, 0.5), class = b),
+    prior(exponential(1), class = sd),
+    prior(exponential(1), class = sigma),
+    prior(lkj(2), class = cor)
+  ),
+  chains = 4, cores = 4, backend = "cmdstanr", seed = 1959
+)`}
+/>
+
+The whole ellipse lives inside `(1 + afternoon | cafe)`: intercept and slope
+vary by café, and the `| cafe` shared across both terms is what estimates
+their correlation. The `lkj(2)` prior on that correlation is mildly skeptical
+of extreme values — it puts more weight near zero, so the model needs real
+evidence before it commits to a strong tilt. Reach for it whenever you write
+varying slopes.
+
+## Distance as a prior
+
+Correlation between two parameters need not come from a matrix you estimate
+entry by entry. Sometimes you already know which units should be alike. Ten
+Pacific societies sit at known sea distances, and their tool counts should
+covary with proximity — neighbors trade, share, and copy. A Gaussian process
+turns that intuition into a prior: one smooth function says how covariance
+falls off with distance, and it applies to every pair at once.
+
+$$
+\mathbf{K}_{ij} = \eta^2 \exp\!\left(-\rho^2 D_{ij}^2\right)
+$$
+
+<Gloss>
+η² is the covariance between a society and itself — the ceiling. ρ² sets how
+fast covariance decays as distance D grows. One curve, ten societies, every
+pairing decided at once.
+</Gloss>
+
+<Wide><GpIslands /></Wide>
+
+The model never estimates a separate effect for Hawaii and a separate one for
+Yap as if they were unrelated names. It estimates the shape of the decline,
+and geography does the pooling. Raise ρ² and covariance collapses to the
+nearest neighbors; lower it and faint threads reach across open ocean. This
+is the same partial-pooling idea as the tadpole tanks, with distance standing
+in for the grouping — a continuous cluster instead of a discrete one.
+
+<Rosetta
+  model="m14.8"
+  book={`m14.8 <- ulam(
+  alist(
+    T ~ dpois(lambda),
+    log(lambda) <- a * P^b / g * exp(k[society]),
+    vector[10]:k ~ multi_normal(0, SIGMA),
+    matrix[10,10]:SIGMA <- cov_GPL2(Dmat, etasq, rhosq, 0.01),
+    c(a, b, g) ~ ...,
+    etasq ~ dexp(2),
+    rhosq ~ dexp(0.5)
+  ), data = dat, chains = 4, cores = 4)`}
+  brms={`m14.8 <- brm(
+  total_tools ~ 1 + gp(lon2, lat2, scale = FALSE),
+  data = d, family = poisson(),
+  prior = c(
+    prior(normal(3, 0.5), class = Intercept),
+    prior(inv_gamma(2, 1), class = lscale, coef = gplon2lat2),
+    prior(exponential(1), class = sdgp)
+  ),
+  chains = 4, cores = 4, backend = "cmdstanr", seed = 1959
+)`}
+/>
+
+brms writes the Gaussian process as a `gp()` term over coordinates, with
+`sdgp` playing the role of η and `lscale` the role of ρ's inverse. The
+parameterization differs from the book's `cov_GPL2`, so the numbers won't
+match symbol for symbol, but the object is the same: a covariance that
+softens with distance, learned from the data.
+
+## Forge it
+
+The 14E problems ask you to write a varying-slopes model and read its
+covariance. 14M rebuilds the café simulation and the chimpanzee model with
+correlated effects, then pushes into Gaussian processes on the Oceanic tools
+and the phylogenetic Primates data. The 14H set brings the social-relations
+model for the KosterLeckie gift-giving network — varying effects for giver,
+receiver, and the tie between them. Finish them and the Covariance Hydra
+joins the bestiary, two heads on one correlated spine.
+
+<LectureCallout
+  n={14}
+  note="Correlated features and the varying-slopes café."
+/>
+
+<LectureCallout
+  n={16}
+  note="Gaussian processes end to end, including the Oceanic tools."
+/>

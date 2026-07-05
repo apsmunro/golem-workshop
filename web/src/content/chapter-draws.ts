@@ -91,6 +91,15 @@ export function drawsForChapter(chapter: number): ChapterDraws | null {
     case 12:
       result = { draws: normalDraws(2000, -1.24, 0.1, 12), range: [-1.66, -0.82] }
       break
+    // ch13 breathes with the reedfrog tank intercepts themselves: the whole
+    // population α_tank ~ Normal(ᾱ ≈ 1.4, σ ≈ 1.6) that the pooling shrinks
+    case 13:
+      result = { draws: normalDraws(2000, 1.4, 1.6, 13), range: [-3, 6] }
+      break
+    // m14.1: the café afternoon slopes β_cafe ~ Normal(b̄ ≈ −1.2, σ_b ≈ 0.5)
+    case 14:
+      result = { draws: normalDraws(2000, -1.2, 0.5, 14), range: [-2.9, 0.5] }
+      break
     default:
       result = null
   }

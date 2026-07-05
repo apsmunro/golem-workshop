@@ -319,3 +319,95 @@ fit_cached("m12.5", function() {
     seed = SEED, chains = 4, cores = 4
   )
 })
+
+# --- Chapter 13: models with memory ------------------------------------
+
+reed <- read.csv2("data/reedfrogs.csv")
+reed$surv <- as.integer(reed$surv)
+reed$density <- as.integer(reed$density)
+reed$tank <- seq_len(nrow(reed))
+
+# m13.2: varying intercept per tank (partial pooling)
+fit_cached("m13.2", function() {
+  brm(
+    surv | trials(density) ~ 1 + (1 | tank),
+    data = reed, family = binomial(),
+    prior = c(
+      prior(normal(0, 1.5), class = Intercept),
+      prior(exponential(1), class = sd)
+    ),
+    seed = SEED, chains = 4, cores = 4,
+    control = list(adapt_delta = 0.95)
+  )
+})
+
+# m13.4: chimpanzees, cross-classified varying intercepts (actor + block)
+chimp$block <- factor(chimp$block)
+fit_cached("m13.4", function() {
+  brm(
+    pulled_left ~ 1 + treatment + (1 | actor) + (1 | block),
+    data = chimp, family = bernoulli(),
+    prior = c(
+      prior(normal(0, 1.5), class = Intercept),
+      prior(normal(0, 0.5), class = b),
+      prior(exponential(1), class = sd)
+    ),
+    seed = SEED, chains = 4, cores = 4,
+    control = list(adapt_delta = 0.95)
+  )
+})
+
+# --- Chapter 14: adventures in covariance ------------------------------
+
+# m14.1: the café varying-slopes model, simulated exactly as in the book.
+set.seed(SEED)
+a_bar <- 3.5; b_bar <- -1; sigma_a <- 1; sigma_b <- 0.5; rho <- -0.7
+Mu <- c(a_bar, b_bar)
+cov_ab <- sigma_a * sigma_b * rho
+Sigma <- matrix(c(sigma_a^2, cov_ab, cov_ab, sigma_b^2), ncol = 2)
+N_cafes <- 20
+vary_effects <- MASS::mvrnorm(N_cafes, Mu, Sigma)
+a_cafe <- vary_effects[, 1]; b_cafe <- vary_effects[, 2]
+N_visits <- 10
+afternoon <- rep(0:1, N_visits * N_cafes / 2)
+cafe_id <- rep(seq_len(N_cafes), each = N_visits)
+mu <- a_cafe[cafe_id] + b_cafe[cafe_id] * afternoon
+cafe_df <- data.frame(cafe = cafe_id, afternoon = afternoon,
+                      wait = rnorm(N_visits * N_cafes, mu, 0.5))
+
+fit_cached("m14.1", function() {
+  brm(
+    wait ~ 1 + afternoon + (1 + afternoon | cafe),
+    data = cafe_df, family = gaussian(),
+    prior = c(
+      prior(normal(5, 2), class = Intercept),
+      prior(normal(-1, 0.5), class = b),
+      prior(exponential(1), class = sd),
+      prior(exponential(1), class = sigma),
+      prior(lkj(2), class = cor)
+    ),
+    seed = SEED, chains = 4, cores = 4,
+    control = list(adapt_delta = 0.95)
+  )
+})
+
+# m14.8: Oceanic tools Gaussian process over geographic distance.
+# brms parameterizes the GP with lon/lat coordinates; the book uses the
+# raw distance matrix with cov_GPL2. We supply coordinates so the gp() term
+# reproduces the squared-exponential covariance.
+kline$lon2 <- c(167.5, 168.8, 165.8, 138.1, 178.8, 151.1, 151.8, 147.0, -175.2, -155.5)
+kline$lat2 <- c(-16.3, -12.3, -10.7, 9.5, -18.0, -8.5, 7.4, -2.1, -21.2, 19.9)
+
+fit_cached("m14.8", function() {
+  brm(
+    total_tools ~ 1 + gp(lon2, lat2, scale = FALSE),
+    data = kline, family = poisson(),
+    prior = c(
+      prior(normal(3, 0.5), class = Intercept),
+      prior(inv_gamma(2, 1), class = lscale, coef = gplon2lat2),
+      prior(exponential(1), class = sdgp)
+    ),
+    seed = SEED, chains = 4, cores = 4,
+    control = list(adapt_delta = 0.95)
+  )
+})

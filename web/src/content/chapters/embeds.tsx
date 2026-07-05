@@ -20,10 +20,16 @@ import { OverfitGame } from '../../components/interactives/overfit-game/OverfitG
 import { PosteriorExplorer } from '../../components/interactives/posterior-explorer/PosteriorExplorer'
 import type { ExplorerDraws } from '../../components/interactives/posterior-explorer/PosteriorExplorer'
 import { TraceTriage } from '../../components/interactives/trace-triage/TraceTriage'
+import { ShrinkageTheater } from '../../components/interactives/shrinkage-theater/ShrinkageTheater'
+import type { Tank } from '../../components/interactives/shrinkage-theater/engine'
+import { DivergenceDetective } from '../../components/interactives/divergence-detective/DivergenceDetective'
+import { CafeEllipse } from '../../components/interactives/cafe-ellipse/CafeEllipse'
+import { GpIslands } from '../../components/interactives/gp-islands/GpIslands'
 import { RNG } from '../../lib/rng'
 import { drawsForChapter } from '../chapter-draws'
 import { adults, fitM43, loadHowell } from '../models/howell'
 import { loadRugged, loadTulips } from '../models/interactions'
+import { loadReedfrogs } from '../models/multilevel'
 import { kde } from '../../lib/stats'
 
 /** Guess the globe-tossing posterior (6 W in 9) before seeing it. */
@@ -55,6 +61,25 @@ export {
   KlinePoisson,
   CutpointDragger,
   ZeroInflationMixer,
+  DivergenceDetective,
+  CafeEllipse,
+  GpIslands,
+}
+
+/** Chapter 13: the reedfrog tanks, loaded once for the Shrinkage Theater. */
+export function ReedfrogTheater() {
+  const [tanks, setTanks] = useState<Tank[] | null>(null)
+  useEffect(() => {
+    let cancelled = false
+    loadReedfrogs().then((t) => {
+      if (!cancelled) setTanks(t)
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [])
+  if (!tanks) return <p className="text-sm text-secondary">Counting 48 tanks of tadpoles…</p>
+  return <ShrinkageTheater tanks={tanks} />
 }
 
 /** Chapter 8: terrain ruggedness and GDP, moderated by continent. */

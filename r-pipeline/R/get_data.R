@@ -3,7 +3,9 @@ base <- "https://raw.githubusercontent.com/rmcelreath/rethinking/master/data"
 files <- c(
   "Howell1.csv", "WaffleDivorce.csv", "milk.csv", "rugged.csv", "tulips.csv",
   # Phase 4 (ch 11–12): counts, admissions, tools, moral judgments
-  "chimpanzees.csv", "UCBadmit.csv", "Kline.csv", "Trolley.csv"
+  "chimpanzees.csv", "UCBadmit.csv", "Kline.csv", "Trolley.csv",
+  # Phase 5 (ch 13–14): tadpole tanks (islandsDistMatrix is embedded in code)
+  "reedfrogs.csv"
 )
 dir.create("data", showWarnings = FALSE)
 for (f in files) {

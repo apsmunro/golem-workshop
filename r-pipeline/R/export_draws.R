@@ -47,7 +47,19 @@ param_maps <- list(
               c3 = "b_Intercept[3]", c4 = "b_Intercept[4]",
               c5 = "b_Intercept[5]", c6 = "b_Intercept[6]"),
   "m12.5" = c(bA = "b_action", bC = "b_contact", bI = "b_intention",
-              bIA = "b_action:intention", bIC = "b_contact:intention")
+              bIA = "b_action:intention", bIC = "b_contact:intention"),
+  # Chapter 13: multilevel hyperparameters
+  "m13.2" = c(a_bar = "b_Intercept", sigma_tank = "sd_tank__Intercept"),
+  "m13.4" = c(a_bar = "b_Intercept",
+              b2 = "b_treatment2", b3 = "b_treatment3", b4 = "b_treatment4",
+              sigma_actor = "sd_actor__Intercept",
+              sigma_block = "sd_block__Intercept"),
+  # Chapter 14: covariance and Gaussian process
+  "m14.1" = c(a_bar = "b_Intercept", b_bar = "b_afternoon",
+              sigma_a = "sd_cafe__Intercept", sigma_b = "sd_cafe__afternoon",
+              rho = "cor_cafe__Intercept__afternoon", sigma = "sigma"),
+  "m14.8" = c(a = "b_Intercept", sdgp = "sdgp_gplon2lat2",
+              lscale = "lscale_gplon2lat2")
 )
 
 chapters <- c("m4.1" = 4, "m4.3" = 4, "m5.1" = 5, "m5.2" = 5,
@@ -55,7 +67,9 @@ chapters <- c("m4.1" = 4, "m4.3" = 4, "m5.1" = 5, "m5.2" = 5,
               "m8.1" = 8, "m8.2" = 8, "m8.3" = 8, "m8.4" = 8,
               "m8.5" = 8, "m9.1" = 9,
               "m11.4" = 11, "m11.7" = 11, "m11.8" = 11, "m11.10" = 11,
-              "m12.1" = 12, "m12.3" = 12, "m12.4" = 12, "m12.5" = 12)
+              "m12.1" = 12, "m12.3" = 12, "m12.4" = 12, "m12.5" = 12,
+              "m13.2" = 13, "m13.4" = 13,
+              "m14.1" = 14, "m14.8" = 14)
 
 for (model in names(param_maps)) {
   path <- file.path("fits", paste0(model, ".rds"))

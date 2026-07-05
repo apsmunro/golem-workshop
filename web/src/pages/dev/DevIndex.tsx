@@ -21,6 +21,10 @@ const demos = [
   { path: '/dev/kline', name: 'Kline Poisson & exposure lab' },
   { path: '/dev/cutpoints', name: 'Cutpoint dragger (Trolley)' },
   { path: '/dev/zip', name: 'Zero-inflation mixer' },
+  { path: '/dev/shrinkage', name: 'Shrinkage Theater (reedfrogs)' },
+  { path: '/dev/divergence', name: 'Divergence detective (funnel)' },
+  { path: '/dev/cafe', name: 'Café ellipse (varying slopes)' },
+  { path: '/dev/gp', name: 'GP islands (Oceanic tools)' },
 ]
 
 export function DevIndex() {

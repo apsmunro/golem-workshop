@@ -1,0 +1,148 @@
+Forty-eight ponds, forty-eight survival rates. The reflex is to estimate
+each pond on its own — count the survivors, divide by the tadpoles, move on.
+The opposite reflex is to throw all the ponds in one bucket and report a
+single number. Both waste what you know. A pond that started with ten
+tadpoles and saw nine survive is weak evidence; a pond of thirty-five that
+saw thirty-one is strong. A model with memory treats them differently, and
+it learns how differently from the ponds themselves.
+
+## The pond that remembers
+
+Give every tank its own intercept on the log-odds scale, then say those
+intercepts came from a common distribution:
+
+$$
+s_i \sim \text{Binomial}(n_i, p_i), \quad \text{logit}(p_i) = \alpha_{\text{tank}[i]}, \quad \alpha_j \sim \text{Normal}(\bar\alpha, \sigma)
+$$
+
+<Gloss>
+Each tank has its own α, but all the α's are tethered to a shared mean ᾱ
+with spread σ. The model estimates ᾱ and σ too, so the tanks set the leash
+they are all held by.
+</Gloss>
+
+That last line is the whole trick. σ is not fixed in advance; it is a
+parameter. When the tanks are alike, the model learns a small σ and pulls
+every estimate hard toward the common mean. When they differ, it learns a
+large σ and lets each tank speak. The pull is strongest for the tanks that
+know the least — the ten-tadpole ponds move the most, because they have the
+most to borrow.
+
+<Wide><ReedfrogTheater /></Wide>
+
+Slide σ to its extremes and you recover the two reflexes we started with:
+near zero is complete pooling, one number for the pond; very wide is no
+pooling, every tank alone. The multilevel model refuses both and finds the
+setting in between that predicts new tanks best. That setting is not a
+compromise so much as a third thing — regularization the data chose for
+itself.
+
+<Rosetta
+  model="m13.2"
+  book={`m13.2 <- ulam(
+  alist(
+    S ~ dbinom(N, p),
+    logit(p) <- a[tank],
+    a[tank] ~ dnorm(a_bar, sigma),
+    a_bar ~ dnorm(0, 1.5),
+    sigma ~ dexp(1)
+  ), data = dat, chains = 4, log_lik = TRUE)`}
+  brms={`m13.2 <- brm(
+  surv | trials(density) ~ 1 + (1 | tank),
+  data = d, family = binomial(),
+  prior = c(
+    prior(normal(0, 1.5), class = Intercept),
+    prior(exponential(1), class = sd)
+  ),
+  chains = 4, cores = 4, backend = "cmdstanr", seed = 1959
+)`}
+/>
+
+The brms formula hides the adaptive prior inside `(1 | tank)`: the `1` is
+the varying intercept, `tank` the grouping, and the `sd` prior is the prior
+on σ. Everything the book writes out by hand is still there. It is worth
+reading the two side by side once, so the shorthand never becomes a black
+box.
+
+## Why memory beats a flat prior
+
+A varying-intercept model is a stack of parameters — one per tank plus two
+hyperparameters — yet it overfits *less* than the no-pooling model with the
+same tank intercepts and flat priors. The count of parameters did not fall;
+the effective count did. Shrinkage spends degrees of freedom only where the
+data support them. This is the same bargain the compass of chapter 7 was
+pointing at, now bought automatically: the model regularizes itself, and the
+strength of the regularization is estimated rather than tuned.
+
+## The neck of the funnel
+
+Multilevel models make a shape that breaks samplers. When a cluster's
+variance σ is small, the varying effects it governs are squeezed into a thin
+neck; when σ is large, they spread into a wide mouth. Plot one effect
+against log-σ and you get a funnel, and a single leapfrog step size cannot
+handle both ends. In the mouth it is fine; in the neck it overshoots and the
+trajectory flies apart. Those are divergences, and they cluster exactly
+where the model most needs to look — the region where a group's variation is
+near zero.
+
+<Wide><DivergenceDetective /></Wide>
+
+The fix costs nothing statistically. Write the varying effect as
+$\alpha_j = \bar\alpha + \sigma z_j$ with $z_j \sim \text{Normal}(0,1)$
+instead of $\alpha_j \sim \text{Normal}(\bar\alpha, \sigma)$. The two say the
+same thing about $\alpha_j$, but the sampler now explores the round, tidy
+space of the $z$'s, and the geometry of the funnel is reconstructed by the
+multiplication afterward. This is non-centered parameterization, and for
+multilevel models it is usually the difference between a chain that works and
+one that lies.
+
+<Rosetta
+  model="m13.2 (non-centered)"
+  book={`# non-centered by hand: sample z, rebuild a
+m13.2nc <- ulam(
+  alist(
+    S ~ dbinom(N, p),
+    logit(p) <- a_bar + z[tank] * sigma,
+    z[tank] ~ dnorm(0, 1),
+    a_bar ~ dnorm(0, 1.5),
+    sigma ~ dexp(1)
+  ), data = dat, chains = 4)`}
+  brms={`# brms non-centers varying effects by default —
+# the same formula, no reparameterization needed
+m13.2 <- brm(
+  surv | trials(density) ~ 1 + (1 | tank),
+  data = d, family = binomial(),
+  prior = c(
+    prior(normal(0, 1.5), class = Intercept),
+    prior(exponential(1), class = sd)
+  ),
+  control = list(adapt_delta = 0.95),
+  chains = 4, cores = 4, backend = "cmdstanr", seed = 1959
+)`}
+/>
+
+brms does the non-centering for you on every `(… | group)` term, which is
+why you rarely write the $z$ trick out. When divergences still appear —
+and with tiny groups they sometimes do — the next move is `adapt_delta`,
+which shrinks the step size near the neck. The detective above is the
+picture of what that dial is fighting.
+
+## Forge it
+
+The 13E problems make you name the pieces of a multilevel model and say what
+the adaptive prior buys. 13M walks through the reedfrog tanks with
+predictors added — predation, size, their interaction — and asks what
+happens to σ each time a real cause is explained. The 13H set moves to new
+data: Trolley judgments with varying intercepts per participant, and the
+Bangladesh contraception survey with districts as clusters. Finish them and
+the Memory Golem joins the bestiary, a leash in one hand.
+
+<LectureCallout
+  n={12}
+  note="Multilevel models from the tadpole tanks up."
+/>
+
+<LectureCallout
+  n={13}
+  note="Multilevel adventures: divergences, non-centering, and when pooling goes wrong."
+/>

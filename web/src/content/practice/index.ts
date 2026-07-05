@@ -9,6 +9,8 @@ import { ch09Hints } from './ch09'
 import { ch10Hints } from './ch10'
 import { ch11Hints } from './ch11'
 import { ch12Hints } from './ch12'
+import { ch13Hints } from './ch13'
+import { ch14Hints } from './ch14'
 import type { ChapterHints } from './types'
 
 export const hintsByChapter: Record<number, ChapterHints> = {
@@ -23,4 +25,6 @@ export const hintsByChapter: Record<number, ChapterHints> = {
   10: ch10Hints,
   11: ch11Hints,
   12: ch12Hints,
+  13: ch13Hints,
+  14: ch14Hints,
 }

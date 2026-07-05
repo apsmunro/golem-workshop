@@ -515,6 +515,106 @@ export function IntegerGolem({
   )
 }
 
+export function MemoryGolem({
+  state = 'forged',
+  dismembered = false,
+  className,
+}: GolemArtProps) {
+  const clay = state === 'forged' ? 'var(--clay-500)' : 'var(--line)'
+  const bone = state === 'forged' ? 'var(--bone-300)' : 'var(--line)'
+  const brass = state === 'forged' ? 'var(--brass-400)' : 'var(--line)'
+  const sw = 1.5
+
+  return (
+    <svg viewBox="0 0 120 150" className={className} role="img" aria-label={`Memory Golem, ${state}`}>
+      {/* a crown of nested tanks — clusters remembering each other */}
+      <Fragment offset="translate(0px, -32px) rotate(0deg)" dismembered={dismembered}>
+        <path d="M40 34 Q40 20 60 20 Q80 20 80 34" fill="none" stroke={brass} strokeWidth={sw} />
+        <path d="M46 34 Q46 25 60 25 Q74 25 74 34" fill="none" stroke={bone} strokeWidth="0.9" />
+        <path d="M52 34 Q52 30 60 30 Q68 30 68 34" fill="none" stroke={bone} strokeWidth="0.9" />
+      </Fragment>
+
+      {/* head, a small pooled tadpole eye */}
+      <Fragment offset="translate(0px, -18px) rotate(0deg)" dismembered={dismembered}>
+        <rect x="48" y="40" width="24" height="22" rx="4" fill="none" stroke={clay} strokeWidth={sw} />
+        <circle cx="55" cy="51" r="1.8" fill={brass} />
+        <circle cx="65" cy="51" r="1.8" fill={brass} />
+      </Fragment>
+
+      {/* torso engraved with three tanks shrinking toward a shared line */}
+      <Fragment offset="translate(-22px, 16px) rotate(-15deg)" dismembered={dismembered}>
+        <path d="M44 62 L76 62 Q80 62 80 68 L78 110 L42 110 L40 68 Q40 62 44 62 Z" fill="none" stroke={clay} strokeWidth={sw} strokeLinejoin="round" />
+        <line x1="46" y1="86" x2="74" y2="86" stroke={brass} strokeWidth="1" strokeDasharray="3 3" />
+        <circle cx="50" cy="76" r="1.6" fill="none" stroke={bone} strokeWidth="1" />
+        <circle cx="60" cy="94" r="1.6" fill="none" stroke={bone} strokeWidth="1" />
+        <circle cx="70" cy="80" r="1.6" fill="none" stroke={bone} strokeWidth="1" />
+        <path d="M50 78 L50 85 M60 92 L60 87 M70 82 L70 85" stroke={brass} strokeWidth="0.8" />
+      </Fragment>
+
+      {/* arms cradling a small tank */}
+      <Fragment offset="translate(28px, 6px) rotate(28deg)" dismembered={dismembered}>
+        <path d="M44 72 L34 84 M76 72 L86 84" fill="none" stroke={clay} strokeWidth={sw} strokeLinecap="round" />
+      </Fragment>
+
+      {/* legs */}
+      <Fragment offset="translate(6px, 28px) rotate(12deg)" dismembered={dismembered}>
+        <path d="M48 110 L47 136 L57 136 L57 110 M63 110 L63 136 L73 136 L72 110" fill="none" stroke={clay} strokeWidth={sw} strokeLinejoin="round" />
+      </Fragment>
+    </svg>
+  )
+}
+
+export function CovarianceHydra({
+  state = 'forged',
+  dismembered = false,
+  className,
+}: GolemArtProps) {
+  const clay = state === 'forged' ? 'var(--clay-500)' : 'var(--line)'
+  const bone = state === 'forged' ? 'var(--bone-300)' : 'var(--line)'
+  const brass = state === 'forged' ? 'var(--brass-400)' : 'var(--line)'
+  const verd = state === 'forged' ? 'var(--verdigris-400)' : 'var(--line)'
+  const sw = 1.5
+
+  return (
+    <svg viewBox="0 0 120 150" className={className} role="img" aria-label={`Covariance Hydra, ${state}`}>
+      {/* two heads on correlated necks — parameters that vary together */}
+      <Fragment offset="translate(-24px, -28px) rotate(-30deg)" dismembered={dismembered}>
+        <path d="M52 68 Q40 52 36 34" fill="none" stroke={clay} strokeWidth={sw} />
+        <path d="M32 30 Q28 24 34 20 Q42 22 40 30 Q36 34 32 30 Z" fill="none" stroke={clay} strokeWidth={sw} strokeLinejoin="round" />
+        <circle cx="35" cy="26" r="1.5" fill={brass} />
+      </Fragment>
+      <Fragment offset="translate(24px, -28px) rotate(30deg)" dismembered={dismembered}>
+        <path d="M68 68 Q80 52 84 34" fill="none" stroke={clay} strokeWidth={sw} />
+        <path d="M88 30 Q92 24 86 20 Q78 22 80 30 Q84 34 88 30 Z" fill="none" stroke={clay} strokeWidth={sw} strokeLinejoin="round" />
+        <circle cx="85" cy="26" r="1.5" fill={brass} />
+      </Fragment>
+
+      {/* the covariance ellipse binding the necks */}
+      <Fragment offset="translate(0px, -20px) rotate(0deg)" dismembered={dismembered}>
+        <ellipse cx="60" cy="40" rx="20" ry="9" fill={verd} opacity="0.1" stroke={verd} strokeWidth="1.2" transform="rotate(-24 60 40)" />
+      </Fragment>
+
+      {/* body: a coiled trunk with an engraved 2×2 matrix */}
+      <Fragment offset="translate(-20px, 18px) rotate(-16deg)" dismembered={dismembered}>
+        <path d="M46 66 Q40 80 46 94 Q52 108 60 108 Q68 108 74 94 Q80 80 74 66 Z" fill="none" stroke={clay} strokeWidth={sw} strokeLinejoin="round" />
+        <rect x="52" y="78" width="16" height="16" fill="none" stroke={bone} strokeWidth="0.8" />
+        <line x1="60" y1="78" x2="60" y2="94" stroke={bone} strokeWidth="0.6" />
+        <line x1="52" y1="86" x2="68" y2="86" stroke={bone} strokeWidth="0.6" />
+        <circle cx="56" cy="82" r="1.2" fill={brass} />
+        <circle cx="64" cy="90" r="1.2" fill={brass} />
+        <circle cx="64" cy="82" r="1.2" fill={verd} />
+        <circle cx="56" cy="90" r="1.2" fill={verd} />
+      </Fragment>
+
+      {/* two curling tails */}
+      <Fragment offset="translate(10px, 30px) rotate(18deg)" dismembered={dismembered}>
+        <path d="M52 108 Q46 124 52 134 Q56 138 60 134" fill="none" stroke={clay} strokeWidth={sw} />
+        <path d="M68 108 Q74 124 68 134 Q64 138 60 134" fill="none" stroke={clay} strokeWidth={sw} />
+      </Fragment>
+    </svg>
+  )
+}
+
 export function MonsterMixer({
   state = 'forged',
   dismembered = false,

@@ -22,6 +22,10 @@ import { EntropyDemo } from './pages/dev/EntropyDemo'
 import { KlineDemo } from './pages/dev/KlineDemo'
 import { LinkDemo } from './pages/dev/LinkDemo'
 import { ZipDemo } from './pages/dev/ZipDemo'
+import { ShrinkageDemo } from './pages/dev/ShrinkageDemo'
+import { DivergenceDemo } from './pages/dev/DivergenceDemo'
+import { CafeDemo } from './pages/dev/CafeDemo'
+import { GpDemo } from './pages/dev/GpDemo'
 import { CeremonyDemo } from './pages/dev/CeremonyDemo'
 import { DagDemo } from './pages/dev/DagDemo'
 import { DevIndex } from './pages/dev/DevIndex'
@@ -65,6 +69,10 @@ const router = createBrowserRouter(
         { path: '/dev/kline', element: <KlineDemo /> },
         { path: '/dev/cutpoints', element: <CutpointDemo /> },
         { path: '/dev/zip', element: <ZipDemo /> },
+        { path: '/dev/shrinkage', element: <ShrinkageDemo /> },
+        { path: '/dev/divergence', element: <DivergenceDemo /> },
+        { path: '/dev/cafe', element: <CafeDemo /> },
+        { path: '/dev/gp', element: <GpDemo /> },
       ],
     },
   ],

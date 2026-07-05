@@ -2,6 +2,7 @@ import type { ComponentType } from 'react'
 import type { GolemArtState } from './golem-art'
 import {
   CompassOfUlysses,
+  CovarianceHydra,
   GaussianGolem,
   GlmPrism,
   GlobeTossingGolem,
@@ -9,6 +10,7 @@ import {
   IntegerGolem,
   ManateeGolem,
   McmcEngineCore,
+  MemoryGolem,
   MonsterMixer,
   MultivariableGolem,
   SamplerSprite,
@@ -113,6 +115,22 @@ export const golems: GolemMeta[] = [
     signature: 'zero-inflated · gamma-Poisson · ordered logit',
     epithet: 'Admits an observation had more than one way to happen.',
     Art: MonsterMixer,
+  },
+  {
+    id: 'memory-golem',
+    name: 'Memory Golem',
+    chapter: 13,
+    signature: 'y ~ (1 | tank) · α_tank ~ Normal(ᾱ, σ)',
+    epithet: 'Lets every cluster borrow what the others learned.',
+    Art: MemoryGolem,
+  },
+  {
+    id: 'covariance-hydra',
+    name: 'Covariance Hydra',
+    chapter: 14,
+    signature: '[a, b] ~ MVNormal([ā, b̄], S·R·S)',
+    epithet: 'Two heads that vary together, and a kernel for a spine.',
+    Art: CovarianceHydra,
   },
 ]
 
