@@ -13,8 +13,11 @@
   --bone-300: #d8cfb8; /* secondary text on dark */
   --brass-400: #c9a227; /* primary accent: actions, highlights, the posterior */
   --brass-200: #e8ce7a; /* brass highlight / hover glow / small text on ink */
-  --verdigris-400: #3e8e7e; /* secondary accent: the prior, links */
+  --verdigris-400: #3e8e7e; /* secondary accent: the prior */
+  --verdigris-300: #4a9d8c; /* links on dark — verdigris-400 misses 4.5:1 on ink-800 */
+  --verdigris-600: #2e6e60; /* links on daylight — verdigris-400 misses 4.5:1 on bone */
   --clay-500: #b4552d; /* golem clay: bestiary, warnings, divergences */
+  --clay-300: #d4764b; /* clay for small text on ink — clay-500 misses 4.5:1 */
   --plum-500: #6e4a7e; /* tertiary: predictive simulation, rare emphasis */
 
   /* ── Typography ──────────────────────────────────────────── */
@@ -54,7 +57,7 @@
   --text-secondary: var(--bone-300);
   --accent: var(--brass-400);
   --accent-bright: var(--brass-200);
-  --link: var(--verdigris-400);
+  --link: var(--verdigris-300);
   --focus-ring: var(--brass-400);
 
   /* ── Semantic: statistical palette (sacred — CLAUDE.md §2.2) ─
@@ -78,7 +81,7 @@
   --text-secondary: var(--ink-600);
   --accent: var(--brass-400);
   --accent-bright: var(--brass-400); /* no pale brass on bone — fails contrast */
-  --link: var(--verdigris-400);
+  --link: var(--verdigris-600);
   --focus-ring: var(--brass-400);
 
   --stat-data: var(--ink-950);

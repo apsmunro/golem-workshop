@@ -1,41 +1,94 @@
 /**
  * House styles for MDX chapter prose, plus the interactives exposed to
  * content authors. Loaded lazily with the chapter chunks (KaTeX CSS
- * rides along).
+ * rides along). The interactives themselves load one step later again —
+ * prose is the LCP and must never wait on engine code, so every embed is
+ * a lazy component behind a placeholder that holds its place on the bench.
  */
 import 'katex/dist/katex.min.css'
+import { Suspense, lazy, useEffect, useRef, useState } from 'react'
+import type { ComponentType, ReactNode } from 'react'
 import type { MDXComponents } from 'mdx/types'
 import { Rosetta } from '../code/Rosetta'
 import { WebRRunner } from '../code/WebRRunner'
-import { GardenOfForkingData } from '../interactives/garden-of-forking-data/GardenOfForkingData'
-import {
-  AdmitParadox,
-  CafeEllipse,
-  ChimpExplorer,
-  CutpointDragger,
-  DagSandbox,
-  DivergenceDetective,
-  DivorceError,
-  EntropyPebbles,
-  GeometricPeople,
-  GlobeCalibration,
-  GpIslands,
-  HmcToy,
-  HoroscopesCapstone,
-  HowellExplorer,
-  KlinePoisson,
-  LinkMorpher,
-  LynxHareOde,
-  MilkImputation,
-  OverfitGame,
-  PriorPlayground,
-  ReedfrogTheater,
-  RuggedSurface,
-  TraceTriage,
-  TulipsSurface,
-  ZeroInflationMixer,
-} from '../../content/chapters/embeds'
 import { LectureCallout } from './LectureCallout'
+
+type EmbedsModule = typeof import('../../content/chapters/embeds')
+type GardenModule =
+  typeof import('../interactives/garden-of-forking-data/GardenOfForkingData')
+
+function placeholder() {
+  return (
+    <div
+      className="mt-8 rounded-card border border-line px-4 py-12 text-center text-sm text-secondary"
+      aria-busy="true"
+    >
+      Warming the instrument…
+    </div>
+  )
+}
+
+type EmbedProps = Record<string, unknown>
+
+/**
+ * Mounts children only once the reader nears them (600px ahead). Chapter
+ * interactives can fit models on mount — the ch4 explorer's quap fit costs
+ * ~700ms of main thread — and none of that belongs in page load.
+ */
+function OnApproach({ children }: { children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [near, setNear] = useState(false)
+  useEffect(() => {
+    if (typeof IntersectionObserver === 'undefined') {
+      setNear(true)
+      return
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setNear(true)
+          io.disconnect()
+        }
+      },
+      { rootMargin: '600px' },
+    )
+    if (ref.current) io.observe(ref.current)
+    return () => io.disconnect()
+  }, [])
+  return near ? <>{children}</> : <div ref={ref}>{placeholder()}</div>
+}
+
+function embed(name: keyof EmbedsModule) {
+  const Inner = lazy(async () => {
+    const m = await import('../../content/chapters/embeds')
+    return { default: m[name] as ComponentType<EmbedProps> }
+  })
+  return function Embed(props: EmbedProps) {
+    return (
+      <OnApproach>
+        <Suspense fallback={placeholder()}>
+          <Inner {...props} />
+        </Suspense>
+      </OnApproach>
+    )
+  }
+}
+
+const LazyGarden = lazy(async () => {
+  const m: GardenModule = await import(
+    '../interactives/garden-of-forking-data/GardenOfForkingData'
+  )
+  return { default: m.GardenOfForkingData as ComponentType<EmbedProps> }
+})
+function GardenOfForkingData(props: EmbedProps) {
+  return (
+    <OnApproach>
+      <Suspense fallback={placeholder()}>
+        <LazyGarden {...props} />
+      </Suspense>
+    </OnApproach>
+  )
+}
 
 export const mdxComponents: MDXComponents = {
   h2: (props) => (
@@ -68,31 +121,31 @@ export const mdxComponents: MDXComponents = {
   ),
   LectureCallout,
   GardenOfForkingData,
-  GlobeCalibration,
-  PriorPlayground,
-  DagSandbox,
-  HowellExplorer,
-  OverfitGame,
-  RuggedSurface,
-  TulipsSurface,
-  HmcToy,
-  TraceTriage,
-  EntropyPebbles,
-  LinkMorpher,
-  ChimpExplorer,
-  AdmitParadox,
-  KlinePoisson,
-  CutpointDragger,
-  ZeroInflationMixer,
-  ReedfrogTheater,
-  DivergenceDetective,
-  CafeEllipse,
-  GpIslands,
-  DivorceError,
-  MilkImputation,
-  GeometricPeople,
-  LynxHareOde,
-  HoroscopesCapstone,
+  GlobeCalibration: embed('GlobeCalibration'),
+  PriorPlayground: embed('PriorPlayground'),
+  DagSandbox: embed('DagSandbox'),
+  HowellExplorer: embed('HowellExplorer'),
+  OverfitGame: embed('OverfitGame'),
+  RuggedSurface: embed('RuggedSurface'),
+  TulipsSurface: embed('TulipsSurface'),
+  HmcToy: embed('HmcToy'),
+  TraceTriage: embed('TraceTriage'),
+  EntropyPebbles: embed('EntropyPebbles'),
+  LinkMorpher: embed('LinkMorpher'),
+  ChimpExplorer: embed('ChimpExplorer'),
+  AdmitParadox: embed('AdmitParadox'),
+  KlinePoisson: embed('KlinePoisson'),
+  CutpointDragger: embed('CutpointDragger'),
+  ZeroInflationMixer: embed('ZeroInflationMixer'),
+  ReedfrogTheater: embed('ReedfrogTheater'),
+  DivergenceDetective: embed('DivergenceDetective'),
+  CafeEllipse: embed('CafeEllipse'),
+  GpIslands: embed('GpIslands'),
+  DivorceError: embed('DivorceError'),
+  MilkImputation: embed('MilkImputation'),
+  GeometricPeople: embed('GeometricPeople'),
+  LynxHareOde: embed('LynxHareOde'),
+  HoroscopesCapstone: embed('HoroscopesCapstone'),
   Rosetta,
   WebRRunner,
 }

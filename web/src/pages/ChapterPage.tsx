@@ -1,38 +1,24 @@
 import { Suspense, lazy, useEffect } from 'react'
-import type { ComponentType } from 'react'
-import type { MDXComponents } from 'mdx/types'
 import { Link, useParams } from 'react-router-dom'
-import { ForgeCTA } from '../components/bestiary/ForgeCTA'
 import { ChapterShell } from '../components/core/ChapterShell'
 import { LivingPosterior } from '../components/core/LivingPosterior'
-import { ChapterPractice } from '../components/practice/ChapterPractice'
 import { chapterBySlug } from '../content/chapters'
+import { chapterContent } from '../content/chapter-content'
+import type { MDXPage } from '../content/chapter-content'
 import { drawsForChapter } from '../content/chapter-draws'
-import { hintsByChapter } from '../content/practice'
+import { hintLoaders } from '../content/practice/loaders'
 import { useWorkshopStore } from '../store'
 
-type MDXPage = ComponentType<{ components?: MDXComponents }>
+// Below the fold and heavy (golem art, ceremony, hint prose) — own chunk.
+const PracticeSection = lazy(async () => {
+  const m = await import('../components/practice/PracticeSection')
+  return { default: m.PracticeSection }
+})
 
 /** Chapter prose, loaded per route together with its interactives + KaTeX. */
-const chapterContent: Record<number, React.LazyExoticComponent<MDXPage>> = {
-  1: lazy(() => import('../content/chapters/ch01.mdx')),
-  2: lazy(() => import('../content/chapters/ch02.mdx')),
-  3: lazy(() => import('../content/chapters/ch03.mdx')),
-  4: lazy(() => import('../content/chapters/ch04.mdx')),
-  5: lazy(() => import('../content/chapters/ch05.mdx')),
-  6: lazy(() => import('../content/chapters/ch06.mdx')),
-  7: lazy(() => import('../content/chapters/ch07.mdx')),
-  8: lazy(() => import('../content/chapters/ch08.mdx')),
-  9: lazy(() => import('../content/chapters/ch09.mdx')),
-  10: lazy(() => import('../content/chapters/ch10.mdx')),
-  11: lazy(() => import('../content/chapters/ch11.mdx')),
-  12: lazy(() => import('../content/chapters/ch12.mdx')),
-  13: lazy(() => import('../content/chapters/ch13.mdx')),
-  14: lazy(() => import('../content/chapters/ch14.mdx')),
-  15: lazy(() => import('../content/chapters/ch15.mdx')),
-  16: lazy(() => import('../content/chapters/ch16.mdx')),
-  17: lazy(() => import('../content/chapters/ch17.mdx')),
-}
+const lazyContent: Record<number, React.LazyExoticComponent<MDXPage>> = Object.fromEntries(
+  Object.entries(chapterContent).map(([n, load]) => [n, lazy(load)]),
+)
 
 const MdxBundle = lazy(async () => {
   const { mdxComponents } = await import('../components/core/mdx-components')
@@ -68,7 +54,7 @@ export function ChapterPage() {
   }
 
   const living = drawsForChapter(chapter.n)
-  const Content = chapterContent[chapter.n]
+  const Content = lazyContent[chapter.n]
 
   return (
     <ChapterShell
@@ -83,7 +69,13 @@ export function ChapterPage() {
     >
       {Content ? (
         <Suspense
-          fallback={<p className="text-sm text-secondary">Lighting the lamps…</p>}
+          fallback={
+            // Tall fallback keeps the practice section below the fold while
+            // the chapter chunk loads, so the swap doesn't shift the page.
+            <div className="min-h-[80vh]">
+              <p className="text-sm text-secondary">Lighting the lamps…</p>
+            </div>
+          }
         >
           <MdxBundle Content={Content} />
         </Suspense>
@@ -105,16 +97,10 @@ export function ChapterPage() {
           </p>
         </>
       )}
-      {hintsByChapter[chapter.n] ? (
-        <section className="mt-16">
-          <h2 className="eyebrow border-b border-line pb-3">
-            Practice · work from your copy of the book
-          </h2>
-          <div className="mt-6">
-            <ChapterPractice chapter={chapter.n} hints={hintsByChapter[chapter.n]!} />
-          </div>
-          <ForgeCTA chapter={chapter.n} />
-        </section>
+      {hintLoaders[chapter.n] ? (
+        <Suspense fallback={null}>
+          <PracticeSection chapter={chapter.n} />
+        </Suspense>
       ) : null}
       <p className="mt-16">
         <Link to="/">Back to the workshop floor</Link>

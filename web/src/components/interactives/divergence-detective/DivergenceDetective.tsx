@@ -39,7 +39,7 @@ function FunnelPanel({
     <div>
       <div className="flex items-baseline justify-between">
         <p className="eyebrow">{title}</p>
-        <p className="font-mono text-xs" style={{ color: run.divergences > 0 ? 'var(--clay-500)' : accent }}>
+        <p className="font-mono text-xs" style={{ color: run.divergences > 0 ? 'var(--clay-300)' : accent }}>
           {run.divergences} divergences
         </p>
       </div>
