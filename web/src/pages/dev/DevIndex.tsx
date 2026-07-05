@@ -25,6 +25,11 @@ const demos = [
   { path: '/dev/divergence', name: 'Divergence detective (funnel)' },
   { path: '/dev/cafe', name: 'Café ellipse (varying slopes)' },
   { path: '/dev/gp', name: 'GP islands (Oceanic tools)' },
+  { path: '/dev/error', name: 'Error-in-variables (divorce)' },
+  { path: '/dev/imputation', name: 'Imputation explorer (milk)' },
+  { path: '/dev/geometric', name: 'Geometric people (weight ∝ height³)' },
+  { path: '/dev/lynxhare', name: 'Lynx–hare ODE phase portrait' },
+  { path: '/dev/horoscopes', name: 'Horoscopes capstone' },
 ]
 
 export function DevIndex() {

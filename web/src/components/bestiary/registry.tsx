@@ -8,12 +8,15 @@ import {
   GlobeTossingGolem,
   HauntedDagGolem,
   IntegerGolem,
+  MadScientistGolem,
   ManateeGolem,
   McmcEngineCore,
   MemoryGolem,
   MonsterMixer,
   MultivariableGolem,
+  PhantomGolem,
   SamplerSprite,
+  WorkshopMasterSeal,
 } from './golem-art'
 
 export interface GolemMeta {
@@ -131,6 +134,30 @@ export const golems: GolemMeta[] = [
     signature: '[a, b] ~ MVNormal([ā, b̄], S·R·S)',
     epithet: 'Two heads that vary together, and a kernel for a spine.',
     Art: CovarianceHydra,
+  },
+  {
+    id: 'phantom-golem',
+    name: 'Phantom Golem',
+    chapter: 15,
+    signature: 'x_obs ~ Normal(x_true, x_se) · x_true estimated',
+    epithet: 'Made of what was measured badly and what was never measured at all.',
+    Art: PhantomGolem,
+  },
+  {
+    id: 'mad-scientist-golem',
+    name: 'Mad Scientist Golem',
+    chapter: 16,
+    signature: 'dH/dt = H(bH − mH·L) · weight ∝ height³',
+    epithet: 'Brings the mechanism and makes the data set the scale.',
+    Art: MadScientistGolem,
+  },
+  {
+    id: 'workshop-master-seal',
+    name: 'Workshop Master Seal',
+    chapter: 17,
+    signature: 'the golem has no wisdom of its own',
+    epithet: 'Stamped on the ones who learned what the golems cannot do.',
+    Art: WorkshopMasterSeal,
   },
 ]
 

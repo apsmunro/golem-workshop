@@ -1,0 +1,114 @@
+Every model so far has been a golem stitched from generic parts: link
+functions, linear predictors, distributions chosen for their entropy. They
+work because they assume little. This chapter does the opposite. It starts
+from what you know about the thing itself — the geometry of a body, the
+mechanics of a nut, the arithmetic of predators eating prey — and builds a
+model shaped like the science. These golems assume a great deal, and when the
+assumptions are right they see further than any curve fit.
+
+## People are cylinders
+
+Why should weight rise with height? Not for any statistical reason. A body is
+roughly a cylinder of fixed proportions and fixed density, so its mass grows
+with its volume, and its volume grows with the cube of its height. That is not
+a coefficient to estimate; it is geometry, fixed at 3 before any data arrive.
+
+$$
+W_i \sim \text{LogNormal}\!\left(\log\!\big(k\,\pi\,p^2\,H_i^{3}\big), \sigma\right)
+$$
+
+<Gloss>
+Weight is proportional to height cubed times a constant that folds in
+density and the width-to-height ratio p. Only the constant is fit; the
+exponent 3 is brought, not learned.
+</Gloss>
+
+<Wide><GeometricPeople /></Wide>
+
+Drag the exponent away from 3 and the fit falls apart at both ends at once —
+the infants and the tallest adults. Return it to 3 and a single constant
+carries the model across the whole growth range, no separate children's model
+required. A statistical model would have spent parameters bending a line to
+match that curve; the scientific model already knew the shape and asked the
+data for one number.
+
+<Rosetta
+  model="m16.1"
+  book={`m16.1 <- ulam(
+  alist(
+    w ~ dlnorm(mu, sigma),
+    exp(mu) <- 3.141593 * k * p^2 * h^3,
+    p ~ dbeta(2, 18),
+    k ~ dexp(0.5),
+    sigma ~ dexp(1)
+  ), data = d, chains = 4, cores = 4)`}
+  brms={`# a nonlinear formula: the cube is structural, not fit
+m16.1 <- brm(
+  bf(weight ~ log(3.141593 * k * p^2 * height^3),
+     k ~ 1, p ~ 1, nl = TRUE),
+  data = d, family = lognormal(),
+  prior = c(
+    prior(exponential(0.5), nlpar = "k", lb = 0),
+    prior(beta(2, 18), nlpar = "p", lb = 0, ub = 1)
+  ),
+  chains = 4, cores = 4, backend = "cmdstanr", seed = 1959
+)`}
+/>
+
+## Some models must be solved
+
+Hares breed; lynx eat hares and breed; lynx starve. Write that story as rates
+of change and you get two coupled differential equations with no closed-form
+solution — to predict next year's hares you have to integrate the system
+forward.
+
+$$
+\frac{dH}{dt} = H\,(b_H - m_H L), \qquad \frac{dL}{dt} = L\,(b_L H - m_L)
+$$
+
+<Gloss>
+Hares grow at rate b_H and die as lynx L rise; lynx grow by eating hares H
+and die at rate m_L. No formula gives H at time t — the golem integrates the
+equations to find out.
+</Gloss>
+
+<Wide><LynxHareOde /></Wide>
+
+The four rates do not set the populations; they set the shape of the loop the
+populations trace in the (hare, lynx) plane. The phase portrait is the model's
+real object, and the Hudson's Bay pelt record cycles through it roughly every
+ten years. Fitting this means solving the differential equations inside the
+sampler at every step — the golem of this chapter does calculus to make a
+prediction, and the reward is parameters that mean something ecological rather
+than coefficients that mean nothing in particular.
+
+<Rosetta
+  model="m16.5"
+  book={`m16.5 <- ulam(
+  alist(
+    pelts ~ ... ,        # lognormal obs around the solved populations
+    # dpop/dt integrated by a Stan ODE solver:
+    #   dH = H*(bH - mH*L);  dL = L*(bL*H - mL)
+    c(bH, mH, bL, mL) ~ dnorm(...),
+    sigma ~ dexp(1)
+  ), data = dat, chains = 4, cores = 4)`}
+  brms={`# ODE models live in raw Stan; brms exposes them through
+# a custom family or brms::stanvar. The mechanism is the same:
+# integrate_ode_rk45(...) inside the model block, then
+# pelts ~ lognormal(log(p * population), sigma_obs)`}
+/>
+
+## Forge it
+
+The 16M problems free the height exponent to test whether the data endorse the
+cube, check the mechanistic model's priors against physically possible people,
+and perturb the lynx–hare rates. The 16H set fits real scientific models: the
+Panda nut-opening data as a strength-versus-age growth curve, and the
+lynx–hare equations against the pelt record end to end. Finish them and the
+Mad Scientist Golem joins the bestiary, a cylinder for a body and an orbit for
+a halo.
+
+<LectureCallout
+  n={19}
+  note="Generalized linear madness: geometric people, hidden minds, and differential equations."
+/>

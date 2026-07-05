@@ -1,0 +1,121 @@
+Every number in a dataset arrived by some process, and the process is never
+perfect. A divorce rate is estimated from a sample of couples; a neocortex
+percentage is sometimes just missing. The usual move is to treat the point
+estimate as the truth and drop the rows with blanks. Both are quiet lies, and
+both are fixable in the same way: put the thing you do not know into the model
+as a parameter, and let the data you do have inform it.
+
+## A measurement is a distribution
+
+The WaffleDivorce data hand you each state's divorce rate together with its
+standard error, and the small states have enormous ones — a few thousand
+couples in Wyoming give a rate that could be a full point off. Regress the
+point estimates as if they were exact and the noisy states drag the line
+around like anyone else. The repair is to say what is actually true: the
+observed rate is a noisy view of a real rate you would like to estimate.
+
+$$
+D_{\text{obs},i} \sim \text{Normal}(D_i, \text{SE}_i), \quad D_i \sim \text{Normal}(a + b\,A_i, \sigma)
+$$
+
+<Gloss>
+The observed rate scatters around a true rate D_i with the known standard
+error. The regression line is now the prior on those true rates, so each
+state is pulled toward it by exactly how noisy its measurement is.
+</Gloss>
+
+<Wide><DivorceError /></Wide>
+
+Turn the error model on and the noisy small states slide toward the line
+while the precise ones hold still. This is the shrinkage of chapter 13 again,
+but the thing being pooled is a measurement rather than a group — and the
+amount of pooling is not estimated from the spread of states, it is handed to
+the model as the standard error. Information you threw away by rounding to a
+point estimate comes back.
+
+<Rosetta
+  model="m15.1"
+  book={`m15.1 <- ulam(
+  alist(
+    D_obs ~ dnorm(D_true, D_sd),
+    vector[N]:D_true ~ dnorm(mu, sigma),
+    mu <- a + bA*A + bM*M,
+    a ~ dnorm(0, 0.2),
+    c(bA, bM) ~ dnorm(0, 0.5),
+    sigma ~ dexp(1)
+  ), data = dlist, chains = 4, cores = 4)`}
+  brms={`m15.1 <- brm(
+  D | mi(D_sd) ~ A + M,
+  data = d, family = gaussian(),
+  prior = c(
+    prior(normal(0, 0.2), class = Intercept),
+    prior(normal(0, 0.5), class = b),
+    prior(exponential(1), class = sigma)
+  ),
+  chains = 4, cores = 4, backend = "cmdstanr", seed = 1959
+)`}
+/>
+
+The same idea handles error in a *predictor*, with one extra wrinkle: a
+predictor you condition on needs its own distribution, because you cannot
+condition on a value you do not know. Model it, and the slope that
+measurement error had quietly flattened springs back to its true steepness —
+the regression dilution the chapter warns about, undone.
+
+## Missing is not the same as absent
+
+Neocortex percentage is missing for twelve of the twenty-nine milk species.
+Complete-case analysis deletes those rows, and with them twelve perfectly
+good measurements of kcal and body mass, because one column was blank.
+Imputation refuses the deletion. Since neocortex and body mass run together,
+the model can read the neocortex it cannot see off the mass it can, and it
+does so with honest uncertainty about the guess.
+
+<Wide><MilkImputation /></Wide>
+
+The imputed values land on the neocortex–mass trend, each with a spread that
+says how much it could be wrong, and the downstream analysis uses all
+twenty-nine species. The masked relationship from chapter 5 survives; it is
+just estimated from more data. Missing data, handled this way, is not a defect
+to be cleaned but another quantity to be modeled.
+
+<Rosetta
+  model="m15.5"
+  book={`m15.5 <- ulam(
+  alist(
+    K ~ dnorm(mu, sigma),
+    mu <- a + bN*N + bM*M,
+    N ~ dnorm(nu, sigma_N),   # observed and missing alike
+    nu <- aN + bNM*M,          # neocortex predicted by mass
+    c(a, aN) ~ dnorm(0, 0.5),
+    c(bN, bM, bNM) ~ dnorm(0, 0.5),
+    c(sigma, sigma_N) ~ dexp(1)
+  ), data = dlist, chains = 4, cores = 4)`}
+  brms={`m15.5 <- brm(
+  bf(K ~ mi(N) + M) +
+  bf(N | mi() ~ M) + set_rescor(FALSE),
+  data = d, family = gaussian(),
+  chains = 4, cores = 4, backend = "cmdstanr", seed = 1959
+)`}
+/>
+
+## Forge it
+
+The 15E problems make you rewrite models to carry measurement error on the
+outcome, on a predictor, and on both at once. 15M modifies the divorce and
+milk models — error on the marriage rate, imputation of neocortex, inflated
+standard errors — to feel each dial. The 15H set is the full re-analyses:
+WaffleDivorce with error on everything, milk imputed end to end, and a case
+where ignoring predictor error hides a real effect. Finish them and the
+Phantom Golem joins the bestiary, made of what was measured badly and what was
+never measured at all.
+
+<LectureCallout
+  n={17}
+  note="Measurement error as a modeling problem, not a data-cleaning one."
+/>
+
+<LectureCallout
+  n={18}
+  note="Missing data and imputation, from the milk model outward."
+/>

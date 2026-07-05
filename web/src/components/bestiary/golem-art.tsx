@@ -663,3 +663,151 @@ export function MonsterMixer({
   )
 }
 
+export function PhantomGolem({
+  state = 'forged',
+  dismembered = false,
+  className,
+}: GolemArtProps) {
+  const clay = state === 'forged' ? 'var(--clay-500)' : 'var(--line)'
+  const bone = state === 'forged' ? 'var(--bone-300)' : 'var(--line)'
+  const brass = state === 'forged' ? 'var(--brass-400)' : 'var(--line)'
+  const plum = state === 'forged' ? 'var(--plum-500)' : 'var(--line)'
+  const sw = 1.5
+
+  return (
+    <svg viewBox="0 0 120 150" className={className} role="img" aria-label={`Phantom Golem, ${state}`}>
+      {/* error bars for a crown — every measurement an interval, not a point */}
+      <Fragment offset="translate(0px, -32px) rotate(0deg)" dismembered={dismembered}>
+        <line x1="44" y1="22" x2="44" y2="38" stroke={brass} strokeWidth="1.2" />
+        <line x1="40" y1="22" x2="48" y2="22" stroke={brass} strokeWidth="1.2" />
+        <line x1="40" y1="38" x2="48" y2="38" stroke={brass} strokeWidth="1.2" />
+        <line x1="76" y1="24" x2="76" y2="40" stroke={brass} strokeWidth="1.2" />
+        <line x1="72" y1="24" x2="80" y2="24" stroke={brass} strokeWidth="1.2" />
+        <line x1="72" y1="40" x2="80" y2="40" stroke={brass} strokeWidth="1.2" />
+        <circle cx="44" cy="30" r="1.4" fill={brass} />
+        <circle cx="76" cy="32" r="1.4" fill={brass} />
+      </Fragment>
+
+      {/* head, half-there */}
+      <Fragment offset="translate(0px, -18px) rotate(0deg)" dismembered={dismembered}>
+        <path d="M48 62 L48 46 Q48 40 54 40 L66 40 Q72 40 72 46 L72 62" fill={plum} opacity="0.08" stroke={plum} strokeWidth={sw} strokeDasharray="3 3" strokeLinejoin="round" />
+        <circle cx="55" cy="51" r="1.8" fill={brass} />
+        <circle cx="65" cy="51" r="1.8" fill={brass} />
+      </Fragment>
+
+      {/* torso with a hole where the data is missing */}
+      <Fragment offset="translate(-22px, 16px) rotate(-14deg)" dismembered={dismembered}>
+        <path d="M44 62 L76 62 Q80 62 80 68 L78 110 L42 110 L40 68 Q40 62 44 62 Z" fill={plum} opacity="0.06" stroke={clay} strokeWidth={sw} strokeDasharray="4 3" strokeLinejoin="round" />
+        <circle cx="60" cy="86" r="7" fill="var(--ink-950)" stroke={plum} strokeWidth="1" strokeDasharray="2 2" />
+        <path d="M53 74 L57 74 M64 96 L68 96" stroke={bone} strokeWidth="0.8" />
+      </Fragment>
+
+      {/* trailing wisp instead of legs — a ghost from imperfect measurement */}
+      <Fragment offset="translate(8px, 30px) rotate(12deg)" dismembered={dismembered}>
+        <path d="M46 110 Q44 126 52 132 Q60 138 60 126 Q60 138 68 132 Q76 126 74 110" fill={plum} opacity="0.06" stroke={clay} strokeWidth={sw} strokeDasharray="4 3" strokeLinejoin="round" />
+      </Fragment>
+    </svg>
+  )
+}
+
+export function MadScientistGolem({
+  state = 'forged',
+  dismembered = false,
+  className,
+}: GolemArtProps) {
+  const clay = state === 'forged' ? 'var(--clay-500)' : 'var(--line)'
+  const bone = state === 'forged' ? 'var(--bone-300)' : 'var(--line)'
+  const brass = state === 'forged' ? 'var(--brass-400)' : 'var(--line)'
+  const verd = state === 'forged' ? 'var(--verdigris-400)' : 'var(--line)'
+  const sw = 1.5
+
+  return (
+    <svg viewBox="0 0 120 150" className={className} role="img" aria-label={`Mad Scientist Golem, ${state}`}>
+      {/* a predator–prey orbit haloing the head — a model that must be solved */}
+      <Fragment offset="translate(0px, -30px) rotate(0deg)" dismembered={dismembered}>
+        <ellipse cx="60" cy="30" rx="26" ry="12" fill="none" stroke={verd} strokeWidth="1" opacity="0.6" transform="rotate(-12 60 30)" />
+        <circle cx="84" cy="26" r="2" fill={brass} />
+        <circle cx="36" cy="34" r="1.6" fill={verd} />
+      </Fragment>
+
+      {/* wild-haired head */}
+      <Fragment offset="translate(0px, -18px) rotate(0deg)" dismembered={dismembered}>
+        <path d="M48 60 Q46 42 60 42 Q74 42 72 60 Z" fill="none" stroke={clay} strokeWidth={sw} strokeLinejoin="round" />
+        <path d="M48 48 L40 42 M52 44 L48 36 M60 42 L60 34 M68 44 L72 36 M72 48 L80 42" stroke={bone} strokeWidth="1" />
+        <circle cx="55" cy="52" r="1.8" fill={brass} />
+        <circle cx="65" cy="52" r="1.8" fill={brass} />
+      </Fragment>
+
+      {/* a cylinder torso — the geometric body of the height³ law */}
+      <Fragment offset="translate(-22px, 16px) rotate(-12deg)" dismembered={dismembered}>
+        <ellipse cx="60" cy="66" rx="16" ry="5" fill="none" stroke={clay} strokeWidth={sw} />
+        <path d="M44 66 L44 106 Q44 110 60 110 Q76 110 76 106 L76 66" fill="none" stroke={clay} strokeWidth={sw} />
+        <ellipse cx="60" cy="106" rx="16" ry="5" fill="none" stroke={clay} strokeWidth="1" />
+        <path d="M50 78 Q60 82 70 78 M50 90 Q60 94 70 90" fill="none" stroke={bone} strokeWidth="0.8" />
+        <path d="M55 70 L55 100 M65 70 L65 100" stroke={bone} strokeWidth="0.6" opacity="0.6" />
+      </Fragment>
+
+      {/* one arm brandishing a test tube */}
+      <Fragment offset="translate(28px, 8px) rotate(30deg)" dismembered={dismembered}>
+        <path d="M76 74 L88 60" stroke={clay} strokeWidth={sw} strokeLinecap="round" />
+        <rect x="85" y="50" width="6" height="12" rx="2" fill={verd} opacity="0.2" stroke={brass} strokeWidth="1" />
+      </Fragment>
+      <Fragment offset="translate(-28px, 8px) rotate(-30deg)" dismembered={dismembered}>
+        <path d="M44 74 L32 66" stroke={clay} strokeWidth={sw} strokeLinecap="round" />
+      </Fragment>
+
+      {/* legs */}
+      <Fragment offset="translate(6px, 30px) rotate(12deg)" dismembered={dismembered}>
+        <path d="M50 110 L48 136 L58 136 L58 110 M63 110 L63 136 L73 136 L72 110" fill="none" stroke={clay} strokeWidth={sw} strokeLinejoin="round" />
+      </Fragment>
+    </svg>
+  )
+}
+
+export function WorkshopMasterSeal({
+  state = 'forged',
+  dismembered = false,
+  className,
+}: GolemArtProps) {
+  const clay = state === 'forged' ? 'var(--clay-500)' : 'var(--line)'
+  const bone = state === 'forged' ? 'var(--bone-300)' : 'var(--line)'
+  const brass = state === 'forged' ? 'var(--brass-400)' : 'var(--line)'
+  const sw = 1.5
+
+  return (
+    <svg viewBox="0 0 120 150" className={className} role="img" aria-label={`Workshop Master Seal, ${state}`}>
+      {/* outer engraved medallion ring */}
+      <Fragment offset="translate(-24px, -20px) rotate(-40deg)" dismembered={dismembered}>
+        <circle cx="60" cy="75" r="40" fill="none" stroke={brass} strokeWidth={sw} />
+        <circle cx="60" cy="75" r="34" fill="none" stroke={bone} strokeWidth="0.8" />
+        {Array.from({ length: 24 }, (_, i) => {
+          const a = (i * Math.PI) / 12
+          return <line key={i} x1={60 + 40 * Math.cos(a)} y1={75 + 40 * Math.sin(a)} x2={60 + 36 * Math.cos(a)} y2={75 + 36 * Math.sin(a)} stroke={brass} strokeWidth="0.8" />
+        })}
+      </Fragment>
+
+      {/* radiant burst behind the key */}
+      <Fragment offset="translate(24px, 20px) rotate(40deg)" dismembered={dismembered}>
+        {Array.from({ length: 12 }, (_, i) => {
+          const a = (i * Math.PI) / 6
+          return <line key={i} x1={60 + 12 * Math.cos(a)} y1={75 + 12 * Math.sin(a)} x2={60 + 28 * Math.cos(a)} y2={75 + 28 * Math.sin(a)} stroke={brass} strokeWidth="0.8" opacity="0.4" />
+        })}
+      </Fragment>
+
+      {/* the workshop key at the centre */}
+      <Fragment offset="translate(0px, -28px) rotate(0deg)" dismembered={dismembered}>
+        <circle cx="60" cy="60" r="8" fill="none" stroke={brass} strokeWidth={sw} />
+        <circle cx="60" cy="60" r="3" fill="var(--ink-950)" stroke={brass} strokeWidth="1" />
+        <path d="M60 68 L60 92 L66 92 L66 86 L60 86 M60 92 L54 92 L54 88 L60 88" fill="none" stroke={brass} strokeWidth={sw} strokeLinejoin="round" />
+      </Fragment>
+
+      {/* a small forged golem head stamped below, the maker's mark */}
+      <Fragment offset="translate(0px, 30px) rotate(0deg)" dismembered={dismembered}>
+        <path d="M52 104 L52 98 Q52 94 56 94 L64 94 Q68 94 68 98 L68 104 Z" fill="none" stroke={clay} strokeWidth="1.2" strokeLinejoin="round" />
+        <circle cx="57" cy="100" r="1.2" fill={brass} />
+        <circle cx="63" cy="100" r="1.2" fill={brass} />
+      </Fragment>
+    </svg>
+  )
+}
+

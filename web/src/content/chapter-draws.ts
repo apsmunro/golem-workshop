@@ -100,6 +100,20 @@ export function drawsForChapter(chapter: number): ChapterDraws | null {
     case 14:
       result = { draws: normalDraws(2000, -1.2, 0.5, 14), range: [-2.9, 0.5] }
       break
+    // m15.1: the age-at-marriage effect on divorce, error-corrected ≈ −0.6 ± 0.16
+    case 15:
+      result = { draws: normalDraws(2000, -0.6, 0.16, 15), range: [-1.2, 0] }
+      break
+    // m16.1: the cylinder model's fitted constant k, tight around its value
+    case 16:
+      result = { draws: normalDraws(2000, 0.53, 0.02, 16), range: [0.46, 0.6] }
+      break
+    // ch17: the learner's own calibration overlap — a Beta-shaped mound near 0.8
+    case 17: {
+      const rng = new RNG(HOUSE_SEED, 17)
+      result = { draws: Array.from({ length: 2000 }, () => rng.beta(8, 2)), range: [0, 1] }
+      break
+    }
     default:
       result = null
   }

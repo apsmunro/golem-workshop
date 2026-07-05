@@ -26,6 +26,11 @@ import { ShrinkageDemo } from './pages/dev/ShrinkageDemo'
 import { DivergenceDemo } from './pages/dev/DivergenceDemo'
 import { CafeDemo } from './pages/dev/CafeDemo'
 import { GpDemo } from './pages/dev/GpDemo'
+import { ErrorDemo } from './pages/dev/ErrorDemo'
+import { ImputationDemo } from './pages/dev/ImputationDemo'
+import { GeometricDemo } from './pages/dev/GeometricDemo'
+import { LynxHareDemo } from './pages/dev/LynxHareDemo'
+import { HoroscopesDemo } from './pages/dev/HoroscopesDemo'
 import { CeremonyDemo } from './pages/dev/CeremonyDemo'
 import { DagDemo } from './pages/dev/DagDemo'
 import { DevIndex } from './pages/dev/DevIndex'
@@ -73,6 +78,11 @@ const router = createBrowserRouter(
         { path: '/dev/divergence', element: <DivergenceDemo /> },
         { path: '/dev/cafe', element: <CafeDemo /> },
         { path: '/dev/gp', element: <GpDemo /> },
+        { path: '/dev/error', element: <ErrorDemo /> },
+        { path: '/dev/imputation', element: <ImputationDemo /> },
+        { path: '/dev/geometric', element: <GeometricDemo /> },
+        { path: '/dev/lynxhare', element: <LynxHareDemo /> },
+        { path: '/dev/horoscopes', element: <HoroscopesDemo /> },
       ],
     },
   ],

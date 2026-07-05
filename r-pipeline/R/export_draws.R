@@ -59,7 +59,14 @@ param_maps <- list(
               sigma_a = "sd_cafe__Intercept", sigma_b = "sd_cafe__afternoon",
               rho = "cor_cafe__Intercept__afternoon", sigma = "sigma"),
   "m14.8" = c(a = "b_Intercept", sdgp = "sdgp_gplon2lat2",
-              lscale = "lscale_gplon2lat2")
+              lscale = "lscale_gplon2lat2"),
+  # Chapter 15: measurement error (the error-corrected coefficients)
+  "m15.1" = c(a = "b_Intercept", bA = "b_A2", bM = "b_M2", sigma = "sigma"),
+  # Chapter 16: the cylinder model's fitted constant and shape ratio.
+  # m15.5 (imputation) and m16.5 (ODE) are fit but not auto-exported —
+  # their internal parameter names are non-standard; the web interactives
+  # run on the JS engines.
+  "m16.1" = c(k = "b_k_Intercept", p = "b_p_Intercept", sigma = "sigma")
 )
 
 chapters <- c("m4.1" = 4, "m4.3" = 4, "m5.1" = 5, "m5.2" = 5,
@@ -69,7 +76,8 @@ chapters <- c("m4.1" = 4, "m4.3" = 4, "m5.1" = 5, "m5.2" = 5,
               "m11.4" = 11, "m11.7" = 11, "m11.8" = 11, "m11.10" = 11,
               "m12.1" = 12, "m12.3" = 12, "m12.4" = 12, "m12.5" = 12,
               "m13.2" = 13, "m13.4" = 13,
-              "m14.1" = 14, "m14.8" = 14)
+              "m14.1" = 14, "m14.8" = 14,
+              "m15.1" = 15, "m16.1" = 16)
 
 for (model in names(param_maps)) {
   path <- file.path("fits", paste0(model, ".rds"))

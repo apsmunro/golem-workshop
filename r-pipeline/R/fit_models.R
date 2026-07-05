@@ -411,3 +411,67 @@ fit_cached("m14.8", function() {
     control = list(adapt_delta = 0.95)
   )
 })
+
+# --- Chapter 15: measurement error and missing data --------------------
+
+waffles$D <- scale(as.numeric(waffles$Divorce))[, 1]
+waffles$A2 <- scale(as.numeric(waffles$MedianAgeMarriage))[, 1]
+waffles$M2 <- scale(as.numeric(waffles$Marriage))[, 1]
+waffles$D_sd <- as.numeric(waffles$`Divorce SE`) / sd(as.numeric(waffles$Divorce))
+
+# m15.1: divorce measured with error, regressed on age and marriage rate
+fit_cached("m15.1", function() {
+  brm(
+    D | mi(D_sd) ~ A2 + M2,
+    data = waffles, family = gaussian(),
+    prior = c(
+      prior(normal(0, 0.2), class = Intercept),
+      prior(normal(0, 0.5), class = b),
+      prior(exponential(1), class = sigma)
+    ),
+    seed = SEED, chains = 4, cores = 4
+  )
+})
+
+# m15.5: milk kcal with neocortex imputed from body mass
+milk$K <- scale(as.numeric(milk$kcal.per.g))[, 1]
+milk$N <- scale(as.numeric(milk$neocortex.perc))[, 1]
+milk$M <- scale(log(as.numeric(milk$mass)))[, 1]
+
+fit_cached("m15.5", function() {
+  brm(
+    bf(K ~ mi(N) + M) + bf(N | mi() ~ M) + set_rescor(FALSE),
+    data = milk, family = gaussian(),
+    prior = c(
+      prior(normal(0, 0.5), class = b, resp = "K"),
+      prior(normal(0, 0.5), class = b, resp = "N"),
+      prior(exponential(1), class = sigma, resp = "K"),
+      prior(exponential(1), class = sigma, resp = "N")
+    ),
+    seed = SEED, chains = 4, cores = 4
+  )
+})
+
+# --- Chapter 16: generalized linear madness -----------------------------
+
+# m16.1: the cylinder weight model — weight ∝ height³, the cube structural.
+howell_all <- read.csv2("data/Howell1.csv")
+howell_all$h <- as.numeric(howell_all$height) / mean(as.numeric(howell_all$height))
+howell_all$w <- as.numeric(howell_all$weight) / mean(as.numeric(howell_all$weight))
+
+fit_cached("m16.1", function() {
+  brm(
+    bf(w ~ log(3.141593 * k * p^2 * h^3), k ~ 1, p ~ 1, nl = TRUE),
+    data = howell_all, family = lognormal(),
+    prior = c(
+      prior(exponential(0.5), nlpar = "k", lb = 0),
+      prior(beta(2, 18), nlpar = "p", lb = 0, ub = 1)
+    ),
+    seed = SEED, chains = 4, cores = 4
+  )
+})
+
+# m16.5 (lynx–hare ODE): fit in raw Stan with integrate_ode_rk45; not a
+# plain brm() call, so it is documented in the chapter's "Run this
+# yourself" panel rather than exported here. The web interactive solves
+# the same equations with RK4 in JavaScript.
