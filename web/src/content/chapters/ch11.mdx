@@ -1,0 +1,125 @@
+Count data are where the comfortable habits of Gaussian regression go to
+die. The outcome is 0, 1, 2, 3 — never 2.4, never −1 — and the natural
+scale of effects is multiplicative, not additive. This chapter forges the
+two count golems that carry most of applied statistics: the binomial for
+counts with a known ceiling, the Poisson for counts without one. Both are
+maximum-entropy choices from chapter 10; both speak through links; and
+both punish anyone who reads their coefficients as if they were slopes on
+the outcome.
+
+## Chimpanzees and the lever
+
+Seven chimpanzees, two levers, and a question: does a partner across the
+table make the prosocial lever more attractive? Each pull is a Bernoulli
+trial, the treatment is one of four side-and-partner combinations, and
+every animal gets its own intercept because chimpanzees, like people,
+have habits.
+
+<Rosetta
+  model="m11.4"
+  book={`m11.4 <- ulam(
+  alist(
+    pulled_left ~ dbinom(1, p),
+    logit(p) <- a[actor] + b[treatment],
+    a[actor] ~ dnorm(0, 1.5),
+    b[treatment] ~ dnorm(0, 0.5)
+  ), data = dat_list, chains = 4, log_lik = TRUE)`}
+  brms={`m11.4 <- brm(
+  pulled_left ~ 0 + factor(actor) + factor(treatment),
+  data = d, family = bernoulli(),
+  prior = c(
+    prior(normal(0, 1.5), class = b),
+    prior(normal(0, 0.5), class = b, coef = "factortreatment2"),
+    prior(normal(0, 0.5), class = b, coef = "factortreatment3"),
+    prior(normal(0, 0.5), class = b, coef = "factortreatment4")
+  ),
+  chains = 4, cores = 4, backend = "cmdstanr", seed = 1959
+)`}
+/>
+
+Why Normal(0, 1.5) and not something flatter? You saw the reason in the
+link morpher: on the logit scale, wide is not humble. Normal(0, 10) on an
+intercept says the chimp either always pulls left or never does — a prior
+piled against the walls of probability.
+
+<Wide><ChimpExplorer /></Wide>
+
+The contrasts hug zero on both scales: adding a partner moved no lever.
+Meanwhile actor 2 pulled left all 72 times and the model, priors keeping
+it sane, estimates a merely enormous intercept rather than an infinite
+one. The scale toggle is the chapter's repeated warning label — a
+log-odds effect and a probability effect are different numbers, and only
+the second one answers "how much did behavior change?"
+
+## Berkeley, and which question you asked
+
+The 1973 Berkeley admissions data show men admitted at a higher rate than
+women. They also show, department by department, no such advantage — in
+the largest departments, a small one for women. Neither summary is a
+mistake.
+
+<Wide><AdmitParadox /></Wide>
+
+The gender-only model estimates the *total* effect of gender, and the
+total effect is real: it flows through which departments people apply to,
+because the departments women favored admitted almost nobody of anyone.
+Condition on department and you ask the *direct* question instead —
+different estimand, different answer, opposite sign. The paradox
+dissolves the moment you say out loud which causal question you are
+paying the golem to answer. Chapter 6's back-door lessons did not retire
+when the outcomes became integers.
+
+## Tools, people, and the ledger's fine print
+
+For counts with no ceiling, the binomial hands over to the Poisson: one
+parameter λ, both mean and variance, linked through the log so that
+predictors act multiplicatively.
+
+<Rosetta
+  model="m11.10"
+  book={`m11.10 <- ulam(
+  alist(
+    T ~ dpois(lambda),
+    log(lambda) <- a[cid] + b[cid] * P,
+    a[cid] ~ dnorm(3, 0.5),
+    b[cid] ~ dnorm(0, 0.2)
+  ), data = dat2, chains = 4, log_lik = TRUE)`}
+  brms={`m11.10 <- brm(
+  total_tools ~ 0 + contact + contact:log_pop_std,
+  data = d, family = poisson(),
+  prior = c(
+    prior(normal(3, 0.5), class = b, coef = contacthigh),
+    prior(normal(3, 0.5), class = b, coef = contactlow),
+    prior(normal(0, 0.2), class = b, coef = "contacthigh:log_pop_std"),
+    prior(normal(0, 0.2), class = b, coef = "contactlow:log_pop_std")
+  ),
+  chains = 4, cores = 4, backend = "cmdstanr", seed = 1959
+)`}
+/>
+
+<Wide><KlinePoisson /></Wide>
+
+Ten societies is not much data, so the priors do visible work — again
+tuned by simulating on the outcome scale, since Normal(0, 10) on a log
+link proposes societies with more tools than atoms. Hawaii sits alone at
+the population extreme, low contact, 71 tools, daring the model to
+extrapolate. And the monastery ledger beneath teaches the offset: when
+observations cover different exposures — days, weeks, person-years — the
+exposure enters as log τ added to the linear predictor, and rates become
+comparable across any bookkeeping. Skip the offset and you are comparing
+λ·7 to λ·1 and calling it a difference in diligence.
+
+## Forge it
+
+The 11E problems drill the scale gymnastics: log-odds to odds to
+probability and back, until the logit stops feeling like a cipher. 11M
+covers why aggregated and disaggregated binomials fit the same posterior
+but different information criteria, and what an offset is doing under the
+hood. The 11H set turns you loose on the real datasets — chimpanzees
+re-analyzed, Kline with priors loosened, the Berkeley data interrogated
+properly. Finish them and the Integer Golem takes its bench.
+
+<LectureCallout
+  n={10}
+  note="Counts, confounds, and the Berkeley data, treated with full causal care."
+/>

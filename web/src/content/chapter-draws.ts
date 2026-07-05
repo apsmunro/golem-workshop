@@ -71,6 +71,26 @@ export function drawsForChapter(chapter: number): ChapterDraws | null {
       result = { draws: chain.samples.map((q) => q[0]), range: [-3, 3] }
       break
     }
+    // ch10: inverse-logit of Normal(0, 1.5) — the chapter's own trap,
+    // a "flat" logit prior piling up at the outcome scale's walls
+    case 10: {
+      const rng = new RNG(HOUSE_SEED, 10)
+      const draws = Array.from({ length: 2000 }, () => {
+        const eta = rng.normal(0, 1.5)
+        return 1 / (1 + Math.exp(-eta))
+      })
+      result = { draws, range: [0, 1] }
+      break
+    }
+    // m11.7: the total male−female admission contrast ≈ +0.61 ± 0.06 —
+    // the seductive number the department model dismantles
+    case 11:
+      result = { draws: normalDraws(2000, 0.61, 0.064, 11), range: [0.35, 0.87] }
+      break
+    // m12.5: the intention-with-contact interaction ≈ −1.24 ± 0.10
+    case 12:
+      result = { draws: normalDraws(2000, -1.24, 0.1, 12), range: [-1.66, -0.82] }
+      break
     default:
       result = null
   }

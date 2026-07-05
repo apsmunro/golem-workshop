@@ -15,6 +15,12 @@ export interface ProblemHints {
   skeleton?: string
   /** Tier 4 — full worked solution and interpretation. */
   solution: string
+  /**
+   * Original workshop drill with no book counterpart (used for
+   * chapter 10, which has no end-of-chapter practice). The paraphrase
+   * carries the full task.
+   */
+  workshop?: boolean
 }
 
 export type ChapterHints = Record<string, ProblemHints>

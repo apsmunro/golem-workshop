@@ -417,3 +417,149 @@ export function McmcEngineCore({
   )
 }
 
+export function GlmPrism({
+  state = 'forged',
+  dismembered = false,
+  className,
+}: GolemArtProps) {
+  const clay = state === 'forged' ? 'var(--clay-500)' : 'var(--line)'
+  const bone = state === 'forged' ? 'var(--bone-300)' : 'var(--line)'
+  const brass = state === 'forged' ? 'var(--brass-400)' : 'var(--line)'
+  const verd = state === 'forged' ? 'var(--verdigris-400)' : 'var(--line)'
+  const sw = 1.5
+
+  return (
+    <svg viewBox="0 0 120 150" className={className} role="img" aria-label={`GLM Prism, ${state}`}>
+      {/* a straight ray enters — the linear predictor on the link scale */}
+      <Fragment offset="translate(-30px, -10px) rotate(-30deg)" dismembered={dismembered}>
+        <path d="M8 52 L46 62" fill="none" stroke={bone} strokeWidth="1.2" />
+      </Fragment>
+
+      {/* the prism head, a tilted triangle of glass */}
+      <Fragment offset="translate(0px, -26px) rotate(0deg)" dismembered={dismembered}>
+        <path d="M46 40 L74 52 L50 74 Z" fill={brass} opacity="0.08" stroke={clay} strokeWidth={sw} strokeLinejoin="round" />
+        <circle cx="54" cy="54" r="1.6" fill={brass} />
+        <circle cx="61" cy="57" r="1.6" fill={brass} />
+      </Fragment>
+
+      {/* the fan of curved rays leaving — one line, refracted onto bounded scales */}
+      <Fragment offset="translate(26px, 8px) rotate(30deg)" dismembered={dismembered}>
+        <path d="M62 64 Q92 62 104 44" fill="none" stroke={brass} strokeWidth="1.2" />
+        <path d="M62 66 Q94 70 108 66" fill="none" stroke={verd} strokeWidth="1.2" />
+        <path d="M62 68 Q92 78 102 92" fill="none" stroke={clay} strokeWidth="1.2" />
+      </Fragment>
+
+      {/* body: an instrument stand holding the glass */}
+      <Fragment offset="translate(-20px, 22px) rotate(-14deg)" dismembered={dismembered}>
+        <path d="M50 74 L58 74 L58 108 L44 108 L44 100 Z" fill="none" stroke={clay} strokeWidth={sw} strokeLinejoin="round" />
+        <path d="M47 86 L56 86 M46 94 L56 94" stroke={bone} strokeWidth="0.8" />
+      </Fragment>
+
+      {/* tripod base */}
+      <Fragment offset="translate(8px, 30px) rotate(14deg)" dismembered={dismembered}>
+        <path d="M51 108 L40 138 M51 108 L62 138 M51 108 L51 138" fill="none" stroke={clay} strokeWidth={sw} strokeLinecap="round" />
+        <path d="M40 138 L62 138" stroke={bone} strokeWidth="0.8" />
+      </Fragment>
+    </svg>
+  )
+}
+
+export function IntegerGolem({
+  state = 'forged',
+  dismembered = false,
+  className,
+}: GolemArtProps) {
+  const clay = state === 'forged' ? 'var(--clay-500)' : 'var(--line)'
+  const bone = state === 'forged' ? 'var(--bone-300)' : 'var(--line)'
+  const brass = state === 'forged' ? 'var(--brass-400)' : 'var(--line)'
+  const sw = 1.5
+
+  return (
+    <svg viewBox="0 0 120 150" className={className} role="img" aria-label={`Integer Golem, ${state}`}>
+      {/* an abacus crown — counts, never fractions */}
+      <Fragment offset="translate(0px, -30px) rotate(0deg)" dismembered={dismembered}>
+        <rect x="38" y="14" width="44" height="24" rx="2" fill="none" stroke={clay} strokeWidth={sw} />
+        <line x1="38" y1="22" x2="82" y2="22" stroke={bone} strokeWidth="0.8" />
+        <line x1="38" y1="30" x2="82" y2="30" stroke={bone} strokeWidth="0.8" />
+        <circle cx="46" cy="22" r="2" fill={brass} />
+        <circle cx="54" cy="22" r="2" fill={brass} />
+        <circle cx="70" cy="22" r="2" fill={brass} />
+        <circle cx="50" cy="30" r="2" fill={brass} />
+        <circle cx="66" cy="30" r="2" fill={brass} />
+      </Fragment>
+
+      {/* blocky head with tally eyes */}
+      <Fragment offset="translate(0px, -18px) rotate(0deg)" dismembered={dismembered}>
+        <rect x="48" y="42" width="24" height="22" rx="2" fill="none" stroke={clay} strokeWidth={sw} />
+        <circle cx="55" cy="53" r="1.8" fill={brass} />
+        <circle cx="65" cy="53" r="1.8" fill={brass} />
+      </Fragment>
+
+      {/* torso: a staircase of counts, discrete steps */}
+      <Fragment offset="translate(-22px, 16px) rotate(-14deg)" dismembered={dismembered}>
+        <path d="M44 64 L76 64 Q80 64 80 70 L78 108 L42 108 L40 70 Q40 64 44 64 Z" fill="none" stroke={clay} strokeWidth={sw} strokeLinejoin="round" />
+        <path d="M46 100 L46 92 L54 92 L54 84 L62 84 L62 76 L70 76 L70 70" fill="none" stroke={bone} strokeWidth="1" strokeLinejoin="round" />
+      </Fragment>
+
+      {/* arms holding a counting rod */}
+      <Fragment offset="translate(28px, 6px) rotate(28deg)" dismembered={dismembered}>
+        <path d="M44 72 L32 82 M76 72 L88 82" fill="none" stroke={clay} strokeWidth={sw} strokeLinecap="round" />
+        <path d="M30 82 L90 82" stroke={bone} strokeWidth="1" />
+      </Fragment>
+
+      {/* legs */}
+      <Fragment offset="translate(6px, 28px) rotate(12deg)" dismembered={dismembered}>
+        <path d="M48 108 L47 136 L57 136 L57 108 M63 108 L63 136 L73 136 L72 108" fill="none" stroke={clay} strokeWidth={sw} strokeLinejoin="round" />
+      </Fragment>
+    </svg>
+  )
+}
+
+export function MonsterMixer({
+  state = 'forged',
+  dismembered = false,
+  className,
+}: GolemArtProps) {
+  const clay = state === 'forged' ? 'var(--clay-500)' : 'var(--line)'
+  const bone = state === 'forged' ? 'var(--bone-300)' : 'var(--line)'
+  const brass = state === 'forged' ? 'var(--brass-400)' : 'var(--line)'
+  const plum = state === 'forged' ? 'var(--plum-500)' : 'var(--line)'
+  const sw = 1.5
+
+  return (
+    <svg viewBox="0 0 120 150" className={className} role="img" aria-label={`Monster Mixer, ${state}`}>
+      {/* two spouts feeding one cauldron — two processes, one observation */}
+      <Fragment offset="translate(-16px, -30px) rotate(-24deg)" dismembered={dismembered}>
+        <path d="M40 20 Q40 34 50 40" fill="none" stroke={plum} strokeWidth={sw} />
+        <circle cx="40" cy="18" r="4" fill="none" stroke={plum} strokeWidth={sw} />
+      </Fragment>
+      <Fragment offset="translate(16px, -30px) rotate(24deg)" dismembered={dismembered}>
+        <path d="M80 20 Q80 34 70 40" fill="none" stroke={brass} strokeWidth={sw} />
+        <circle cx="80" cy="18" r="4" fill="none" stroke={brass} strokeWidth={sw} />
+      </Fragment>
+
+      {/* the cauldron head, a mixture bowl with mismatched eyes */}
+      <Fragment offset="translate(0px, -16px) rotate(0deg)" dismembered={dismembered}>
+        <path d="M44 44 Q44 66 60 66 Q76 66 76 44 Z" fill="none" stroke={clay} strokeWidth={sw} strokeLinejoin="round" />
+        <path d="M44 44 L76 44" stroke={clay} strokeWidth={sw} />
+        <circle cx="54" cy="52" r="2" fill={plum} />
+        <circle cx="66" cy="52" r="1.6" fill={brass} />
+      </Fragment>
+
+      {/* over-dispersed body — a lumpy, over-spread torso */}
+      <Fragment offset="translate(-24px, 18px) rotate(-16deg)" dismembered={dismembered}>
+        <path d="M42 66 Q36 78 40 92 Q44 108 60 110 Q76 108 80 92 Q84 78 78 66 Z" fill="none" stroke={clay} strokeWidth={sw} strokeLinejoin="round" />
+        {/* a histogram of counts engraved, one bar a zero-spike in plum */}
+        <path d="M50 98 L50 88 M57 98 L57 80 M64 98 L64 86 M71 98 L71 92" stroke={bone} strokeWidth="1" />
+        <path d="M43 98 L43 74" stroke={plum} strokeWidth="1.4" />
+      </Fragment>
+
+      {/* stubby mismatched legs */}
+      <Fragment offset="translate(8px, 30px) rotate(14deg)" dismembered={dismembered}>
+        <path d="M50 110 L48 134 L58 134 L58 110" fill="none" stroke={clay} strokeWidth={sw} strokeLinejoin="round" />
+        <path d="M64 110 L64 138 L74 138 L72 110" fill="none" stroke={clay} strokeWidth={sw} strokeLinejoin="round" />
+      </Fragment>
+    </svg>
+  )
+}
+

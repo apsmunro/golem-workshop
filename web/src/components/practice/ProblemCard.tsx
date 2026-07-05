@@ -45,7 +45,9 @@ export function ProblemCard({ chapter, id, tier, hints }: ProblemCardProps) {
       {open ? (
         <div className="border-t border-line px-4 py-4">
           <p className="text-sm text-secondary">
-            Work from your copy of the book ({id}, end-of-chapter practice).
+            {hints.workshop
+              ? 'A bench drill of this workshop — no book needed; the line above is the whole task.'
+              : `Work from your copy of the book (${id}, end-of-chapter practice).`}{' '}
             Hints open one rung at a time; try each rung before the next.
           </p>
           <HintLadder hints={hints} />

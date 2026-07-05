@@ -9,15 +9,22 @@ import { Rosetta } from '../code/Rosetta'
 import { WebRRunner } from '../code/WebRRunner'
 import { GardenOfForkingData } from '../interactives/garden-of-forking-data/GardenOfForkingData'
 import {
+  AdmitParadox,
+  ChimpExplorer,
+  CutpointDragger,
   DagSandbox,
+  EntropyPebbles,
   GlobeCalibration,
   HmcToy,
   HowellExplorer,
+  KlinePoisson,
+  LinkMorpher,
   OverfitGame,
   PriorPlayground,
   RuggedSurface,
   TraceTriage,
   TulipsSurface,
+  ZeroInflationMixer,
 } from '../../content/chapters/embeds'
 import { LectureCallout } from './LectureCallout'
 
@@ -61,6 +68,13 @@ export const mdxComponents: MDXComponents = {
   TulipsSurface,
   HmcToy,
   TraceTriage,
+  EntropyPebbles,
+  LinkMorpher,
+  ChimpExplorer,
+  AdmitParadox,
+  KlinePoisson,
+  CutpointDragger,
+  ZeroInflationMixer,
   Rosetta,
   WebRRunner,
 }

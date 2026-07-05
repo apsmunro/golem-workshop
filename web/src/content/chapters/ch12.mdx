@@ -1,0 +1,127 @@
+The pure golems of chapter 11 assume the world is tidier than it is. Real
+counts scatter wider than a Poisson allows; real zeros arrive from more
+than one source; real survey answers come as ordered grades that are not
+numbers at all. This chapter builds monsters — hybrid golems stitched
+from simpler ones — and the surprise is how principled the stitching is.
+A mixture is not a hack. It is a likelihood that admits the data had more
+than one way of happening.
+
+## When variance outruns the mean
+
+A Poisson insists variance equals mean. Data rarely agree, because rates
+differ across units in ways no predictor captures — beaches with
+different tides, monasteries with different scribes. The repair is to let
+each unit draw its own rate from a distribution: binomial probabilities
+from a beta, Poisson rates from a gamma. The result — beta-binomial,
+gamma-Poisson — is a continuous mixture: fatter tails, honest intervals,
+and far less panic over outliers. UCBadmit refit as a beta-binomial stops
+being scandalized by department A. The cost is interpretive: parameters
+now describe a *population* of rates, one more link in the chain between
+coefficient and consequence.
+
+## Two kinds of nothing
+
+The monks of the scriptorium finish manuscripts at some daily rate — on
+the days they work. Some days they drink. A day with zero manuscripts is
+therefore ambiguous evidence, and a model that treats every zero as "slow
+day" will get the work rate wrong while failing to predict the pile of
+zeros in the ledger.
+
+$$
+\Pr(0) = p + (1 - p)\,e^{-\lambda}
+$$
+
+<Gloss>
+Nothing happens two ways: the drinking way, with probability p, and the
+working-but-unlucky way. The mixture credits each zero to both, in
+proportion.
+</Gloss>
+
+<Wide><ZeroInflationMixer /></Wide>
+
+<Rosetta
+  model="m12.3"
+  book={`m12.3 <- ulam(
+  alist(
+    y ~ dzipois(p, lambda),
+    logit(p) <- ap,
+    log(lambda) <- al,
+    ap ~ dnorm(-1.5, 1),
+    al ~ dnorm(1, 0.5)
+  ), data = list(y = y), chains = 4)`}
+  brms={`m12.3 <- brm(
+  bf(y ~ 1, zi ~ 1),
+  data = d, family = zero_inflated_poisson(),
+  prior = c(
+    prior(normal(1, 0.5), class = Intercept),
+    prior(normal(-1.5, 1), class = Intercept, dpar = zi)
+  ),
+  chains = 4, cores = 4, backend = "cmdstanr", seed = 1959
+)`}
+/>
+
+brms carries a whole shelf of these mixed families — zero-inflated,
+hurdle, beta-binomial via `beta_binomial()`, gamma-Poisson as
+`negbinomial()` — each just a likelihood with an honest story about how
+observations arise. HMC never sees the discrete "was it wine?" state;
+the family marginalizes it out before sampling, which is why the golem
+runs at all.
+
+## Grades are not numbers
+
+The Trolley survey asks for moral judgment on a 1-to-7 scale. Category 4
+is not twice category 2; the only structure is order. The
+ordered-categorical golem respects exactly that and nothing more: a
+latent axis, six cutpoints carving it into seven bins, and cumulative
+log-odds as the machinery.
+
+<Wide><CutpointDragger /></Wide>
+
+Drag until the bars agree, then reveal: the fitted cutpoints are nothing
+but logits of cumulative proportions. Predictors never touch the
+cutpoints — they shift φ, sliding the whole story along the axis, leaking
+probability across every threshold at once. Watch the intended-contact
+cell: its histogram wants the density shoved hard left, which is exactly
+what m12.5's most negative coefficient does.
+
+<Rosetta
+  model="m12.5"
+  book={`m12.5 <- ulam(
+  alist(
+    R ~ dordlogit(phi, cutpoints),
+    phi <- bA * A + bC * C + BI * I,
+    BI <- bI + bIA * A + bIC * C,
+    c(bA, bI, bC, bIA, bIC) ~ dnorm(0, 0.5),
+    cutpoints ~ dnorm(0, 1.5)
+  ), data = dat, chains = 4, cores = 4)`}
+  brms={`m12.5 <- brm(
+  response ~ action + contact + intention +
+    intention:action + intention:contact,
+  data = d, family = cumulative("logit"),
+  prior = c(
+    prior(normal(0, 0.5), class = b),
+    prior(normal(0, 1.5), class = Intercept)
+  ),
+  chains = 4, cores = 4, backend = "cmdstanr", seed = 1959
+)`}
+/>
+
+Ordered predictors get the mirror treatment: education levels enter as
+cumulative increments δ with a Dirichlet prior over how the total effect
+splits, so the model never pretends the step from primary to middle
+school equals the step from college to degree. Order in, order out,
+arithmetic nowhere.
+
+## Forge it
+
+The 12E problems make you say what over-dispersion is and which monster
+eats it. 12M has you compute an ordered-categorical likelihood by hand
+once — after the dragger, it is bookkeeping. The 12H set runs from
+Hurricanes to bonobos: real over-dispersed, zero-inflated, ordered data,
+each punishing the pure golem and rewarding the right monster. Finish
+them and the Monster Mixer joins the bestiary, ladle first.
+
+<LectureCallout
+  n={11}
+  note="Ordered categories, cutpoints, and the Trolley data end to end."
+/>

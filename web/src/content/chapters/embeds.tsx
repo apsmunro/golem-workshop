@@ -3,7 +3,14 @@
  * clean of setup code.
  */
 import { useEffect, useMemo, useState } from 'react'
+import { AdmitParadox } from '../../components/interactives/admit-paradox/AdmitParadox'
 import { CalibrationSketch } from '../../components/interactives/calibration-sketch/CalibrationSketch'
+import { ChimpExplorer } from '../../components/interactives/chimp-explorer/ChimpExplorer'
+import { CutpointDragger } from '../../components/interactives/cutpoint-dragger/CutpointDragger'
+import { EntropyPebbles } from '../../components/interactives/entropy-pebbles/EntropyPebbles'
+import { KlinePoisson } from '../../components/interactives/kline-poisson/KlinePoisson'
+import { LinkMorpher } from '../../components/interactives/link-morpher/LinkMorpher'
+import { ZeroInflationMixer } from '../../components/interactives/zero-inflation-mixer/ZeroInflationMixer'
 import { PriorPlayground } from '../../components/interactives/prior-playground/PriorPlayground'
 import { DagSandbox } from '../../components/interactives/dag-sandbox/DagSandbox'
 import { HmcToy } from '../../components/interactives/hmc-toy/HmcToy'
@@ -35,7 +42,20 @@ export function GlobeCalibration() {
   )
 }
 
-export { PriorPlayground, DagSandbox, OverfitGame, HmcToy, TraceTriage }
+export {
+  PriorPlayground,
+  DagSandbox,
+  OverfitGame,
+  HmcToy,
+  TraceTriage,
+  EntropyPebbles,
+  LinkMorpher,
+  ChimpExplorer,
+  AdmitParadox,
+  KlinePoisson,
+  CutpointDragger,
+  ZeroInflationMixer,
+}
 
 /** Chapter 8: terrain ruggedness and GDP, moderated by continent. */
 export function RuggedSurface() {

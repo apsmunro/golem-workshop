@@ -1,6 +1,10 @@
 # Download the open rethinking datasets this phase needs.
 base <- "https://raw.githubusercontent.com/rmcelreath/rethinking/master/data"
-files <- c("Howell1.csv", "WaffleDivorce.csv", "milk.csv", "rugged.csv", "tulips.csv")
+files <- c(
+  "Howell1.csv", "WaffleDivorce.csv", "milk.csv", "rugged.csv", "tulips.csv",
+  # Phase 4 (ch 11–12): counts, admissions, tools, moral judgments
+  "chimpanzees.csv", "UCBadmit.csv", "Kline.csv", "Trolley.csv"
+)
 dir.create("data", showWarnings = FALSE)
 for (f in files) {
   dest <- file.path("data", f)

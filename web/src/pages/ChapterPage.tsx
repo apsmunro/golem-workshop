@@ -24,6 +24,9 @@ const chapterContent: Record<number, React.LazyExoticComponent<MDXPage>> = {
   7: lazy(() => import('../content/chapters/ch07.mdx')),
   8: lazy(() => import('../content/chapters/ch08.mdx')),
   9: lazy(() => import('../content/chapters/ch09.mdx')),
+  10: lazy(() => import('../content/chapters/ch10.mdx')),
+  11: lazy(() => import('../content/chapters/ch11.mdx')),
+  12: lazy(() => import('../content/chapters/ch12.mdx')),
 }
 
 const MdxBundle = lazy(async () => {

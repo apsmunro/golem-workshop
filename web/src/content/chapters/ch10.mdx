@@ -1,0 +1,80 @@
+Ten pebbles thrown at five buckets can land all in the middle exactly one
+way. They can land 2-2-2-2-2 in 113,400 ways. Nothing about the throwing
+favors flatness; there are simply astronomically more ways for the pebbles
+to spread than to stack. That count of ways, scaled and logged, is
+entropy, and it turns a vague instinct — "don't assume more than you
+know" — into arithmetic the workshop can run.
+
+<Wide><EntropyPebbles /></Wide>
+
+Lock the lever and the game sharpens. Among all shapes with a given mean,
+one maximizes entropy, and it is never the shape with drama in it. This is
+the maximum entropy principle: choose the distribution that can happen the
+most ways subject to what you actually know. It is a device for
+*confessing* constraints rather than smuggling in extras.
+
+## The usual suspects, re-arrested
+
+Chapter 4 excused the Gaussian as a law of ignorance. Now the excuse
+becomes a theorem: fix a mean and a variance and the maximum-entropy
+distribution over the real line is exactly the normal. Every other shape
+with that mean and variance claims something additional — skew, spikes,
+thin tails — that your constraints never asserted. The binomial earns the
+same defense: for binary trials with a fixed expected number of successes,
+it is the flattest thing there is. The globe-tossing golem of chapter 2
+was a maximum-entropy golem all along; nobody had said so yet.
+
+The recipe generalizes. Constraints on counts with no upper bound and a
+fixed mean rate give the Poisson. A fixed mean of a positive continuous
+quantity gives the exponential. Each of the so-called exponential family
+is the honest distribution for some simple statement of knowledge, which
+is why they keep appearing: not convention, but confession.
+
+## Bending the line into the world
+
+A Gaussian mean can wander anywhere, so chapter 4 could set μ equal to a
+line and walk away. A probability cannot leave [0, 1]; a rate cannot go
+negative. Generalized linear models keep the linear machinery and insert a
+hinge — the link function — between the line and the constrained
+parameter:
+
+$$
+y_i \sim \text{Binomial}(n, p_i), \qquad \text{logit}(p_i) = \alpha + \beta x_i
+$$
+
+<Gloss>
+The line lives on the log-odds scale, where it may roam all reals; the
+inverse link folds it back into probability. Nothing about y is
+transformed — only the parameter.
+</Gloss>
+
+<Wide><LinkMorpher /></Wide>
+
+Ride the morph slider a few times. Equal steps on the link scale compress
+into nothing near the floor and ceiling — that bunching *is* the model's
+built-in interaction. Even with no product term anywhere, the effect of
+one predictor on the outcome scale depends on where every other predictor
+has already pushed η. The probe makes it numeric: β holds still while the
+outcome-scale slope goes wherever p(1−p) sends it. Remember this in
+chapter 11, when coefficients on the logit scale refuse to be percentage
+points.
+
+The log link plays the same trick for rates: linear on log λ, exponential
+on λ. And it sets the trap this chapter's header is drawn from: a prior
+that is flat on the logit scale is not flat on the probability scale — it
+piles up against 0 and 1, certain the world is extreme. Priors must be
+judged where their consequences live, which is one more job for prior
+predictive simulation.
+
+## No practice section — drills instead
+
+The book gives chapter 10 no end-of-chapter problems; it is the armory
+door, not the battle. The bench drills below are this workshop's own, and
+they use the two instruments above. Complete them and the GLM Prism —
+the piece of glass every remaining golem looks through — joins your
+bestiary.
+
+<LectureCallout
+  n={9}
+  note="The first half of this lecture builds maximum entropy and the GLM; the rest belongs to chapter 11."
+/>

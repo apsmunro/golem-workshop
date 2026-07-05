@@ -38,10 +38,10 @@ Claude Code: read this first each session. Tick items as completed. Log blockers
 - [x] Pipeline m7–m9 scripts; Ch. 7–9 content, practice (46 ladders), golems. NOTE: like Phase 2, fit scripts written but not executed (needs R+cmdstan); ch 8 interactives run on the in-browser OLS engine meanwhile.
 
 ## Phase 4 — Ch. 10–12
-- [ ] Entropy pebble simulator; link-function morpher
-- [ ] Binomial/Poisson explorers (chimpanzees, UCBadmit, Kline); offset slider
-- [ ] Ordinal cutpoint dragger (Trolley); zero-inflation mixer
-- [ ] Pipeline m11–m12; content, practice, golems (note: ch 10 has no practice section)
+- [x] Entropy pebble simulator (exact multiplicities, maxent tilt); link-function morpher (logit/log, live morph)
+- [x] Binomial/Poisson explorers: chimp (m11.4 quap in-browser), admit paradox (m11.7/m11.8 total vs direct), Kline (m11.10) + monastery offset lab
+- [x] Ordinal cutpoint dragger (Trolley aggregate, closed-form reveal); zero-inflation mixer (drinking monks, cause-split zeros)
+- [x] Pipeline m11–m12 scripts (fit + export param maps); ch 10–12 content, practice (ch10 = 3 workshop drills, ch11 18, ch12 15), golems (GLM Prism, Integer Golem, Monster Mixer). NOTE: fit scripts written not executed (no R+cmdstan); explorers run on the in-browser quap/JS engines meanwhile.
 
 ## Phase 5 — Ch. 13–14
 - [ ] Shrinkage Theater (reedfrogs, animated pooling morph)
@@ -65,6 +65,7 @@ Claude Code: read this first each session. Tick items as completed. Log blockers
 - No GitHub remote configured yet. Deploy workflow is committed but unverified; create the repo, push main, enable Pages (Source: GitHub Actions) to close the last Phase 0 box.
 
 ## Session log
+- 005 (2026-07-05): Phase 4 built. Ch 10: entropy pebbles (exact W matches book table 1/90/1260/37800/113400, maxent by exponential tilt; verified E→113,400 in browser) + link morpher (verified straight line at t=0 morphs to logistic S at t=1, η gridlines bunch, probe reads η=1.80→p=0.858 slope 0.146). Ch 11: chimp explorer (m11.4 fit by 11-param quap in-browser, matches book b1..b4; partner contrasts straddle zero, actor 2 pinned ~1.0), admit paradox (m11.7/m11.8 total +0.61 vs direct ≈−0.1, clay→brass on conditioning), Kline Poisson (m11.10 curves + monastery offset lab, exact 7× inflation). Ch 12: cutpoint dragger (Trolley 9,930-judgment aggregate, reveal → 100% match via closed-form logit-of-cumulative, book m12.4 cutpoints ±0.03) + zero-inflation mixer (P(0) decomposition 0.20+0.29=0.49 verified, naive λ̂ estimates (1−p)λ). Three golems in house style; ch10 forge unlocks via 3 original workshop drills (no book practice). r-pipeline extended m11.4/7/8/10, m12.1/3/4/5 with export param maps. 211 tests (was 144), build, prose-lint green. New watchpoint: chimp contrast labels moved to fixed top-left corners to avoid peak-overlap collision.
 - 004 (2026-07-04): Phase 3 built. Overfit game (OLS polys + exact LOO, verified reveal flow + comparison table in browser); interaction surface (verified rugged sign flip −0.15 → +0.14 and tulips water slope +0.21 in browser; fixed rugged.csv quoted-semicolon parsing); HMC toy (leapfrog + Metropolis + |ΔH|>50 divergences, verified 100% acceptance at ε=0.18 and 8/9 divergences at ε=2.6; smooth bitmap density background); trace triage (5 ailments, split-R̂/ESS engines); ch 7–9 MDX + 46 hint ladders + 3 golems (compass/manatee/engine core); ch 9 living posterior runs the toy's own HMC; r-pipeline extended m8.1–m8.5, m9.1, ch7 loo criteria + comparison artifact. 144 tests, build, prose-lint green.
 - 000: repo initialized with plan, CLAUDE.md, course data manifests, this file.
 - 001 (2026-07-04): Phase 0 built. git init; web/ scaffold (Vite 6, React 18, TS strict, Tailwind 4); tokens.css + global.css; Layout/ChapterShell/Home/ChapterPage/dev specimen; workshop store (5 slices, persist v1, export/import) with 14 passing tests; plot-theme.ts; shot + prose-lint scripts; deploy workflow. Build, tests, prose-lint all green.

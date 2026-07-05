@@ -187,3 +187,135 @@ fit_cached("m9.1", function() {
       seed = SEED, chains = 4, cores = 4,
       warmup = 1000, iter = 2000)
 })
+
+# --- Chapter 11: binomial and Poisson GLMs ------------------------------
+# Chapter 10 fits no models (it derives GLMs and maximum entropy); its
+# interactives run on closed-form JS. The count golems start here.
+
+chimp <- read.csv2("data/chimpanzees.csv")
+chimp$treatment <- factor(1 + chimp$prosoc_left + 2 * chimp$condition)
+chimp$actor <- factor(chimp$actor)
+
+fit_cached("m11.4", function() {
+  brm(
+    pulled_left ~ 0 + actor + treatment,
+    data = chimp, family = bernoulli(),
+    prior = c(
+      prior(normal(0, 1.5), class = b, coef = actor1),
+      prior(normal(0, 1.5), class = b, coef = actor2),
+      prior(normal(0, 1.5), class = b, coef = actor3),
+      prior(normal(0, 1.5), class = b, coef = actor4),
+      prior(normal(0, 1.5), class = b, coef = actor5),
+      prior(normal(0, 1.5), class = b, coef = actor6),
+      prior(normal(0, 1.5), class = b, coef = actor7),
+      prior(normal(0, 0.5), class = b, coef = treatment2),
+      prior(normal(0, 0.5), class = b, coef = treatment3),
+      prior(normal(0, 0.5), class = b, coef = treatment4)
+    ),
+    seed = SEED, chains = 4, cores = 4
+  )
+})
+
+ucb <- read.csv2("data/UCBadmit.csv")
+ucb$gid <- factor(ifelse(ucb$applicant.gender == "male", "male", "female"))
+ucb$dept <- factor(ucb$dept)
+
+# m11.7: total effect of gender
+fit_cached("m11.7", function() {
+  brm(
+    admit | trials(applications) ~ 0 + gid,
+    data = ucb, family = binomial(),
+    prior = prior(normal(0, 1.5), class = b),
+    seed = SEED, chains = 4, cores = 4
+  )
+})
+
+# m11.8: gender within department (direct effect)
+fit_cached("m11.8", function() {
+  brm(
+    admit | trials(applications) ~ 0 + gid + dept,
+    data = ucb, family = binomial(),
+    prior = prior(normal(0, 1.5), class = b),
+    seed = SEED, chains = 4, cores = 4
+  )
+})
+
+kline <- read.csv2("data/Kline.csv")
+kline$P <- as.numeric(scale(log(kline$population)))
+kline$contact_id <- factor(ifelse(kline$contact == "high", "high", "low"))
+
+# m11.10: interaction of log population and contact on tool count
+fit_cached("m11.10", function() {
+  brm(
+    total_tools ~ 0 + contact_id + contact_id:P,
+    data = kline, family = poisson(),
+    prior = c(
+      prior(normal(3, 0.5), class = b, coef = contact_idhigh),
+      prior(normal(3, 0.5), class = b, coef = contact_idlow),
+      prior(normal(0, 0.2), class = b, coef = "contact_idhigh:P"),
+      prior(normal(0, 0.2), class = b, coef = "contact_idlow:P")
+    ),
+    seed = SEED, chains = 4, cores = 4
+  )
+})
+
+# --- Chapter 12: mixtures, over-dispersion, ordered categories ----------
+
+# m12.1: beta-binomial on UCBadmit — over-dispersion instead of dept
+fit_cached("m12.1", function() {
+  brm(
+    admit | trials(applications) ~ 0 + gid,
+    data = ucb, family = beta_binomial(),
+    prior = c(
+      prior(normal(0, 1.5), class = b),
+      prior(exponential(1), class = phi)
+    ),
+    seed = SEED, chains = 4, cores = 4
+  )
+})
+
+# m12.3: zero-inflated Poisson, the drinking monks (simulated as in the book)
+set.seed(SEED)
+N_days <- 365
+drink <- rbinom(N_days, 1, 0.2)
+monks <- (1 - drink) * rpois(N_days, 1)
+monk_df <- data.frame(y = monks)
+
+fit_cached("m12.3", function() {
+  brm(
+    bf(y ~ 1, zi ~ 1),
+    data = monk_df, family = zero_inflated_poisson(),
+    prior = c(
+      prior(normal(1, 0.5), class = Intercept),
+      prior(normal(-1.5, 1), class = Intercept, dpar = zi)
+    ),
+    seed = SEED, chains = 4, cores = 4
+  )
+})
+
+trolley <- read.csv2("data/Trolley.csv")
+trolley$response <- as.integer(trolley$response)
+
+# m12.4: intercept-only ordered logit (the seven cutpoints)
+fit_cached("m12.4", function() {
+  brm(
+    response ~ 1,
+    data = trolley, family = cumulative("logit"),
+    prior = prior(normal(0, 1.5), class = Intercept),
+    seed = SEED, chains = 4, cores = 4
+  )
+})
+
+# m12.5: full action/intention/contact ordered logit with interactions
+fit_cached("m12.5", function() {
+  brm(
+    response ~ action + contact + intention +
+      intention:action + intention:contact,
+    data = trolley, family = cumulative("logit"),
+    prior = c(
+      prior(normal(0, 0.5), class = b),
+      prior(normal(0, 1.5), class = Intercept)
+    ),
+    seed = SEED, chains = 4, cores = 4
+  )
+})

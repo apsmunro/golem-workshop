@@ -14,7 +14,14 @@ import { Layout } from './components/core/Layout'
 import { Bestiary } from './pages/Bestiary'
 import { ChapterPage } from './pages/ChapterPage'
 import { Home } from './pages/Home'
+import { AdmitDemo } from './pages/dev/AdmitDemo'
 import { CalibrationDemo } from './pages/dev/CalibrationDemo'
+import { ChimpDemo } from './pages/dev/ChimpDemo'
+import { CutpointDemo } from './pages/dev/CutpointDemo'
+import { EntropyDemo } from './pages/dev/EntropyDemo'
+import { KlineDemo } from './pages/dev/KlineDemo'
+import { LinkDemo } from './pages/dev/LinkDemo'
+import { ZipDemo } from './pages/dev/ZipDemo'
 import { CeremonyDemo } from './pages/dev/CeremonyDemo'
 import { DagDemo } from './pages/dev/DagDemo'
 import { DevIndex } from './pages/dev/DevIndex'
@@ -51,6 +58,13 @@ const router = createBrowserRouter(
         { path: '/dev/interaction', element: <InteractionDemo /> },
         { path: '/dev/hmc', element: <HmcDemo /> },
         { path: '/dev/triage', element: <TriageDemo /> },
+        { path: '/dev/entropy', element: <EntropyDemo /> },
+        { path: '/dev/link', element: <LinkDemo /> },
+        { path: '/dev/chimps', element: <ChimpDemo /> },
+        { path: '/dev/admit', element: <AdmitDemo /> },
+        { path: '/dev/kline', element: <KlineDemo /> },
+        { path: '/dev/cutpoints', element: <CutpointDemo /> },
+        { path: '/dev/zip', element: <ZipDemo /> },
       ],
     },
   ],

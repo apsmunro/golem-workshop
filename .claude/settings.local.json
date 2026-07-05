@@ -19,7 +19,21 @@
       "PowerShell(npx vitest run src/components/interactives/posterior-explorer src/components/interactives/prior-playground)",
       "PowerShell(npx vitest run src/lib/posterior-artifact.test.ts)",
       "Bash(npm run *)",
-      "PowerShell(npm run lint:prose)"
+      "PowerShell(npm run lint:prose)",
+      "PowerShell($base = \"https://raw.githubusercontent.com/rmcelreath/rethinking/master/data\"; foreach \\($f in @\\(\"rugged.csv\",\"tulips.csv\"\\)\\) { Invoke-WebRequest \"$base/$f\" -OutFile \"web/public/data/datasets/$f\" }; Get-ChildItem web/public/data/datasets | Select-Object Name, Length)",
+      "PowerShell(\\(Get-Content web/src/components/bestiary/golem-art.tsx | Measure-Object -Line\\).Lines; Get-Content web/src/components/bestiary/golem-art.tsx -Tail 40)",
+      "PowerShell(Set-Location C:\\\\Users\\\\am5e18\\\\Documents\\\\Claude\\\\Projects\\\\Golem_Workshop_Course; Get-Content web/src/components/bestiary/golem-art.tsx -Tail 30; \\(Get-Content web/src/components/bestiary/golem-art.tsx | Measure-Object -Line\\).Lines)",
+      "PowerShell(npm run build 2>&1)",
+      "PowerShell($rows = Import-Csv \"web\\\\public\\\\data\\\\datasets\\\\Trolley.csv\" -Delimiter ';'; $agg = $rows | Group-Object action, intention, contact | ForEach-Object { $g = $_.Group[0]; $counts = @\\(0,0,0,0,0,0,0\\); foreach \\($r in $_.Group\\) { $counts[[int]$r.response - 1]++ }; [PSCustomObject]@{ action = [int]$g.action; intention = [int]$g.intention; contact = [int]$g.contact; n = $_.Count; counts = $counts } }; $agg | Sort-Object action, contact, intention | ConvertTo-Json -Depth 3 | Out-File -Encoding utf8 \"web\\\\public\\\\data\\\\datasets\\\\trolley_counts.json\"; Get-Content \"web\\\\public\\\\data\\\\datasets\\\\trolley_counts.json\")",
+      "PowerShell($d = \"C:\\\\Users\\\\am5e18\\\\Documents\\\\Claude\\\\Projects\\\\Golem_Workshop_Course\\\\web\\\\public\\\\data\\\\datasets\"; $rows = Import-Csv \"$d\\\\Trolley.csv\" -Delimiter ';'; $agg = $rows | Group-Object action, intention, contact | ForEach-Object { $g = $_.Group[0]; $counts = @\\(0,0,0,0,0,0,0\\); foreach \\($r in $_.Group\\) { $counts[[int]$r.response - 1]++ }; [PSCustomObject]@{ action = [int]$g.action; intention = [int]$g.intention; contact = [int]$g.contact; n = $_.Count; counts = $counts } }; $json = $agg | Sort-Object action, contact, intention | ConvertTo-Json -Depth 3 -Compress; [IO.File]::WriteAllText\\(\"$d\\\\trolley_counts.json\", $json\\); $json)",
+      "PowerShell(Remove-Item \"C:\\\\Users\\\\am5e18\\\\Documents\\\\Claude\\\\Projects\\\\Golem_Workshop_Course\\\\web\\\\public\\\\data\\\\datasets\\\\Trolley.csv\" -Confirm:$false)",
+      "PowerShell(npx vitest run src/components/interactives/chimp-explorer 2>&1)",
+      "PowerShell(npx vitest run src/components/interactives/admit-paradox 2>&1)",
+      "PowerShell(npx vitest run src/components/interactives/kline-poisson 2>&1)",
+      "PowerShell(npx vitest run src/components/interactives/cutpoint-dragger 2>&1)",
+      "PowerShell(npx vitest run src/components/interactives/zero-inflation-mixer 2>&1)",
+      "PowerShell(npx vitest run 2>&1)",
+      "PowerShell(npm run lint:prose 2>&1)"
     ]
   }
 }

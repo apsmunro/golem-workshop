@@ -40,6 +40,21 @@ export function ChapterPractice({ chapter, hints }: { chapter: number; hints: Ch
 
   const withHints = problems.filter((p) => hints[p.id])
 
+  // Chapters with no book practice section (ch 10) carry workshop-only
+  // drills that never appear in the ledger; render them from the hints.
+  if (withHints.length === 0) {
+    const drills = Object.keys(hints).filter((id) => hints[id]!.workshop)
+    if (drills.length > 0) {
+      return (
+        <div className="space-y-3">
+          {drills.map((id) => (
+            <ProblemCard key={id} chapter={chapter} id={id} tier="medium" hints={hints[id]!} />
+          ))}
+        </div>
+      )
+    }
+  }
+
   return (
     <div className="space-y-3">
       {withHints.map((p) => (

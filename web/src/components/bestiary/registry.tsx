@@ -3,10 +3,13 @@ import type { GolemArtState } from './golem-art'
 import {
   CompassOfUlysses,
   GaussianGolem,
+  GlmPrism,
   GlobeTossingGolem,
   HauntedDagGolem,
+  IntegerGolem,
   ManateeGolem,
   McmcEngineCore,
+  MonsterMixer,
   MultivariableGolem,
   SamplerSprite,
 } from './golem-art'
@@ -86,6 +89,30 @@ export const golems: GolemMeta[] = [
     signature: 'brm(..., chains = 4, cores = 4) · R̂ < 1.01',
     epithet: 'A marble that rolls where the posterior is deep.',
     Art: McmcEngineCore,
+  },
+  {
+    id: 'glm-prism',
+    name: 'GLM Prism',
+    chapter: 10,
+    signature: 'g(μ) = α + βx · maximum entropy in, bounded scale out',
+    epithet: 'Refracts one straight line onto every bounded world.',
+    Art: GlmPrism,
+  },
+  {
+    id: 'integer-golem',
+    name: 'Integer Golem',
+    chapter: 11,
+    signature: 'y ~ Binomial(n, p) · y ~ Poisson(λ) · log and logit',
+    epithet: 'Counts only in whole things, and multiplies its effects.',
+    Art: IntegerGolem,
+  },
+  {
+    id: 'monster-mixer',
+    name: 'Monster Mixer',
+    chapter: 12,
+    signature: 'zero-inflated · gamma-Poisson · ordered logit',
+    epithet: 'Admits an observation had more than one way to happen.',
+    Art: MonsterMixer,
   },
 ]
 

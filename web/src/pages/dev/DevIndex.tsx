@@ -14,6 +14,13 @@ const demos = [
   { path: '/dev/interaction', name: 'Interaction surface (rugged, tulips)' },
   { path: '/dev/hmc', name: 'HMC physics toy' },
   { path: '/dev/triage', name: 'Trace-plot triage' },
+  { path: '/dev/entropy', name: 'Entropy pebbles' },
+  { path: '/dev/link', name: 'Link morpher' },
+  { path: '/dev/chimps', name: 'Chimp explorer (m11.4)' },
+  { path: '/dev/admit', name: 'Admit paradox (UCBadmit)' },
+  { path: '/dev/kline', name: 'Kline Poisson & exposure lab' },
+  { path: '/dev/cutpoints', name: 'Cutpoint dragger (Trolley)' },
+  { path: '/dev/zip', name: 'Zero-inflation mixer' },
 ]
 
 export function DevIndex() {
