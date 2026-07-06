@@ -92,7 +92,25 @@
       "Bash(git commit -q -m 'r-pipeline: execute fits, ship 26 brms posterior artifacts, wire ch4 explorer *)",
       "Bash(git commit -q -m 'docs: update r-pipeline README to the validated setup flow; extend tool allowlist *)",
       "Bash(node -e \"console.log\\(JSON.stringify\\(require\\('./web/public/data/posteriors/comparison-ch07.json'\\), null, 1\\)\\)\")",
-      "Bash(git commit -q -m 'chore: add artifact-inspection command to local tool allowlist *)"
+      "Bash(git commit -q -m 'chore: add artifact-inspection command to local tool allowlist *)",
+      "PowerShell(try { $v = \\(Get-Command gh -ErrorAction Stop\\).Source; \"gh already installed: $v\" } catch { \"gh not found\" }; winget --version)",
+      "PowerShell(winget install --id GitHub.cli --silent --accept-package-agreements --accept-source-agreements)",
+      "PowerShell(winget install --id GitHub.cli --source winget --silent --accept-package-agreements --accept-source-agreements --override \"/quiet /norestart\")",
+      "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); gh --version; gh auth status 2>&1)",
+      "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); gh auth status)",
+      "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); Set-Location \"C:\\\\Users\\\\am5e18\\\\Documents\\\\Claude\\\\Projects\\\\Golem_Workshop_Course\"; gh repo create golem-workshop --public --source=. --remote=origin --push)",
+      "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); gh api repos/apsmunro/golem-workshop -X PATCH -f default_branch=main; gh api repos/apsmunro/golem-workshop/git/refs/heads/master -X DELETE)",
+      "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); gh run list --repo apsmunro/golem-workshop --limit 3)",
+      "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); gh run view 28788458302 --repo apsmunro/golem-workshop --log-failed 2>&1 | Select-Object -Last 80)",
+      "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); gh run view 28788458302 --repo apsmunro/golem-workshop)",
+      "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); gh api repos/apsmunro/golem-workshop/environments/github-pages)",
+      "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); gh api repos/apsmunro/golem-workshop/environments/github-pages/deployment-branch-policies)",
+      "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); gh api repos/apsmunro/golem-workshop/environments/github-pages -X PUT --input \"C:\\\\Users\\\\am5e18\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--Users-am5e18-Documents-Claude-Projects-Golem-Workshop-Course\\\\069e894f-e83b-465d-b447-b5d6fb7c975a\\\\scratchpad\\\\env-patch.json\")",
+      "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); gh run rerun 28788458302 --repo apsmunro/golem-workshop --failed)",
+      "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); gh run view 28788458302 --repo apsmunro/golem-workshop --log-failed 2>&1 | Select-Object -Last 60)",
+      "Bash(curl -s https://apsmunro.github.io/golem-workshop/)",
+      "Bash(git commit -q -m 'docs: record the Pages deploy — repo created, live at apsmunro.github.io/golem-workshop *)",
+      "Bash(git push *)"
     ]
   }
 }
