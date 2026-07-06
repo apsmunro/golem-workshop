@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { artifactDraws, loadArtifact } from '../../../lib/posterior-artifact'
 import { HOUSE_SEED, RNG } from '../../../lib/rng'
 import { kde, mean, percentileInterval } from '../../../lib/stats'
 import { invLogit } from '../link-morpher/engine'
@@ -10,6 +11,29 @@ import {
   totalContrast,
 } from './engine'
 import type { AdmitContrast, AdmitRow } from './engine'
+
+/**
+ * The real m11.7/m11.8 brms draws, when deployed. brms codes the direct
+ * model as `0 + gid + dept`, which pins department A's offset at zero —
+ * the engine's contrast math expects a dA column, so one is supplied.
+ * Throws when either artifact is missing; the caller falls back to quap.
+ */
+async function loadAdmitDraws(): Promise<{
+  total: Record<string, Float64Array>
+  direct: Record<string, Float64Array>
+}> {
+  const [total, direct] = await Promise.all([
+    loadArtifact('m11.7'),
+    loadArtifact('m11.8'),
+  ])
+  const t = artifactDraws(total)
+  const d = artifactDraws(direct)
+  if (!t['aM'] || !t['aF'] || !d['aM'] || !d['aF']) {
+    throw new Error('admit artifacts missing gender params')
+  }
+  d['dA'] = new Float64Array(d['aM'].length) // reference department
+  return { total: t, direct: d }
+}
 
 type Model = 'total' | 'direct'
 
@@ -31,13 +55,23 @@ export function AdmitParadox() {
 
   useEffect(() => {
     let cancelled = false
-    fetch(`${import.meta.env.BASE_URL}data/datasets/UCBadmit.csv`)
+    void fetch(`${import.meta.env.BASE_URL}data/datasets/UCBadmit.csv`)
       .then((r) => r.text())
-      .then((csv) => {
+      .then(async (csv) => {
         if (cancelled) return
         const rows = admitRows(csv)
-        const totalDraws = fitTotal(rows).draws(2000, new RNG(HOUSE_SEED, 21))
-        const directDraws = fitDirect(rows).draws(2000, new RNG(HOUSE_SEED, 22))
+        let totalDraws: Record<string, Float64Array>
+        let directDraws: Record<string, Float64Array>
+        try {
+          // real brms draws when the artifacts are deployed
+          const admit = await loadAdmitDraws()
+          totalDraws = admit.total
+          directDraws = admit.direct
+        } catch {
+          totalDraws = fitTotal(rows).draws(2000, new RNG(HOUSE_SEED, 21))
+          directDraws = fitDirect(rows).draws(2000, new RNG(HOUSE_SEED, 22))
+        }
+        if (cancelled) return
         setState({
           rows,
           totalDraws,

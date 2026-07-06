@@ -88,3 +88,58 @@ export async function loadArtifact(model: string): Promise<PosteriorArtifact> {
   if (!res.ok) throw new ArtifactError(`artifact ${model} not found (${res.status})`)
   return validateArtifact(await res.json())
 }
+
+// ── model-comparison artifacts (golem-workshop/comparison@1) ─────────
+
+export const COMPARISON_SCHEMA = 'golem-workshop/comparison@1'
+
+export interface ComparisonRow {
+  model: string
+  elpd_loo: number
+  se_elpd_loo: number
+  p_loo: number
+  looic: number
+  waic: number
+}
+
+export interface ComparisonArtifact {
+  schema: typeof COMPARISON_SCHEMA
+  chapter: number
+  seed: number
+  engine: string
+  created: string
+  models: ComparisonRow[]
+}
+
+const ROW_KEYS = ['elpd_loo', 'se_elpd_loo', 'p_loo', 'looic', 'waic'] as const
+
+export function validateComparison(raw: unknown): ComparisonArtifact {
+  if (typeof raw !== 'object' || raw === null) {
+    throw new ArtifactError('comparison is not an object')
+  }
+  const a = raw as Record<string, unknown>
+  if (a['schema'] !== COMPARISON_SCHEMA) {
+    throw new ArtifactError(`unknown schema: ${String(a['schema'])}`)
+  }
+  const models = a['models']
+  if (!Array.isArray(models) || models.length === 0) {
+    throw new ArtifactError('comparison has no models')
+  }
+  for (const m of models as Record<string, unknown>[]) {
+    if (typeof m['model'] !== 'string') throw new ArtifactError('row missing model id')
+    for (const k of ROW_KEYS) {
+      if (typeof m[k] !== 'number' || !Number.isFinite(m[k])) {
+        throw new ArtifactError(`${String(m['model'])}: ${k} missing or non-finite`)
+      }
+    }
+  }
+  return raw as ComparisonArtifact
+}
+
+export async function loadComparison(name: string): Promise<ComparisonArtifact> {
+  const res = await fetch(
+    `${import.meta.env.BASE_URL}data/posteriors/${name}.json`,
+  )
+  if (!res.ok) throw new ArtifactError(`comparison ${name} not found (${res.status})`)
+  return validateComparison(await res.json())
+}

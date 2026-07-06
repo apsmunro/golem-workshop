@@ -125,6 +125,7 @@ export const mdxComponents: MDXComponents = {
   PriorPlayground: embed('PriorPlayground'),
   DagSandbox: embed('DagSandbox'),
   HowellExplorer: embed('HowellExplorer'),
+  DivorceComparison: embed('DivorceComparison'),
   OverfitGame: embed('OverfitGame'),
   RuggedSurface: embed('RuggedSurface'),
   TulipsSurface: embed('TulipsSurface'),

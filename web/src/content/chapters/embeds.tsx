@@ -33,8 +33,14 @@ import { GeometricPeople as GeometricPeopleView } from '../../components/interac
 import type { HW } from '../../components/interactives/geometric-people/engine'
 import { LynxHareOde } from '../../components/interactives/lynx-hare-ode/LynxHareOde'
 import { HoroscopesCapstone } from '../../components/interactives/horoscopes/HoroscopesCapstone'
+import { ModelComparison } from '../../components/core/ModelComparison'
+import type { ModelComparisonRow } from '../../components/core/ModelComparison'
 import { RNG } from '../../lib/rng'
-import { artifactDraws, loadArtifact } from '../../lib/posterior-artifact'
+import {
+  artifactDraws,
+  loadArtifact,
+  loadComparison,
+} from '../../lib/posterior-artifact'
 import { drawsForChapter } from '../chapter-draws'
 import { adults, fitM43, loadHowell } from '../models/howell'
 import { loadRugged, loadTulips } from '../models/interactions'
@@ -76,6 +82,64 @@ export {
   GpIslands,
   LynxHareOde,
   HoroscopesCapstone,
+}
+
+/**
+ * Chapter 7: the divorce trio ranked by real PSIS-LOO from the r-pipeline
+ * fits — the output of the exact loo_compare() call shown above it.
+ * Renders nothing if the comparison artifact is missing.
+ */
+const DIVORCE_LABELS: Record<string, string> = {
+  'm5.1': 'm5.1 · age only',
+  'm5.2': 'm5.2 · marriage only',
+  'm5.3': 'm5.3 · both',
+}
+
+export function DivorceComparison() {
+  const [rows, setRows] = useState<ModelComparisonRow[] | null>(null)
+
+  useEffect(() => {
+    let cancelled = false
+    loadComparison('comparison-ch07')
+      .then((c) => {
+        if (cancelled) return
+        const bestElpd = Math.max(...c.models.map((m) => m.elpd_loo))
+        const bestLooic = Math.min(...c.models.map((m) => m.looic))
+        // pseudo-BMA weights from elpd differences
+        const rels = c.models.map((m) => Math.exp(m.elpd_loo - bestElpd))
+        const total = rels.reduce((s, r) => s + r, 0)
+        const built = c.models
+          .map((m, i) => ({
+            label: DIVORCE_LABELS[m.model] ?? m.model,
+            score: m.looic,
+            delta: m.looic - bestLooic,
+            weight: rels[i]! / total,
+            penalty: m.p_loo,
+          }))
+          .sort((a, b) => a.score - b.score)
+        setRows(built)
+      })
+      .catch(() => {
+        if (!cancelled) setRows(null)
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  if (!rows) return null
+  return (
+    <div>
+      <ModelComparison rows={rows} scoreName="LOO deviance" penaltyName="pLOO" />
+      <p className="mt-3 text-sm text-secondary">
+        The real ranking, from the pipeline fits (seed 1959, 4 chains each).
+        Age alone edges out the two-predictor model — marriage rate buys
+        nothing once age is known, and the extra parameter costs a little
+        skill. Note how close those two sit next to the gap down to
+        marriage-only.
+      </p>
+    </div>
+  )
 }
 
 /** Chapter 13: the reedfrog tanks, loaded once for the Shrinkage Theater. */
