@@ -1,0 +1,15 @@
+# Fitted objects are never committed — CI does not refit (plan §5, §2).
+# Only the exported JSON artifacts in web/public/data/posteriors/ ship.
+fits/
+
+# Datasets are a reproducible download cache (`make data` / get_data.R).
+data/
+
+# renv library and R session cruft.
+renv/library/
+renv/local/
+renv/cellar/
+renv/staging/
+.Rhistory
+.RData
+.Rproj.user/

@@ -20,6 +20,7 @@ fit_cached <- function(name, expr) {
 howell <- read.csv2("data/Howell1.csv")
 howell$height <- as.numeric(howell$height)
 howell$weight <- as.numeric(howell$weight)
+howell$age <- as.numeric(howell$age) # else `>= 18` is a string compare: kids leak in
 adults <- howell[howell$age >= 18, ]
 adults$weight_c <- adults$weight - mean(adults$weight)
 
@@ -417,7 +418,8 @@ fit_cached("m14.8", function() {
 waffles$D <- scale(as.numeric(waffles$Divorce))[, 1]
 waffles$A2 <- scale(as.numeric(waffles$MedianAgeMarriage))[, 1]
 waffles$M2 <- scale(as.numeric(waffles$Marriage))[, 1]
-waffles$D_sd <- as.numeric(waffles$`Divorce SE`) / sd(as.numeric(waffles$Divorce))
+# read.csv2 turns the "Divorce SE" header into Divorce.SE
+waffles$D_sd <- as.numeric(waffles$Divorce.SE) / sd(as.numeric(waffles$Divorce))
 
 # m15.1: divorce measured with error, regressed on age and marriage rate
 fit_cached("m15.1", function() {

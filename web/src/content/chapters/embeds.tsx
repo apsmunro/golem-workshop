@@ -34,6 +34,7 @@ import type { HW } from '../../components/interactives/geometric-people/engine'
 import { LynxHareOde } from '../../components/interactives/lynx-hare-ode/LynxHareOde'
 import { HoroscopesCapstone } from '../../components/interactives/horoscopes/HoroscopesCapstone'
 import { RNG } from '../../lib/rng'
+import { artifactDraws, loadArtifact } from '../../lib/posterior-artifact'
 import { drawsForChapter } from '../chapter-draws'
 import { adults, fitM43, loadHowell } from '../models/howell'
 import { loadRugged, loadTulips } from '../models/interactions'
@@ -189,7 +190,11 @@ export function TulipsSurface() {
   )
 }
 
-/** The chapter-4 posterior explorer, fit in the browser from Howell1. */
+/**
+ * The chapter-4 posterior explorer. Prefers the real m4.3 brms draws from
+ * the r-pipeline artifact (validated by the loader's rhat/ESS gates) and
+ * falls back to the in-browser quap fit when no artifact is deployed.
+ */
 export function HowellExplorer() {
   const [state, setState] = useState<{
     draws: ExplorerDraws
@@ -199,14 +204,27 @@ export function HowellExplorer() {
 
   useEffect(() => {
     let cancelled = false
-    loadHowell().then((rows) => {
+    void loadHowell().then(async (rows) => {
       if (cancelled) return
       const grown = adults(rows)
+      const xbar = grown.reduce((s, r) => s + r.weight, 0) / grown.length
+      const data = grown.map((r) => ({ x: r.weight, y: r.height }))
+      try {
+        const d = artifactDraws(await loadArtifact('m4.3'))
+        if (!d['a'] || !d['b'] || !d['sigma']) throw new Error('m4.3 params missing')
+        if (!cancelled) {
+          setState({ draws: { a: d['a'], b: d['b'], sigma: d['sigma'] }, xbar, data })
+        }
+        return
+      } catch {
+        // No artifact (or it failed its gates) — quap stands in.
+      }
+      if (cancelled) return
       const fit = fitM43(grown)
       setState({
         draws: fit.draws(4000, new RNG(1959)) as unknown as ExplorerDraws,
         xbar: fit.xbar,
-        data: grown.map((r) => ({ x: r.weight, y: r.height })),
+        data,
       })
     })
     return () => {
