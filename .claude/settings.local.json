@@ -77,7 +77,20 @@
       "Bash(ls lh*)",
       "Bash(git add *)",
       "Bash(git commit -m 'Phase 7: polish — a11y contrast tokens, export/import UI, route/embed code splitting, Lighthouse >= 90 all routes *)",
-      "Bash(git commit -q -m 'chore: extend local tool allowlist from Phase 7 session \\(lighthouse, vitest, build scripts\\) *)"
+      "Bash(git commit -q -m 'chore: extend local tool allowlist from Phase 7 session \\(lighthouse, vitest, build scripts\\) *)",
+      "Bash(gh auth *)",
+      "Bash(Rscript --version)",
+      "PowerShell($candidates = @\\(\"C:\\\\Program Files\\\\R\", \"C:\\\\Program Files\\\\GitHub CLI\", \"$env:LOCALAPPDATA\\\\Programs\\\\GitHub CLI\"\\); foreach \\($c in $candidates\\) { if \\(Test-Path $c\\) { Write-Output \"EXISTS: $c\"; Get-ChildItem $c | Select-Object -ExpandProperty Name } else { Write-Output \"missing: $c\" } }; try { \\(Get-Command gh -ErrorAction Stop\\).Source } catch { \"gh not on PATH\" }; try { \\(Get-Command Rscript -ErrorAction Stop\\).Source } catch { \"Rscript not on PATH\" })",
+      "PowerShell(& \"C:\\\\Program Files\\\\R\\\\R-4.5.0\\\\bin\\\\Rscript.exe\" -e \"cat\\(R.version.string, '\\\\n'\\); ip <- rownames\\(installed.packages\\(\\)\\); for \\(p in c\\('brms','cmdstanr','rstan','posterior','loo','jsonlite','renv'\\)\\) cat\\(p, p %in% ip, '\\\\n'\\)\")",
+      "PowerShell(@\\(\"C:\\\\rtools45\",\"C:\\\\rtools44\",\"C:\\\\rtools43\"\\) | ForEach-Object { if \\(Test-Path $_\\) { \"EXISTS: $_\" } else { \"missing: $_\" } }; if \\(Test-Path \"C:\\\\rtools45\\\\usr\\\\bin\"\\) { & \"C:\\\\rtools45\\\\mingw64\\\\bin\\\\g++.exe\" --version 2>$null | Select-Object -First 1 })",
+      "PowerShell(& \"C:\\\\Program Files\\\\R\\\\R-4.5.0\\\\bin\\\\Rscript.exe\" -e \"options\\(repos = c\\(stan = 'https://stan-dev.r-universe.dev', CRAN = 'https://cloud.r-project.org'\\)\\); install.packages\\(c\\('brms', 'cmdstanr'\\), type = 'binary', quiet = TRUE\\); cat\\('---done---\\\\n'\\); for \\(p in c\\('brms','cmdstanr'\\)\\) cat\\(p, requireNamespace\\(p, quietly = TRUE\\), '\\\\n'\\)\")",
+      "PowerShell(& \"C:\\\\Program Files\\\\R\\\\R-4.5.0\\\\bin\\\\Rscript.exe\" -e \"cmdstanr::check_cmdstan_toolchain\\(fix = TRUE\\)\")",
+      "PowerShell(& \"C:\\\\Program Files\\\\R\\\\R-4.5.0\\\\bin\\\\Rscript.exe\" -e \"cmdstanr::install_cmdstan\\(cores = 4, quiet = FALSE\\)\" 2>&1)",
+      "Bash(find 'C:\\\\Users\\\\am5e18/.cmdstan/cmdstan-2.39.0/bin' -name *.o)",
+      "Bash(awk '{print $5, $9}')",
+      "Bash(grep -n '>= 18\\\\|as.numeric\\(howell\\\\|howell$age\\\\|$age' R/fit_models.R)",
+      "Bash(git commit -q -m 'r-pipeline: execute fits, ship 26 brms posterior artifacts, wire ch4 explorer *)",
+      "Bash(git commit -q -m 'docs: update r-pipeline README to the validated setup flow; extend tool allowlist *)"
     ]
   }
 }

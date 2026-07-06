@@ -8,20 +8,21 @@ in `web/public/data/posteriors/`.
 ## Requirements
 
 - R ≥ 4.3
-- cmdstan (via `cmdstanr::install_cmdstan()`)
-- ~15 minutes for the chapter 4–6 fits
+- A C++ toolchain (RTools on Windows; setup.R checks and says what's missing)
+- ~45 minutes first run: cmdstan compile plus all 26 fits (validated on
+  Windows, R 4.5.0 + RTools45 + cmdstan 2.39, session 010)
 
 ## Setup and run
 
 ```sh
-Rscript setup.R      # installs renv and locked packages
+Rscript setup.R      # installs brms + cmdstanr (Stan r-universe repo) and builds cmdstan
 make data            # downloads rethinking datasets into data/
-make fits            # fits m4.x–m6.x (seed 1959, backend cmdstanr)
+make fits            # fits m4.x–m16.1 (seed 1959, backend cmdstanr)
 make export          # writes ../web/public/data/posteriors/*.json
 ```
 
-`make all` does the lot. Fits are cached as .rds under fits/ and only
-re-run when the model file changes.
+`make all` does the lot. Fits are cached as .rds under fits/ (gitignored —
+only the exported artifacts are committed) and only re-run when deleted.
 
 ## Correctness gates (CLAUDE.md §5)
 
