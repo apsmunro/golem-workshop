@@ -90,7 +90,9 @@
       "Bash(awk '{print $5, $9}')",
       "Bash(grep -n '>= 18\\\\|as.numeric\\(howell\\\\|howell$age\\\\|$age' R/fit_models.R)",
       "Bash(git commit -q -m 'r-pipeline: execute fits, ship 26 brms posterior artifacts, wire ch4 explorer *)",
-      "Bash(git commit -q -m 'docs: update r-pipeline README to the validated setup flow; extend tool allowlist *)"
+      "Bash(git commit -q -m 'docs: update r-pipeline README to the validated setup flow; extend tool allowlist *)",
+      "Bash(node -e \"console.log\\(JSON.stringify\\(require\\('./web/public/data/posteriors/comparison-ch07.json'\\), null, 1\\)\\)\")",
+      "Bash(git commit -q -m 'chore: add artifact-inspection command to local tool allowlist *)"
     ]
   }
 }
