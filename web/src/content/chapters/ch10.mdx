@@ -13,6 +13,16 @@ the maximum entropy principle: choose the distribution that can happen the
 most ways subject to what you actually know. It is a device for
 *confessing* constraints rather than smuggling in extras.
 
+If that sounds abstract, here is the practical question it answers. Every
+model you build must declare a distribution for its outcome — chapter 4
+declared heights Gaussian, chapter 2 declared tosses binomial. On what
+grounds? Picking a distribution *is* an assumption, and a strong one. The
+maximum entropy principle gives the grounds: state the constraints you
+genuinely believe (the outcome is a count with a ceiling; it has some
+average rate; it is continuous with a known spread), then take the flattest
+distribution that satisfies them. Anything else quietly asserts a
+constraint you never stated and cannot defend.
+
 ## The usual suspects, re-arrested
 
 Chapter 4 excused the Gaussian as a law of ignorance. Now the excuse
@@ -33,10 +43,12 @@ is why they keep appearing: not convention, but confession.
 ## Bending the line into the world
 
 A Gaussian mean can wander anywhere, so chapter 4 could set μ equal to a
-line and walk away. A probability cannot leave [0, 1]; a rate cannot go
-negative. Generalized linear models keep the linear machinery and insert a
-hinge — the link function — between the line and the constrained
-parameter:
+line and walk away. Other outcomes are fussier. A probability cannot leave
+[0, 1]; a rate cannot go negative. But the linear predictor α + βx roams
+the whole real line, and sooner or later it will propose a probability of
+1.4 or a rate of −3. Generalized linear models keep the linear machinery
+and insert a hinge — the link function — between the line and the
+constrained parameter:
 
 $$
 y_i \sim \text{Binomial}(n, p_i), \qquad \text{logit}(p_i) = \alpha + \beta x_i
@@ -48,23 +60,35 @@ inverse link folds it back into probability. Nothing about y is
 transformed — only the parameter.
 </Gloss>
 
+The logit is the workhorse, so meet it properly. Take a probability p,
+form the odds p/(1−p) — the gambler's phrasing, "three to one" — and take
+the log. Now 0.5 maps to 0, certainty maps to ±infinity, and the whole
+awkward [0, 1] interval has been unrolled onto the real line where lines
+are allowed to live. The model is linear *there*, and the inverse mapping
+squashes the line back into an S-shaped curve on the probability scale.
+
 <Wide><LinkMorpher /></Wide>
 
 Ride the morph slider a few times. Equal steps on the link scale compress
-into nothing near the floor and ceiling — that bunching *is* the model's
-built-in interaction. Even with no product term anywhere, the effect of
-one predictor on the outcome scale depends on where every other predictor
-has already pushed η. The probe makes it numeric: β holds still while the
-outcome-scale slope goes wherever p(1−p) sends it. Remember this in
-chapter 11, when coefficients on the logit scale refuse to be percentage
-points.
+into nothing near the floor and ceiling — a one-unit push moves a
+probability of 0.5 a lot, a probability of 0.97 barely at all, which is as
+it should be: near-certain things are hard to make more certain. That
+bunching *is* the model's built-in interaction. Even with no product term
+anywhere, the effect of one predictor on the outcome scale depends on
+where every other predictor has already pushed η. The probe makes it
+numeric: β holds still while the outcome-scale slope goes wherever p(1−p)
+sends it. Remember this in chapter 11, when coefficients on the logit
+scale refuse to be percentage points.
 
 The log link plays the same trick for rates: linear on log λ, exponential
-on λ. And it sets the trap this chapter's header is drawn from: a prior
-that is flat on the logit scale is not flat on the probability scale — it
-piles up against 0 and 1, certain the world is extreme. Priors must be
-judged where their consequences live, which is one more job for prior
-predictive simulation.
+on λ, so predictors act multiplicatively. Each unit of x scales the rate
+by a constant factor rather than adding a constant amount. And it sets the
+trap this chapter's header is drawn from: a prior that is flat on the
+logit scale is not flat on the probability scale — it piles up against 0
+and 1, certain the world is extreme. The general moral outlasts the
+example. A link function is a change of scale, and priors, like effects,
+must be judged on the scale where their consequences live, which is one
+more job for prior predictive simulation.
 
 ## No practice section — drills instead
 

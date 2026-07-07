@@ -7,13 +7,26 @@ remains is to *visit* the posterior instead of solving it: take samples
 whose long-run frequencies match the distribution, then work with samples
 exactly as you have since chapter 3.
 
+Pause on how strange and how practical that is. You cannot write down the
+posterior. You cannot even evaluate how tall it is at a given point without
+knowing a normalizing constant that is itself the impossible integral. But
+you *can* wander through parameter space by rules that guarantee one thing:
+in the long run, the time you spend in each region is proportional to that
+region's posterior probability. Keep a diary of the walk and the diary is
+your sample — the same kind of object `sample()` gave you in chapter 3,
+earned the hard way. That family of wandering rules is Markov chain Monte
+Carlo, MCMC.
+
 The book tells this as the parable of a king condemned to visit islands in
 proportion to their populations, with a coin-flip rule that needs no map of
 the whole archipelago. That rule — propose, compare, sometimes move — is
 the Metropolis algorithm, and it works. Slowly. Each proposal is blind, and
 in high dimensions blind proposals land in probabilistic nowhere almost
-every time. The random walk dawdles; consecutive samples barely differ;
-a million draws can carry a few hundred draws' worth of information.
+every time. Why? Because in a space of a hundred dimensions, nearly all the
+volume is far from where the probability lives, so a random step in a
+random direction almost always steps off a cliff and gets rejected. The
+random walk dawdles; consecutive samples barely differ; a million draws can
+carry a few hundred draws' worth of information.
 
 ## Roll, don't stumble
 
@@ -34,10 +47,12 @@ The simulation is discrete: the marble advances in L leapfrog steps of size
 real computational cost. Push ε up and the discretization stops conserving
 energy — the marble gains speed from nowhere and flies out of the bowl.
 That is a divergence. It is not a warning label; it is a physical event you
-just watched, and when Stan reports one it means exactly this. Try the
-funnel: divergences pile up in the neck, where curvature changes too fast
-for any single ε. Chapter 13 meets that geometry in earnest and learns to
-melt it away by reparameterization.
+just watched, and when Stan reports one it means exactly this: somewhere in
+your posterior there is terrain the simulated marble could not cross
+honestly, and the samples near it may not be trustworthy. Try the funnel:
+divergences pile up in the neck, where curvature changes too fast for any
+single ε. Chapter 13 meets that geometry in earnest and learns to melt it
+away by reparameterization.
 
 ## From quap to chains
 
@@ -69,22 +84,28 @@ over; the engine underneath becomes Stan's adaptive HMC.
 )`}
 />
 
-Warm-up is not burn-in with better branding — during those first thousand
-iterations Stan is *tuning the sampler itself*, adapting ε and the mass
-matrix to the posterior's shape, and those draws are discarded because they
-were taken with the wrong instrument. Run several chains from dispersed
-starts. Agreement among strangers is the only convergence evidence there
-is.
+A chain is one marble's diary — one independent walk through the
+posterior, started from its own random spot. Warm-up is not burn-in with
+better branding: during those first thousand iterations Stan is *tuning
+the sampler itself*, adapting ε and the mass matrix to the posterior's
+shape, and those draws are discarded because they were taken with the
+wrong instrument. Run several chains from dispersed starts. The logic is
+plain: if four walkers who began in different corners of parameter space
+all end up describing the same territory, the territory is probably real.
+Agreement among strangers is the only convergence evidence there is.
 
 ## Chain care
 
 Two numbers summarize the health of a run. R̂ compares variance between
 chains to variance within them; at convergence the chains are
-indistinguishable and R̂ approaches 1 (this workshop's pipeline refuses
-anything above 1.01). Effective sample size counts draws after discounting
-autocorrelation — a thousand sticky draws may be worth fifty independent
-ones. But numbers are summaries of pictures, and you should be able to read
-the pictures. Diagnose these patients:
+indistinguishable (a stranger reading the diaries could not tell which
+walker wrote which) and R̂ approaches 1. This workshop's pipeline refuses
+anything above 1.01. Effective sample size counts draws after discounting
+autocorrelation. Consecutive MCMC samples are correlated — each is a step
+from the last, not a fresh draw — so a thousand sticky draws may carry the
+information of fifty independent ones, and it is the fifty that determines
+how precise your estimates are. But numbers are summaries of pictures, and
+you should be able to read the pictures. Diagnose these patients:
 
 <Wide><TraceTriage /></Wide>
 
@@ -95,7 +116,9 @@ approach path left in the sample. When a chain misbehaves, the fix is
 rarely "more iterations". It is better geometry: tighter priors,
 reparameterization, a model that says what you actually believe. A golem
 that samples badly is usually a golem that was asked a badly posed
-question.
+question — a flat prior on an unbounded parameter, two parameters doing
+one job, a likelihood that cannot tell its inputs apart. The sampler is
+the first tool in the workshop that complains out loud. Listen to it.
 
 ## Forge it
 

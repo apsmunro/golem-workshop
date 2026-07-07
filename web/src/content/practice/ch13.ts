@@ -126,4 +126,22 @@ m_multi <- brm(use ~ 1 + (1 | district), data = d, family = bernoulli(), ...)`,
     solution:
       'Letting the urban effect vary reveals that districts differ not only in baseline use but in how much urban living matters, and the intercept–slope correlation is typically negative: districts with low rural use show the largest urban boost, so the urban and rural rates are closer to converging in already-high-use districts. This is the bridge into chapter 14 — the moment a varying-intercept model becomes a varying-slopes model, and the covariance between the two effects starts carrying information.',
   },
+  '13C1': {
+    workshop: true,
+    paraphrase:
+      'Two classrooms, same true-story school. Each pupil\'s score scatters around their class mean with within-class sd 1. Class A tested only 5 pupils and averaged 2.0; class B tested 50 and averaged 2.0 as well. The school\'s partial-pooling model has settled on a grand mean of 0 and a between-class sd of 1. By hand, compute each class\'s shrunk estimate, say which class the leash pulls harder and why, then predict what happens to both if you slide the between-class sd toward 0 and toward infinity.',
+    concept:
+      'Shrinkage is a precision-weighted average, and the weights are counting: the pooled estimate leans on the data in proportion to how much data there is, and on the grand mean in proportion to how alike the classes are.',
+    strategy:
+      'For a Gaussian class mean, the partial-pooling estimate given the hyperparameters is θ̂ = (n·ȳ/σ² + μ/τ²) / (n/σ² + 1/τ²). Here σ = 1 (within), μ = 0 (grand), τ = 1 (between), so data-weight is just n and prior-weight is 1. Plug in n = 5 and n = 50 at the same raw mean of 2.0, then push τ to its two extremes and read off complete versus no pooling.',
+    skeleton: `sigma <- 1; mu <- 0; tau <- 1
+shrink <- function(n, ybar) {
+  wd <- n / sigma^2      # data precision
+  wp <- 1 / tau^2        # prior (grand-mean) precision
+  (wd * ybar + wp * mu) / (wd + wp)
+}
+shrink(5, 2); shrink(50, 2)`,
+    solution:
+      'With σ = τ = 1 the weights are just n against 1. Class A: θ̂ = (5·2 + 1·0)/(5 + 1) = 10/6 ≈ **1.67**. Class B: θ̂ = (50·2)/(50 + 1) = 100/51 ≈ **1.96**. Same raw average of 2.0, two different estimates — the five-pupil class is dragged a sixth of the way toward the grand mean (its prior weight is 1 against 5 data-points\' worth) while the fifty-pupil class barely moves. The leash pulls hardest on the class that knows least, exactly the reedfrog rule: little data means little to lose by borrowing, so the model borrows more.\n\nNow the extremes, both exact. Send τ → 0 (the school insists every class is identical) and the prior precision 1/τ² blows up, so both estimates collapse to the grand mean 0: complete pooling, one number for the school. Send τ → ∞ (classes are unrelated strangers) and the prior precision vanishes, so each estimate returns to its own raw mean of 2.0 — no pooling, every class alone. The multilevel model lives between these poles and, unlike this hand calculation, *estimates* τ from how much the classes actually differ rather than being told. That single learned number is the whole difference between a golem with memory and one without.',
+  },
 }

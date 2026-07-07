@@ -4,11 +4,18 @@ will ask: *so what's the answer?* A curve is a bad sentence. This bench
 teaches the honest compression: draw samples from the posterior, then ask
 your questions of the samples.
 
-The move sounds like a shortcut and is actually a philosophy. Integrals
-become head-counts. Tail areas become `mean(samples < 0.2)`. Every summary
-you will ever need — intervals, point estimates, predictions — is a one-liner
-over a vector of draws. MCMC, waiting in Chapter 9, produces *only*
-samples, so you are learning the permanent interface early.
+Sampling sounds like it should lose information, and it does lose a
+little. But look what it buys. Every question you might ask of a posterior
+curve is, in its native mathematical form, an integral: the probability
+that $p$ is below 0.2 is the area under the curve to the left of 0.2.
+Integrals are unpleasant, and they get rapidly worse as models grow. But if
+you hold ten thousand samples drawn from that same curve, the integral
+collapses into counting: what fraction of your samples are below 0.2? That
+is `mean(samples < 0.2)`, one line, no calculus. The move sounds like a
+shortcut and is actually a philosophy. Integrals become head-counts. Every
+summary you will ever need — intervals, point estimates, predictions — is a
+one-liner over a vector of draws. MCMC, waiting in Chapter 9, produces
+*only* samples, so you are learning the permanent interface early.
 
 ## Draw ten thousand globes
 
@@ -27,29 +34,42 @@ quantile(samples, c(0.055, 0.945)) # 89% percentile interval`}
 />
 
 Each sample is a candidate globe, drawn as often as the posterior finds it
-plausible. The vector `samples` *is* your posterior now, for every
-practical purpose. Interrogate it rudely.
+plausible. A value of $p$ the posterior loves shows up thousands of times
+in the vector; a value it doubts shows up rarely; a value it has ruled out
+never appears. So the vector `samples` *is* your posterior now, for every
+practical purpose — a bag of plausible worlds you can reach into whenever
+you have a question. Interrogate it rudely.
 
 ## Intervals are summaries, never estimates
 
-Two interval species live in the wild. A **percentile interval** chops
-equal mass off both tails; it is symmetric in probability and what most
-people mean by default. A **highest posterior density interval** is the
-narrowest region holding the stated mass; it hugs the peak and matters when
-the posterior is lopsided. For the globe they nearly coincide. For skewed
+An interval is a way of saying "the plausible values live roughly here" in
+two numbers instead of a curve. Two interval species live in the wild. A
+**percentile interval** chops equal mass off both tails: for an 89%
+interval, drop the lowest 5.5% of samples and the highest 5.5%, and report
+what remains. It is symmetric in probability and what most people mean by
+default. A **highest posterior density interval** is instead the narrowest
+region holding the stated mass; it hugs the peak. For a posterior shaped
+like a lopsided hill, most of its mass piled near one end, the two give
+visibly different answers, and the percentile interval can even exclude the single
+most plausible value. For the globe they nearly coincide. For skewed
 posteriors they part company, and which one you report becomes a real
 choice — so report which you chose.
 
 Two habits worth adopting from day one. First, the interval is a summary
 of the posterior, never the inference itself; when the two conflict, the
-posterior wins. Second, 89% is as defensible as 95% — the only virtue 95%
-has is seniority, and seniority is how the flowchart happened.
+posterior wins. If someone asks a question the interval can't answer, go
+back to the samples and answer it directly. Second, 89% is as defensible
+as 95% — the only virtue 95% has is seniority, and seniority is how the
+flowchart happened.
 
 ## Simulating prediction
 
-The posterior speaks about parameters. To speak about *future data*, push
-whole posterior draws through the likelihood — every plausible globe gets
-tossed again, in proportion to its plausibility:
+The posterior speaks about parameters — about $p$, the unseen dial of the
+world. But parameters are not observations. Nobody will ever hand you a
+$p$; they will hand you tosses. To speak about *future data*, push whole
+posterior draws through the likelihood: for each sampled globe, toss it
+nine more times and record what happens. Every plausible globe gets tossed
+again, in proportion to its plausibility:
 
 <WebRRunner
   caption="Posterior predictive for nine new tosses"
@@ -65,10 +85,14 @@ table(w) / 1e4`}
 />
 
 Compare that spread against `rbinom(1e4, 9, 0.64)` — prediction from the
-single best $p$. The predictive distribution is wider, because it carries
-two uncertainties at once: the binomial's ordinary noise *and* your doubt
-about $p$ itself. Golems that report only the first kind are how confident
-nonsense gets published.
+single best $p$, as if you were certain of it. The honest predictive
+distribution is wider, because it carries two uncertainties at once: the
+binomial's ordinary noise (even a known coin surprises you) *and* your
+doubt about $p$ itself. Collapsing the second kind, by pretending your
+best estimate is the truth, is one of the most common errors in applied
+statistics, and it always errs in the same direction: too confident.
+Golems that report only the first kind of noise are how confident nonsense
+gets published.
 
 $$
 \Pr(\tilde{W} \mid \text{data}) = \int \Pr(\tilde{W} \mid p)\,\Pr(p \mid \text{data})\,dp
@@ -79,6 +103,14 @@ Future tosses, averaged over every globe the posterior still believes in.
 The integral looks solemn; `rbinom(1e4, 9, samples)` is the same sentence
 in a working-class accent.
 </Gloss>
+
+This simulation trick has a second job that matters even more than
+forecasting: checking the model against the data you already have. Simulate
+data from the fitted golem and set it beside the real data. Where the two
+disagree — the real data has streaks the simulation never shows, or spreads
+the simulation can't reach — the small world is missing something the large
+world contains. No p-value required; just looking, carefully, at what your
+own model claims the world is like.
 
 ## The dungeon: births
 

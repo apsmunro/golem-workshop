@@ -6,15 +6,29 @@ regression is our epicycle: a device that approximates almost any mean
 relationship, often useful, rarely a claim about mechanism. Keep the Ptolemy
 warning close as you build this one, because it fits so willingly.
 
+What regression actually does is easy to state. You have an outcome you
+care about (height, say) and a predictor you suspect matters (weight).
+The golem's job is to describe how the *average* height changes as weight
+changes, and how much individuals scatter around that average. Two jobs,
+two kinds of number, and confusing them causes trouble all the way to the
+end of this chapter.
+
 ## Why heights are a bell
 
 Add up many small independent nudges — genes, meals, illnesses, a thousand
 of them — and the sum forgets where each nudge came from. All that survives
-is a mean and a spread. That is the Gaussian, and it is not a law of nature
-so much as a law of ignorance: the least committal shape for a quantity
-built from many additions. The golem uses it not because heights *are*
-normal but because, knowing only a mean and a variance, normal is the most
-honest guess.
+is a mean and a spread. That is the Gaussian, the bell curve, and it is not
+a law of nature so much as a law of ignorance: the least committal shape
+for a quantity built from many additions. The golem uses it not because
+heights *are* normal but because, knowing only a mean and a variance,
+normal is the most honest guess.
+
+You can watch this happen with coins. Flip sixteen coins, count heads,
+repeat a thousand times, and histogram the counts: a bell, already. Nothing
+about a single coin is bell-shaped; the bell comes from the adding. Any
+outcome assembled the same way — many small influences, each pushing a
+little up or a little down — will tend toward the same shape, which is why
+the Gaussian keeps showing up in places that owe each other nothing.
 
 $$
 h_i \sim \text{Normal}(\mu, \sigma)
@@ -25,29 +39,60 @@ Each height is a draw from one bell, with center μ and width σ. No predictor
 yet — just the claim that heights scatter around a typical value.
 </Gloss>
 
+Read the notation slowly once, because every model from here on is written
+in it. The left side names the data. The tilde says "is distributed as" —
+a claim about scatter, not an equation to solve. The right side names the
+distribution and its parameters, the unknown dials the golem will learn:
+here μ, the center, and σ, the spread. A model is a stack of lines like
+this, one per assumption, and you should be able to read each line aloud
+as an English sentence about the world.
+
 ## Priors are claims; simulate them
 
-Before fitting anything, hear what a prior says out loud. A slope prior of
-Normal(0, 10) sounds humble and is in fact unhinged: it cheerfully proposes
-people who shrink to negative height or tower past three metres. Move the
-sliders until the golem stops predicting monsters.
+Every parameter needs a prior — a statement of what values were plausible
+before the data arrived. Newcomers often treat priors as an embarrassment
+to be minimized. The better posture: a prior is a claim about the world,
+and like any claim it can be inspected. The inspection method is
+simulation. Draw parameter values from the prior, push them through the
+model, and look at the fake people it invents. If the prior invents
+impossible people, it was a bad claim, and you found out for free — before
+any data, with no risk of cheating.
+
+Hear what a prior says out loud. A slope prior of Normal(0, 10) sounds
+humble — centered on zero, letting the data decide! — and is in fact
+unhinged: it cheerfully proposes people who shrink to negative height or
+tower past three metres. Move the sliders until the golem stops predicting
+monsters.
 
 <Wide><PriorPlayground /></Wide>
 
 A LogNormal(0, 1) slope forces the relationship positive and keeps it
-plausible — taller-with-heavier, at a believable rate. This is the whole
-argument for weakly informative priors, and you just watched it rather than
-took it on faith.
+plausible — taller-with-heavier, at a believable rate. Notice that this is
+knowledge you already had: you have met people, and none of them lost
+height by gaining weight. A prior that encodes what everyone knows is not
+bias; refusing to encode it means your model starts out believing in
+monsters. This is the whole argument for weakly informative priors, and
+you just watched it rather than took it on faith.
 
 ## The linear golem
 
-Give the mean a predictor. Center weight on its own mean so the intercept
-stays interpretable — it becomes "the height of an average-weight person",
-not "the height of a weightless one".
+Now give the mean a predictor. The move is small but it is *the* move of
+this entire book: μ stops being a single number and becomes a function of
+weight, so the golem now claims that people of different weights have
+different average heights, arranged along a line. One practical trick
+makes the result readable: center weight — subtract its own mean — so the
+intercept stays interpretable. It becomes "the height of an average-weight
+person", not "the height of a weightless one".
 
 $$
 h_i \sim \text{Normal}(\mu_i, \sigma), \qquad \mu_i = \alpha + \beta\,(x_i - \bar{x})
 $$
+
+The parameters have plain readings. α is the expected height at average
+weight. β is the slope: how many centimetres of average height come with
+one extra kilogram. And σ still measures how far real individuals scatter
+around the line — the line never claims people sit on it, only that they
+cluster near it.
 
 <Rosetta
   model="m4.3"
@@ -75,21 +120,28 @@ $$
 
 ## Reading the posterior
 
-Fit it and the golem hands back not a line but a posterior over lines. Here
-is that posterior for 352 !Kung adults — the real brms draws, fit offline
-with Stan and shipped as thinned samples (and if those ever fail to load, an
-in-browser quadratic approximation stands in). Marginals
-first, then the model's lines over the data, then a counterfactual: pick a
-weight the census never recorded and ask for a height.
+Fit it and the golem hands back not a line but a posterior over lines —
+thousands of (α, β, σ) triples, each one a complete candidate story about
+heights, each held with plausibility proportional to how well it explains
+the data. Here is that posterior for 352 !Kung adults — the real brms
+draws, fit offline with Stan and shipped as thinned samples (and if those
+ever fail to load, an in-browser quadratic approximation stands in).
+Marginals first, then the model's lines over the data, then a
+counterfactual: pick a weight the census never recorded and ask for a
+height.
 
 <Wide><HowellExplorer /></Wide>
 
 Watch the two bands. The narrow brass one is uncertainty about the *mean*
-line — it tightens with more data toward a hairline. The wide plum one is
-uncertainty about an actual *person*, and it never collapses, because people
-scatter around the mean no matter how sure you are of the mean. Confusing
-these two bands is how forecasts end up sounding certain about individuals
-when they are only certain about averages.
+line — where the average sits. It tightens with more data toward a
+hairline, because averages are easy to pin down with enough people. The
+wide plum one is uncertainty about an actual *person*, and it never
+collapses, no matter how much data arrives, because people genuinely
+scatter around the mean and no amount of certainty about the average
+removes the scatter. A weather service can be nearly sure the average July
+is warm and still be humble about next Tuesday. Confusing these two bands
+is how forecasts end up sounding certain about individuals when they are
+only certain about averages.
 
 ## Predict before you look
 

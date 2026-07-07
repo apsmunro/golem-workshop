@@ -11,7 +11,7 @@ export const ch08Hints: ChapterHints = {
     concept: 'An interaction candidate is anything the mechanism needs to work.',
     strategy: 'For each causal story, ask: under what condition would this cause do nothing?',
     solution:
-      'Yeast raises dough only in a warm kitchen — temperature moderates fermentation. Education raises income more in some labor markets, fields, or eras than others — any of those moderates the return. Gasoline moves a car only if the engine runs — a broken engine sets the gasoline slope to zero. In each case the moderator gates the mechanism rather than adding to it.',
+      'Yeast raises dough only in a warm kitchen: temperature moderates fermentation. Education raises income more in some labor markets, fields, or eras than others: any of those moderates the return. Gasoline moves a car only if the engine runs: a broken engine sets the gasoline slope to zero. In each case the moderator gates the mechanism rather than adding to it.',
   },
   '8E2': {
     paraphrase: 'Pick out which of the four explanations actually invokes an interaction.',

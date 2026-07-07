@@ -7,6 +7,13 @@ That little ritual is the whole of Bayesian inference in miniature, and
 this bench builds it twice. Once with your hands, counting paths through a
 garden. Once with twenty lines of R.
 
+Before the counting starts, notice the shape of the question. You are not
+asking "is the globe mostly water, yes or no?" You are asking how plausible
+every possible answer is — 10% water, 50%, 71%, all of them at once — given
+what nine tosses told you. Holding many candidate answers in mind
+simultaneously, each with its own degree of plausibility, is the one mental
+habit this whole course is built on. Everything else is bookkeeping.
+
 ## Small worlds and large worlds
 
 The globe in your hands is the large world: wet, dented, indifferent to
@@ -17,6 +24,11 @@ small world the golem's logic is flawless. Whether the small world has
 anything to do with the large one is your problem, never the golem's, and
 no amount of arithmetic will make that judgment for you.
 
+The small world leaves things out on purpose. It doesn't know that your
+thumb tends to land on the Pacific, that the globe is dented near Norway,
+or that you got bored after toss six. If any of those matter, the golem's
+flawless logic will produce a flawless answer to the wrong question.
+
 Keep both worlds in view at once. The chapters ahead are full of golems
 that were perfect in their small worlds and wrong about ours.
 
@@ -25,6 +37,14 @@ that were perfect in their small worlds and wrong about ours.
 Strip the machinery away and Bayesian updating is counting. Consider every
 way the world could be; for each one, count the paths that produce exactly
 the data you saw; believe each world in proportion to its surviving paths.
+
+A path here is nothing exotic. Suppose a bag holds four marbles, some blue
+and some white, and you draw three with replacement. If the bag were one
+blue and three white, how many distinct sequences of draws could produce
+blue-white-blue? Count them on your fingers: one way to draw the first
+blue, three ways the white, one way the second blue — three paths. A bag of
+three blues and one white offers nine. Nothing about the counting requires
+a formula; it requires patience, which is what computers are for.
 
 Try it. Pick a conjecture below, draw data, and watch the incompatible
 paths wither. When you press "update again", this round's counts become the
@@ -38,10 +58,15 @@ Relative numbers of ways. That is what a probability is about to be.
 
 ## From counting to the globe
 
-Counts get unwieldy when the conjectures form a continuum, so we rename.
-The paths-per-conjecture, standardized, becomes a **likelihood**. The
-starting weights become a **prior**. The surviving plausibility becomes the
-**posterior**. For $W$ waters in $N$ tosses:
+Counts get unwieldy when the conjectures form a continuum — the globe's
+water proportion could be any number between 0 and 1, and you cannot list
+infinitely many bags of marbles. So we rename the pieces and let algebra
+carry the counting. The paths-per-conjecture, standardized, becomes a
+**likelihood**: for each candidate value of $p$, how readily would that
+world produce the exact data you saw? The starting weights become a
+**prior**: how plausible was each candidate before this data arrived? And
+the surviving plausibility becomes the **posterior**: what you believe
+after the data have spoken. For $W$ waters in $N$ tosses:
 
 $$
 \Pr(p \mid W, N) = \frac{\binom{N}{W} p^{W} (1-p)^{N-W} \times \Pr(p)}{\Pr(W)}
@@ -53,6 +78,14 @@ this p), normalized so all the plausibility sums to one. The denominator is
 only the normalizing chore.
 </Gloss>
 
+Those three names — prior, likelihood, posterior — will appear on every
+bench for the rest of the course, so pin them down now with the globe in
+hand. The prior is what you believed about $p$ before tossing. The
+likelihood is the model's engine: it scores each candidate $p$ by how well
+it explains W L W W W L W L W. The posterior is the updated belief, and it
+is always a compromise between the other two, weighted by how much data you
+have. Nine tosses move a prior a little; nine thousand tosses steamroll it.
+
 The golem for this chapter has three parts and you should be able to point
 at each: a likelihood (binomial — tosses are exchangeable coin flips with
 stickiness $p$), a parameter to learn ($p$), and a prior (flat, for now —
@@ -61,9 +94,12 @@ within a chapter).
 
 ## Making it go: grid approximation
 
-The continuum version of "list every conjecture" is a grid. Score each grid
-point by likelihood × prior, normalize, done — a posterior you computed by
-brute honesty. Run it; the code is editable, so break it and see.
+The continuum version of "list every conjecture" is a grid. Instead of
+considering every possible $p$ between 0 and 1 (there are infinitely
+many), consider twenty of them, evenly spaced, and pretend they are the
+only options. Score each grid point by likelihood × prior, normalize so
+the scores sum to one, done — a posterior you computed by brute honesty.
+Run it; the code is editable, so break it and see.
 
 <WebRRunner
   caption="The globe posterior on a 20-point grid"
@@ -77,21 +113,29 @@ round(posterior, 3)`}
 />
 
 Twenty points is coarse on purpose: you can read the whole posterior as a
-list. Push `length.out` to 1000 and the list becomes a curve; nothing else
+list, and reading it teaches you what a posterior *is* — a plausibility
+score next to each candidate answer, nothing more mysterious than that.
+Push `length.out` to 1000 and the list becomes a curve; nothing else
 changes. Grid approximation dies of the curse of dimensionality around two
-or three parameters, which is why sturdier engines arrive in Chapter 9 —
-same posterior, better plumbing.
+or three parameters: a fine grid over ten parameters needs more points
+than there are atoms in you, which is why sturdier engines arrive in
+Chapter 9. Same posterior, better plumbing.
 
 ## Predict before you look
 
 Six waters in nine tosses, flat prior. Before running anything: where does
-the posterior for $p$ pile up, and how wide is the pile? Draw it.
+the posterior for $p$ pile up, and how wide is the pile? Draw it. Resist
+the urge to peek first; a sketch you make after seeing the answer trains
+nothing.
 
 <GlobeCalibration />
 
 Whatever your overlap score, it goes in your calibration ledger, and the
 ledger is the point. Being well calibrated about uncertainty is a skill,
-it is trainable, and almost nobody arrives with it.
+it is trainable, and almost nobody arrives with it. Most people draw their
+first posterior far too narrow — sure of an answer nine tosses cannot
+possibly justify. If that was you, you are in the majority, and the cure
+is exactly this exercise repeated across seventeen chapters.
 
 ## Forge it
 

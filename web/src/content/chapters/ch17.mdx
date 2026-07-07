@@ -7,13 +7,24 @@ you, and this chapter is where the course hands it back.
 ## The horoscope problem
 
 A horoscope is unfalsifiable by design — vague enough to feel true whatever
-happens. A surprising amount of statistical practice works the same way. A
-model that can absorb any result explains nothing; a workflow with enough
-researcher degrees of freedom will find a significant effect in noise; a
-default prior smuggled in without thought is a wish dressed as knowledge. The
-antidote is everything you built: predict before you reveal, simulate before
-you fit, draw the causal graph, and check the model against data it has never
-seen.
+happens. "You will face a challenge and grow from it" cannot be wrong,
+which is exactly why it tells you nothing. A surprising amount of
+statistical practice works the same way, and usually without anyone
+intending it. A model flexible enough to absorb any result explains
+nothing, though it fits everything. A workflow with enough quiet choices
+(which cases to drop, which covariates to try, when to stop collecting)
+will find a significant effect in pure noise, because somebody kept
+turning dials until one lit up. A default prior dropped in without thought
+is a wish dressed as knowledge. None of these announce themselves; each
+feels like ordinary competent work from the inside.
+
+The antidote is everything you built. Predict before you reveal, so the
+data can surprise you. Simulate before you fit, so you know what your
+model believes before it meets reality. Draw the causal graph, so you
+adjust for confounds and not for mediators. Check the model against data
+it has never seen, so flexibility cannot masquerade as fit. Each of those
+habits was a chapter; together they are the difference between science and
+astrology done with matrices.
 
 ## Your record
 
@@ -26,20 +37,27 @@ few questions none of them can answer.
 
 The calibration number is not a grade. It is a mirror: it shows where your
 sense of uncertainty tracked the truth and where it ran too narrow, which is
-the most common way to be wrong. A well-calibrated forecaster who says "70%"
-is right about seventy percent of the time — no more, and no less. That habit,
-more than any single model, is what the course was training.
+the most common way to be wrong — humans are reliably overconfident, drawing
+intervals too tight and then acting surprised. A well-calibrated forecaster
+who says "70%" is right about seventy percent of the time — no more, and no
+less; the ones who claim 90% and are right half the time are not bolder,
+just miscalibrated. That habit, more than any single model, is what the
+course was training. It transfers to every decision you make under
+uncertainty, most of which will never involve a posterior at all.
 
 ## What the golems cannot do
 
 Each golem in your bestiary has a horizon set by its structure, not its
-sample size. The Gaussian golem predicts height from weight and can never tell
-you whether feeding a child changes its adult height — that is a causal
-question its structure does not encode. The compass ranks models for
-prediction and is silent on cause. The multilevel golems pool across clusters
-and assume the clusters are exchangeable, which is sometimes exactly wrong.
-Knowing which golem to distrust, and when to reach for another, is the wisdom
-the workshop cannot forge for you. It is the part you supply.
+sample size. That is the point most easily forgotten, because more data
+feels like it should cure everything. It cannot cure the wrong question. The Gaussian golem predicts height from weight and can never tell
+you whether feeding a child changes its adult height; that is a causal
+question its structure does not encode, and a billion rows would not add
+the missing arrow. The compass of chapter 7 ranks models for prediction
+and is silent on cause. The multilevel golems pool across clusters and
+assume the clusters are exchangeable — interchangeable in the ways that
+matter — which is sometimes exactly wrong. Knowing which golem to
+distrust, and when to reach for another, is the wisdom the workshop cannot
+forge for you. It is the part you supply.
 
 ## Forge it
 

@@ -160,6 +160,6 @@ grad_U <- function(theta) { p <- plogis(theta); -(6 - 9*p) }   # d(-logpost)/dth
 # leapfrog: phi half-step, theta full step, phi half-step, repeat L times
 # accept with min(1, exp(H0 - H1))`,
     solution:
-      'On the logit scale, with the flat prior absorbed by the Jacobian, the gradient of the negative log posterior collapses to −(W − N·p) = 9p − 6 — one line. Leapfrog with small ε conserves H to a few decimals and acceptance sits near 1; crank ε and you can produce your own divergences on a one-dimensional posterior. After this exercise, nothing Stan reports is folklore: you have built the marble, the flick, and the bowl yourself.',
+      'On the logit scale the skeleton\'s U is the negative log likelihood, which amounts to a flat prior on θ itself, and its gradient collapses to −(W − N·p) = 9p − 6, one line. (Careful: that is a different model from 9H6. A flat prior on p transforms to θ with a Jacobian of p(1−p); include it and the gradient becomes 11p − 7, with target Beta(7, 4) on p. Omit it, as the skeleton does, and the target is Beta(6, 3). Run both and compare histograms — the difference *is* the Jacobian, made visible.) Leapfrog with small ε conserves H to a few decimals and acceptance sits near 1; crank ε and you can produce your own divergences on a one-dimensional posterior. After this exercise, nothing Stan reports is folklore: you have built the marble, the flick, and the bowl yourself.',
   },
 }

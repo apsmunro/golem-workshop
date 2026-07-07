@@ -6,6 +6,14 @@ throws that away. Adventures in covariance is about teaching the prior to
 notice when parameters travel in pairs, and then letting one estimate inform
 the other.
 
+Covariance, if the word has gone rusty: two quantities covary when knowing
+one shifts your guess about the other. Height and weight covary across
+people; so, in this chapter's running example, do a café's typical wait
+and how much that wait drops in the afternoon. Correlation is the same
+idea rescaled to run from −1 to 1. Nothing more exotic is coming — the
+chapter simply moves that familiar idea up one level, from the data to the
+*parameters*.
+
 ## Effects that travel together
 
 Give each café two numbers, an intercept and a slope, and draw the pair from
@@ -21,12 +29,20 @@ correlation matrix R sets whether they lean the same way. Together they make
 a tilted ellipse, and that ellipse is the prior the cafés share.
 </Gloss>
 
+A two-dimensional Gaussian is just a bell viewed from above: a cloud of
+plausible (intercept, slope) pairs, densest at the center. With zero
+correlation the cloud is a level oval, aligned with the axes. With
+correlation it tilts, and the tilt is a promise: cafés with low intercepts
+tend to have steep slopes, or shallow ones, depending on the sign.
+
 Partial pooling now shrinks in two dimensions. A noisy café is pulled toward
 the ellipse, not toward a point, and when the correlation is real the pull
 runs along the tilt. That is the sideways channel: observe only that a café
 is slow in the morning, and the negative correlation drags its slope estimate
 downward too, because the model has learned that morning-slow cafés swing
-hard in the afternoon.
+hard in the afternoon. Information about one parameter became information
+about a different parameter, routed through the correlation — an inference
+no pile of independent priors could make.
 
 <Wide><CafeEllipse /></Wide>
 
@@ -75,8 +91,10 @@ Correlation between two parameters need not come from a matrix you estimate
 entry by entry. Sometimes you already know which units should be alike. Ten
 Pacific societies sit at known sea distances, and their tool counts should
 covary with proximity — neighbors trade, share, and copy. A Gaussian process
-turns that intuition into a prior: one smooth function says how covariance
-falls off with distance, and it applies to every pair at once.
+turns that intuition into a prior: instead of estimating a separate
+correlation for all forty-five pairs of islands, estimate one smooth
+function that says how covariance falls off with distance, and read every
+pair's covariance from the same curve.
 
 $$
 \mathbf{K}_{ij} = \eta^2 \exp\!\left(-\rho^2 D_{ij}^2\right)
@@ -95,7 +113,11 @@ Yap as if they were unrelated names. It estimates the shape of the decline,
 and geography does the pooling. Raise ρ² and covariance collapses to the
 nearest neighbors; lower it and faint threads reach across open ocean. This
 is the same partial-pooling idea as the tadpole tanks, with distance standing
-in for the grouping — a continuous cluster instead of a discrete one.
+in for the grouping — a continuous cluster instead of a discrete one. And
+the trick is not really about oceans: swap sea miles for years, and the
+same prior smooths a rate over time; swap them for shared ancestry, and it
+pools across a phylogeny. Anywhere "close should mean similar" is
+knowledge you hold in advance, a Gaussian process will spend it.
 
 <Rosetta
   model="m14.8"

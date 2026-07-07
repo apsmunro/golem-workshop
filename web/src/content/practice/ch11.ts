@@ -39,7 +39,7 @@ export const ch11Hints: ChapterHints = {
     concept: 'The multiplicity (n-choose-k) term differs; the parameter-dependent part does not.',
     strategy: 'Write both likelihoods and separate the parts that depend on p from the parts that do not.',
     solution:
-      'The disaggregated Bernoulli likelihood and the aggregated binomial likelihood differ only by the binomial coefficient counting the orderings — a constant in p. So the posterior over p is identical, but the absolute log-likelihood is smaller (more negative) for the aggregated form. This matters for information criteria: never compare a WAIC from aggregated data against one from disaggregated data, because the constant does not cancel across different data representations.',
+      'The disaggregated Bernoulli likelihood and the aggregated binomial likelihood differ only by the binomial coefficient counting the orderings — a constant in p. So the posterior over p is identical, but the absolute log-likelihood is larger (less negative) for the aggregated form, since the multiplicity term adds log C(n, k) ≥ 0: there are more orderings that count as "the same data". This matters for information criteria: never compare a WAIC from aggregated data against one from disaggregated data, because the constant does not cancel across different data representations.',
   },
   '11M2': {
     paraphrase: 'A Poisson coefficient is 1.5 — describe the effect on the outcome fully.',

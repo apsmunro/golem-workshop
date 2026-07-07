@@ -5,12 +5,23 @@ estimate as the truth and drop the rows with blanks. Both are quiet lies, and
 both are fixable in the same way: put the thing you do not know into the model
 as a parameter, and let the data you do have inform it.
 
+That one move is the entire chapter, so hold it up to the light. A
+parameter, all along, has been "a quantity the golem must learn". Nothing
+in the machinery says parameters must be slopes or intercepts. Wyoming's
+true divorce rate is a quantity nobody knows; a gibbon's unmeasured
+neocortex is a quantity nobody knows. Declare them parameters, give them
+distributions like any other, and the same engine that estimates slopes
+estimates them too — complete with honest uncertainty about each one.
+
 ## A measurement is a distribution
 
 The WaffleDivorce data hand you each state's divorce rate together with its
-standard error, and the small states have enormous ones — a few thousand
-couples in Wyoming give a rate that could be a full point off. Regress the
-point estimates as if they were exact and the noisy states drag the line
+standard error — the number that says how far the estimate could plausibly
+sit from the truth, given how many couples it was computed from. The small
+states have enormous ones: a few thousand couples in Wyoming give a rate
+that could be a full point off, while California's millions pin its rate
+down tight. Regress the point estimates as if they were exact and every
+state votes with equal confidence, so the noisy states drag the line
 around like anyone else. The repair is to say what is actually true: the
 observed rate is a noisy view of a real rate you would like to estimate.
 
@@ -58,18 +69,34 @@ point estimate comes back.
 
 The same idea handles error in a *predictor*, with one extra wrinkle: a
 predictor you condition on needs its own distribution, because you cannot
-condition on a value you do not know. Model it, and the slope that
-measurement error had quietly flattened springs back to its true steepness —
-the regression dilution the chapter warns about, undone.
+condition on a value you do not know. It matters more than it sounds.
+Noise in a predictor does not merely blur an estimate — it biases the
+slope toward zero, systematically, because scatter along the x-axis
+smears any real trend flat. The effect is called regression dilution, and
+it means ignoring predictor error is not conservative; it manufactures
+false reassurance that an effect is small. Model the error and the slope
+that measurement noise had quietly flattened springs back to its true
+steepness.
 
 ## Missing is not the same as absent
 
 Neocortex percentage is missing for twelve of the twenty-nine milk species.
-Complete-case analysis deletes those rows, and with them twelve perfectly
-good measurements of kcal and body mass, because one column was blank.
-Imputation refuses the deletion. Since neocortex and body mass run together,
-the model can read the neocortex it cannot see off the mass it can, and it
-does so with honest uncertainty about the guess.
+Complete-case analysis (the default in most software, usually applied
+without anyone deciding anything) deletes those rows entirely, and with
+them twelve perfectly good measurements of kcal and body mass, because one
+column was blank. Worse than the waste is the silent assumption: dropping
+rows is only harmless when the data went missing at pure random, and
+"which species have measured neocortexes" is very much not random — the
+well-studied species got measured.
+
+Imputation refuses the deletion. Since neocortex and body mass run
+together, the model can read the neocortex it cannot see off the mass it
+can, and it does so with honest uncertainty about the guess. Each missing
+value becomes a parameter; each parameter gets a posterior; the twelve
+guesses stay appropriately fuzzy, and that fuzz flows through to every
+downstream conclusion instead of being flattened into a made-up number.
+Nothing here is fabrication — it is the same borrowing of strength as
+every other chapter, aimed at holes instead of noise.
 
 <Wide><MilkImputation /></Wide>
 

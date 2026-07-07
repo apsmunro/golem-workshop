@@ -7,16 +7,29 @@ implies being strong on the other. Condition on a collider and you conjure a
 relationship from thin air. This chapter is a catalogue of ways good golems
 go wrong, and every one is a version of that trick.
 
+Walk the logic through by hand once, because it feels like a card trick
+until you do. Take a hundred scientists with talent and self-promotion
+dealt independently — knowing one tells you nothing about the other. Fund
+the twenty with the highest combined score. Who makes the cut? The
+brilliant promoters, the brilliant researchers, and nobody weak at both.
+Inside the funded group, a researcher with modest talent *must* have been a
+strong promoter to get in, and vice versa. The negative correlation is
+real, in that subgroup, and it was created entirely by how the subgroup was
+chosen. No causal arrow connects the two traits; the selection drew one in.
+
 ## The collider of selection
 
 The scientists story is a collider: talent → funded ← promotion. Funding is
 a common effect of both. Selecting on it — studying only funded people —
 opens the path and correlates the causes. The same shape explains why
 handsome actors seem less talented (both get you cast), why nutritious
-restaurants seem to have worse ambiance, and why controlling for a
-"downstream" variable so often backfires. Open the collider preset in the
-sandbox from the last chapter and watch the association appear the instant
-you condition.
+restaurants seem to have worse ambiance (both keep a restaurant open), and
+why controlling for a "downstream" variable so often backfires. Note the
+unsettling part: you do not need to *put* the collider in a regression to
+fall for this. Studying a selected group at all (the funded, the hired,
+the surviving) is conditioning, done by the world before your data ever
+arrived. Open the collider preset in the sandbox from the last chapter and
+watch the association appear the instant you condition.
 
 ## Post-treatment bias
 
@@ -35,6 +48,15 @@ in the model and treatment looks useless — not because it is, but because you
 adjusted away its only route.
 </Gloss>
 
+To see why, ask what the coefficient on treatment means in that model:
+"the effect of treatment, comparing plants with the *same* amount of
+fungus." But plants with the same fungus have, by definition, already
+received whatever benefit the treatment delivers — the treatment's whole
+job was to change the fungus. You are comparing treated and untreated
+plants after the treatment's work has been held equal, and finding,
+correctly, nothing left. The golem answered the question you asked. The
+question was self-defeating.
+
 The rule is blunt and worth memorizing: never condition on a variable that
 sits between your cause and your effect. "Control for everything measured" is
 not caution, it is a way to be precisely, defensibly wrong.
@@ -46,8 +68,11 @@ Grandparents, parents, children: education flows down the generations, and an
 unseen neighborhood effect touches both parents and children. Condition on
 parents — which any sane model of a child would — and you open a path through
 the invisible neighborhood, biasing the grandparent effect you were after.
-The confounder you cannot see reaches through the collider you had to
-condition on.
+Why does conditioning open anything? Because parents are a collider on that
+path: grandparents point into parents, and so does the neighborhood. Hold
+parents fixed and the two causes start trading information, exactly like
+talent and promotion inside the funded group. The confounder you cannot see
+reaches through the collider you had to condition on.
 
 <Wide><DagSandbox /></Wide>
 
@@ -55,18 +80,23 @@ Select the grandparents preset. The unobserved node is drawn as a dashed
 circle you are not allowed to click, because you cannot condition on what you
 did not measure. The sandbox will tell you the honest truth: with that node
 hidden, no adjustment set closes every door. Sometimes the correct answer is
-"this effect is not identified", and a golem that admits that is worth more
-than one that produces a confident number.
+"this effect is not identified" — meaning no amount of data, fit through any
+model, can recover it from these measurements. A golem that admits that is
+worth more than one that produces a confident number.
 
 ## The four elemental confounds
 
-Everything in this chapter reduces to four shapes between two variables and a
-third: the fork (common cause — condition to close), the pipe (mediator —
-do not condition or you block the effect), the collider (common effect — do
-not condition or you open a fake path), and the descendant (a proxy that
-partially conditions on whatever it descends from). Learn to see these four
-in any DAG and you can read off what to control for without fitting anything.
-That skill — not the regression — is the Haunted DAG Charm.
+Everything in this chapter reduces to four shapes between two variables and
+a third. The **fork** (Z causes both X and Y: condition on Z to close the
+spurious path). The **pipe** (X causes Z causes Y: do not condition on Z,
+or you block the effect you wanted; this is the fungus). The **collider**
+(X and Y both cause Z: do not condition on Z, or you open a fake path;
+this is the grant committee). And the **descendant**, a child of one of
+those nodes: conditioning on it acts like a weak version of conditioning on
+its parent, so a descendant of a collider is still a trap, just a shallower
+one. Learn to see these four in any DAG and you can read off what to
+control for without fitting anything. That skill — not the regression — is
+the Haunted DAG Charm.
 
 ## Forge it
 

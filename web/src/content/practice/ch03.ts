@@ -88,7 +88,7 @@ likelihood <- dbinom(___, size = ___, prob = p_grid)
 posterior <- likelihood * prior
 posterior <- posterior / sum(posterior)`,
     solution:
-      '```r\nlikelihood <- dbinom(8, size = 15, prob = p_grid)\n```\n\nThe posterior peaks near 8/15 ≈ 0.53 and is broader than a 6-of-9 fit is around its own peak relative to the extra data — fifteen tosses is still not many. Keep this fit; 3M2 through 3M5 all feed on it.',
+      '```r\nlikelihood <- dbinom(8, size = 15, prob = p_grid)\n```\n\nThe posterior peaks near 8/15 ≈ 0.53 and is only a little narrower than the 6-of-9 fit, despite two thirds more data — fifteen tosses is still not many, and width shrinks with the square root of N, not with N. Keep this fit; 3M2 through 3M5 all feed on it.',
   },
   '3M2': {
     paraphrase: 'Sample the 3M1 posterior and get the 90% HPDI.',
@@ -211,5 +211,22 @@ sim <- rbinom(1e4, size = ___, prob = samples)
 dens(sim); abline(v = obs)`,
     solution:
       '```r\nsim <- rbinom(1e4, size = 49, prob = samples)\ndens(sim); abline(v = sum(birth2[birth1 == 0]))  # 39\n```\n\nSimulations center near 27; the data say 39. The observation lands far out in the right tail — the model is badly wrong about these births. Second births after firstborn girls run heavily to boys in this sample, so births within a family are anything except independent. The golem never volunteers this: it answered every earlier check with a straight face. You had to know where to press.',
+  },
+  '3C1': {
+    workshop: true,
+    paraphrase:
+      'The workshop has two kilns. Kiln A cracks 1 golem in 10; the hotter kiln B cracks 1 in 4. Golems come half from each, unlabelled. (a) You pull one off the shelf and it is cracked — how plausible is kiln B? (b) You pull a second golem from the same unknown kiln; how likely is it also cracked? (c) That second one comes out intact instead — update kiln B once more. Do the whole thing by hand, in exact fractions, before you trust a single decimal.',
+    concept:
+      'One counting garden, three prunings: a posterior over the hidden kiln, a posterior-predictive bet on the next golem, and sequential updating that must agree with the batch answer.',
+    strategy:
+      'Weigh each kiln by the chance it produces what you saw, then normalize — the 2H pandas move. For (b), average each kiln\'s crack rate by its posterior weight. For (c), either carry (a)\'s posterior forward as the new prior or score both golems at once; the two routes must land on the same number, and checking that is half the lesson.',
+    skeleton: `# priors and crack rates
+prA <- 0.5; prB <- 0.5
+cA <- 0.10; cB <- 0.25
+# (a) Pr(B | crack): weight each kiln by its crack rate, normalize
+# (b) posterior-weighted average of the two crack rates
+# (c) score (crack, intact) per kiln; normalize for Pr(B)`,
+    solution:
+      '(a) Pr(B | crack) = (0.25·0.5) / (0.25·0.5 + 0.10·0.5) = 0.125 / 0.175 = **5/7 ≈ 0.714**. A crack is the hot kiln\'s signature, so one crack already tilts you well past even.\n\n(b) Carry that posterior — Pr(A)=2/7, Pr(B)=5/7 — through each kiln\'s crack rate: Pr(next cracks) = (2/7)(0.10) + (5/7)(0.25) = 1.45/7 ≈ **0.207**. Note it sits *above* the blind 0.175 crack rate: learning the golem came from a crack-prone kiln raises your bet on the next one.\n\n(c) The second golem is intact. Score (crack, intact) per kiln: A gives 0.10·0.90·0.5 = 0.045, B gives 0.25·0.75·0.5 = 0.09375. Normalize: Pr(B) = 0.09375 / 0.13875 ≈ **0.676**. The intact golem pulled you back from 0.714 toward 0.676, because staying intact is kiln A\'s specialty. Update sequentially instead — take (a)\'s 2/7, 5/7 as the prior and feed only the intact observation — and you land on 0.676 to the digit. Order does no work; the golem weighs evidence the same however you hand it over.',
   },
 }

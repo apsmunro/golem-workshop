@@ -166,6 +166,11 @@
    "id": "3H5",
    "tier": "hard",
    "hasSolution": true
+  },
+  {
+   "id": "3C1",
+   "tier": "hard",
+   "hasSolution": true
   }
  ],
  "4": [
@@ -482,6 +487,11 @@
   },
   {
    "id": "7H5",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "7C1",
    "tier": "hard",
    "hasSolution": true
   }
@@ -887,6 +897,11 @@
   },
   {
    "id": "13H4",
+   "tier": "hard",
+   "hasSolution": true
+  },
+  {
+   "id": "13C1",
    "tier": "hard",
    "hasSolution": true
   }

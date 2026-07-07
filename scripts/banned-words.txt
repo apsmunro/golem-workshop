@@ -30,6 +30,20 @@ pivotal
 realm
 seamless
 robust
+vital
+essential
+navigate
+journey
+landscape
+comprehensive
+powerful
+furthermore
+moreover
+# NOTE: "rich" and "beautiful/stunning" are banned only when figurative or
+# self-praising (CLAUDE.md §4.1), but both have legitimate literal uses in the
+# course prose ("tool-rich island", "predicted eclipses beautifully"). A word-
+# boundary regex cannot tell the two apart, so they are NOT automated here —
+# see VOICE.md for the human-review checklist that covers them.
 # phrases / moves
 it's important to note
 worth noting
@@ -45,3 +59,6 @@ not just .* but
 it's not about .* it's about
 incredibly powerful
 truly remarkable
+at the end of the day
+when it comes to
+needless to say

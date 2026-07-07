@@ -9,6 +9,15 @@ A golem that must give ruggedness one slope for the whole world will split
 the difference and be wrong everywhere. What it needs is permission for the
 slope to depend on something else. That permission is an interaction.
 
+Until now, every model has been additive: each predictor contributes its
+effect regardless of what the other predictors are doing, and the
+contributions stack like bricks. An interaction breaks that truce. It says
+the effect of one variable *is a function of* another — ruggedness helps
+or hurts depending on where you are, medicine works or doesn't depending
+on the dose of something else. Most interesting scientific claims have
+this shape, which is why additive models so often feel like they are
+answering a smoothed-over version of your question.
+
 ## One dataset, two worlds
 
 $$
@@ -25,8 +34,12 @@ The interaction is the difference between the two betas.
 Flip between the continents and watch the right-hand panel: the slope of
 ruggedness is itself a line, and it crosses zero on the way from one world
 to the other. That crossing is the whole finding. Note what splitting the
-data by hand would have cost you instead: separate σ estimates, no shared
-strength, and no way to say how confident you are that the slopes differ.
+data by hand would have cost you instead. Two separate regressions would
+give you two slopes, yes — but each would estimate its own σ from half the
+data, neither would share any strength with the other, and, worst, you
+would have no estimate of the *difference* between the slopes, which is
+the actual claim under scrutiny. "Fit them separately and eyeball it" is
+the interaction model with its inference amputated.
 
 <Rosetta
   model="m8.3"
@@ -54,18 +67,24 @@ strength, and no way to say how confident you are that the slopes differ.
 
 ## When both dials are continuous
 
-The tulips make the harder case. Blooms respond to water and to shade, but
-water can do nothing for a plant in the dark: light and water are joint
-requirements, not independent contributions. So the effect of water must
-shrink as shade deepens — a continuous interaction, one slope sliding along
-another variable's whole range.
+The Africa split was the easy case: the moderating variable was a category
+with two levels, so "the slope depends on continent" meant two slopes. The
+tulips make the harder case, where the moderator is itself continuous.
+Blooms respond to water and to shade, but water can do nothing for a plant
+in the dark: light and water are joint requirements, not independent
+contributions. So the effect of water must shrink as shade deepens — a
+continuous interaction, one slope sliding smoothly along another
+variable's whole range, with no clean split anywhere.
 
 <Wide><TulipsSurface /></Wide>
 
 Drag the shade slider. In full sun the water slope is steep; two steps of
 shade later it has flattened toward nothing. The model behind this adds a
 single term, β<sub>ws</sub>·water·shade, and that one product carries the
-whole biology.
+whole biology. If the product term is unintuitive, multiply it out: the
+water slope is now β<sub>w</sub> + β<sub>ws</sub>·shade, a quantity that
+changes as shade changes. That is all an interaction term ever is — a slope
+that has its own slope.
 
 ## Interactions are symmetric
 
@@ -75,14 +94,18 @@ The golem holds one equation, so "shade changes the effect of water" and
 depends on your question, not on the math. This symmetry is also a warning:
 you cannot read an interaction off a table of coefficients. The effect of
 water is now β<sub>w</sub> + β<sub>ws</sub>·shade, a quantity that does not
-sit in any single row of a summary. Plot conditional predictions, as both
-panels above do, or you are interpreting numbers you cannot see.
+sit in any single row of a summary — β<sub>w</sub> alone is only the water
+slope at exactly zero shade, one point on a whole line of slopes. Plot
+conditional predictions, as both panels above do, or you are interpreting
+numbers you cannot see.
 
 Two habits make interactions tractable. Center your predictors, so the
 "main effect" coefficients mean something at a real point of the data
-rather than at an imaginary zero. And run prior predictive simulations:
-interaction terms compound, and priors that look tame on each coefficient
-can imply tulip beds that bloom at negative rates.
+rather than at an imaginary zero — uncentered, β<sub>w</sub> describes
+plants at zero shade, a condition your greenhouse may not even contain.
+And run prior predictive simulations: interaction terms compound, and
+priors that look tame on each coefficient can imply tulip beds that bloom
+at negative rates.
 
 ## Forge it
 

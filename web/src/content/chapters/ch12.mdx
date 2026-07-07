@@ -8,16 +8,25 @@ than one way of happening.
 
 ## When variance outruns the mean
 
-A Poisson insists variance equals mean. Data rarely agree, because rates
-differ across units in ways no predictor captures — beaches with
-different tides, monasteries with different scribes. The repair is to let
-each unit draw its own rate from a distribution: binomial probabilities
-from a beta, Poisson rates from a gamma. The result — beta-binomial,
-gamma-Poisson — is a continuous mixture: fatter tails, honest intervals,
-and far less panic over outliers. UCBadmit refit as a beta-binomial stops
-being scandalized by department A. The cost is interpretive: parameters
-now describe a *population* of rates, one more link in the chain between
-coefficient and consequence.
+A Poisson insists variance equals mean: a rate of 10 per day should
+scatter about ±3 around 10, no negotiation. Data rarely agree, and the
+usual reason is hiding in plain sight — the single rate λ was a fiction.
+Rates differ across units in ways no predictor captures: beaches with
+different tides, monasteries with different scribes, each running its own
+λ while the model insists there is only one. Force one rate onto many and
+the pooled data spread wider than any single Poisson can explain. The
+condition is called over-dispersion, and it is less a pathology than a
+message: there is variation here you have not modeled.
+
+The repair is to say so in the likelihood. Let each unit draw its own rate
+from a distribution: binomial probabilities from a beta, Poisson rates
+from a gamma. The result — beta-binomial, gamma-Poisson — is a continuous
+mixture: fatter tails, honest intervals, and far less panic over
+outliers, because an extreme unit is now read as "a unit with an unusual
+rate" rather than "an impossibility". UCBadmit refit as a beta-binomial
+stops being scandalized by department A. The cost is interpretive:
+parameters now describe a *population* of rates, one more link in the
+chain between coefficient and consequence.
 
 ## Two kinds of nothing
 
@@ -36,6 +45,13 @@ Nothing happens two ways: the drinking way, with probability p, and the
 working-but-unlucky way. The mixture credits each zero to both, in
 proportion.
 </Gloss>
+
+Notice what the model is doing that you could not do by hand: no observer
+can look at a particular zero and say which kind it was. The mixture never
+needs to know. It splits each zero's evidential weight across the two
+stories, in proportion to how plausible each story is given everything
+else — and out come two clean estimates, the drinking probability and the
+true work rate, neither of which appears in any column of the data.
 
 <Wide><ZeroInflationMixer /></Wide>
 
@@ -69,20 +85,28 @@ runs at all.
 
 ## Grades are not numbers
 
-The Trolley survey asks for moral judgment on a 1-to-7 scale. Category 4
-is not twice category 2; the only structure is order. The
-ordered-categorical golem respects exactly that and nothing more: a
-latent axis, six cutpoints carving it into seven bins, and cumulative
-log-odds as the machinery.
+The Trolley survey asks for moral judgment on a 1-to-7 scale. It is
+tempting to feed those responses to a Gaussian regression as if they were
+measurements, and the temptation should be resisted: category 4 is not
+twice category 2, and the psychological distance from 1 to 2 need not
+equal the distance from 4 to 5. The only structure the data genuinely
+carry is order. The ordered-categorical golem respects exactly that and
+nothing more. Picture a hidden continuous axis of disapproval, and six
+cutpoints carving it into seven bins; a response of "5" means only that
+this person's judgment landed between cutpoint four and cutpoint five.
+Cumulative log-odds is the machinery that makes the picture fittable.
 
 <Wide><CutpointDragger /></Wide>
 
 Drag until the bars agree, then reveal: the fitted cutpoints are nothing
-but logits of cumulative proportions. Predictors never touch the
-cutpoints — they shift φ, sliding the whole story along the axis, leaking
-probability across every threshold at once. Watch the intended-contact
-cell: its histogram wants the density shoved hard left, which is exactly
-what m12.5's most negative coefficient does.
+but logits of cumulative proportions — the running totals of the observed
+response frequencies, translated onto the log-odds scale. No magic was
+performed. Predictors never touch the cutpoints — they shift φ, sliding
+the whole story along the axis, leaking probability across every
+threshold at once, which is exactly how a real change of attitude should
+behave: every category boundary feels it simultaneously. Watch the
+intended-contact cell: its histogram wants the density shoved hard left,
+which is exactly what m12.5's most negative coefficient does.
 
 <Rosetta
   model="m12.5"
@@ -106,11 +130,14 @@ what m12.5's most negative coefficient does.
 )`}
 />
 
-Ordered predictors get the mirror treatment: education levels enter as
-cumulative increments δ with a Dirichlet prior over how the total effect
-splits, so the model never pretends the step from primary to middle
-school equals the step from college to degree. Order in, order out,
-arithmetic nowhere.
+Ordered *predictors* get the mirror treatment, and the same refusal to
+invent arithmetic. Education runs from primary school to advanced degree,
+and coding it 1 through 8 would assert that every step is worth the same.
+Instead the levels enter as cumulative increments δ — each step
+contributes its own share of the total effect — with a Dirichlet prior
+over how the shares split. The data decide whether the college step dwarfs
+the middle-school step or the reverse. Order in, order out, arithmetic
+nowhere.
 
 ## Forge it
 

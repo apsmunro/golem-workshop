@@ -4,6 +4,13 @@ halves of that sentence are true at once, and the whole chapter lives in the
 gap between them. Fit to the sample you have is cheap. Skill on the sample
 you don't have yet is the only thing a golem is for.
 
+The gap exists because your twelve points are part signal, part accident —
+the real relationship plus the day's noise. A flexible enough curve cannot
+tell the two apart, so it learns both, faithfully. The signal will show up
+again in tomorrow's data. The accidents won't; tomorrow brings fresh
+accidents of its own, and every wiggle the curve devoted to yesterday's
+noise is now aimed at nothing.
+
 Ulysses had to sail between two monsters. Ours are overfitting, the golem
 that memorizes its training data down to the noise, and underfitting, the
 golem too rigid to learn even the signal. Neither monster announces itself:
@@ -25,7 +32,9 @@ fresh data always sends the bill.
 ## Scoring a golem honestly
 
 To say "predicts well" out loud you need a currency. Information theory
-supplies it. The uncertainty in a distribution of outcomes is its entropy:
+supplies it, and the underlying idea is only this: a good prediction is one
+that is rarely surprised. The uncertainty in a distribution of outcomes is
+its entropy:
 
 $$
 H(p) = -\sum_i p_i \log p_i
@@ -38,13 +47,19 @@ often it happens. Rare events are big surprises; certain events are none.
 
 From entropy comes the distance between your model and the truth, the
 Kullback–Leibler divergence: the extra surprise you suffer by using the
-wrong distribution to predict the world. You never know the truth, so you
-can never compute your distance to it — but you can compare two models'
-distances, because the unknowable part cancels. What remains is the log
-score: the log probability your golem assigned to what actually happened.
-Deviance is that score times −2, an accounting convention from older wars.
-Lower is better, and in-sample deviance lies in exactly the direction you'd
-expect: more parameters, lower deviance, always.
+wrong distribution to predict the world. Predict rain with the wrong
+probabilities and you will be surprised more often than the weather itself
+requires; that excess surprise is the divergence, and a perfect model has
+none. You never know the truth, so you can never compute your own distance
+to it — but you can compare two models' distances, because the unknowable
+part (the weather's own inherent surprise) is the same for both and
+cancels. What remains is the log score: the log probability your golem
+assigned to what actually happened, event by event. A golem that assigned
+high probability to the things that occurred was, in the only sense that
+matters, less wrong. Deviance is that score times −2, an accounting
+convention from older wars. Lower is better, and in-sample deviance lies in
+exactly the direction you'd expect: more parameters, lower deviance,
+always — which is precisely why in-sample deviance cannot be the judge.
 
 ## Estimating skill without new data
 
@@ -52,18 +67,26 @@ You rarely get to wait for the thirteenth point. Two families of tricks
 estimate out-of-sample skill from the sample you have.
 
 Cross-validation holds points out, fits without them, and scores the golem
-on what it never saw. The game above does this exactly — leave one out,
-refit, repeat. At scale, refitting is too slow, so Pareto-smoothed
-importance sampling (PSIS) approximates leave-one-out from a single fit,
-and complains — through its Pareto k diagnostic — about the specific points
-it cannot vouch for. Those complaints are useful: a big k marks an outlier
-your model finds unbelievable.
+on what it never saw — a rehearsal of the real test, staged with data you
+already own. The purest version leaves out one point at a time: fit on
+eleven, predict the twelfth, rotate, and total the scores. The game above
+does this exactly. At scale, refitting once per data point is too slow, so
+Pareto-smoothed importance sampling (PSIS) approximates leave-one-out from
+a single fit — and, better, complains when the approximation itself gets
+shaky. Its Pareto k diagnostic names the specific points it cannot vouch
+for, and those complaints are useful in their own right: a big k marks an
+outlier so influential that removing it visibly moves the model, which is
+something you want to know regardless.
 
-Information criteria take the other road: start from the training score and
-charge a penalty for flexibility. WAIC's penalty is the summed variance of
-each point's log score across the posterior — parameters only cost you to
-the extent the data left them free to wiggle. In practice PSIS-LOO and WAIC
-agree so often that disagreement is itself a diagnostic.
+Information criteria take the other road: start from the training score,
+which you know flatters the model, and charge a penalty for flexibility to
+cancel the flattery. WAIC's penalty is the summed variance of each point's
+log score across the posterior — parameters only cost you to the extent
+the data left them free to wiggle, so a tightly constrained parameter is
+nearly free while a loose one bills at full rate. In practice PSIS-LOO and
+WAIC agree so often that disagreement is itself a diagnostic: when they
+split, something (usually an extreme observation) deserves your
+attention.
 
 <Rosetta
   model="comparing golems"
@@ -85,15 +108,24 @@ output of those three fits:
 
 <DivorceComparison />
 
+Read the table the way a mechanic reads a gauge, not the way a judge reads
+a verdict. The differences between models come with standard errors, and a
+difference smaller than its error is a shrug: the data cannot tell these
+golems apart. That is a finding too.
+
 ## Regularization, or teaching the golem doubt
 
 A prior that gently disbelieves large coefficients makes a golem harder to
-impress with noise. Tighten the slope priors in any model from chapter 4
-and its train deviance worsens while its test deviance improves — up to a
-point, past which the golem is too skeptical to learn the signal. Priors
-are a dial, and the dial trades the two monsters against each other. This
-is why the multilevel models of chapter 13 predict so well: they learn how
-much to regularize from the data itself.
+impress with noise. The mechanism is nothing new — it is the same prior
+arithmetic from Chapter 2. A skeptical prior demands more evidence before
+it lets a coefficient grow, and noise, which by definition doesn't repeat,
+rarely musters that evidence, while real signal does. Tighten the slope
+priors in any model from chapter 4 and its train deviance worsens while
+its test deviance improves — up to a point, past which the golem is too
+skeptical to learn the signal. Priors are a dial, and the dial trades the
+two monsters against each other. This is why the multilevel models of
+chapter 13 predict so well: they learn how much to regularize from the
+data itself.
 
 ## The compass is not a captain
 
@@ -101,10 +133,12 @@ The sharpest lesson in the chapter: predictive skill and causal truth are
 different targets. The fungus experiment from chapter 6 makes the point
 brutally — the model that conditions on the post-treatment variable
 *predicts better* (fungus really does tell you about growth) while being
-causally useless for deciding whether to treat. LOO and WAIC rank golems by
-prediction. If your question is intervention, the DAG outranks the compass.
-Compare models to understand them; do not let a score pick your model for
-you.
+causally useless for deciding whether to treat. There is no contradiction:
+knowing the fungus level genuinely improves your forecast of the harvest,
+and simultaneously ruins your estimate of whether treating caused the
+harvest. LOO and WAIC rank golems by prediction. If your question is
+intervention, the DAG outranks the compass. Compare models to understand
+them; do not let a score pick your model for you.
 
 ## Forge it
 

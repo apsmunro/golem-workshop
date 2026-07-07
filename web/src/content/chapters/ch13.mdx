@@ -6,6 +6,15 @@ tadpoles and saw nine survive is weak evidence; a pond of thirty-five that
 saw thirty-one is strong. A model with memory treats them differently, and
 it learns how differently from the ponds themselves.
 
+The idea underneath has a homely name: borrowing strength. The ponds are
+not identical, but they are not strangers either — they are the same
+species in the same experiment, and what happens in forty-seven ponds
+tells you *something* about the forty-eighth. A small pond with a wild
+survival rate is probably part signal, part luck, and the other ponds are
+your best guide to how much of each. Estimates built this way get pulled
+("shrunk") toward the group's typical value, gently for well-measured
+ponds, firmly for poorly measured ones. That pull is the memory.
+
 ## The pond that remembers
 
 Give every tank its own intercept on the log-odds scale, then say those
@@ -21,12 +30,13 @@ with spread σ. The model estimates ᾱ and σ too, so the tanks set the leash
 they are all held by.
 </Gloss>
 
-That last line is the whole trick. σ is not fixed in advance; it is a
-parameter. When the tanks are alike, the model learns a small σ and pulls
-every estimate hard toward the common mean. When they differ, it learns a
-large σ and lets each tank speak. The pull is strongest for the tanks that
-know the least — the ten-tadpole ponds move the most, because they have the
-most to borrow.
+That last line is the whole trick, and it is worth seeing what kind of
+line it is: a prior for the tank intercepts whose own parameters are
+learned from the data. An adaptive prior. When the tanks are alike, the
+model learns a small σ and pulls every estimate hard toward the common
+mean. When they differ, it learns a large σ and lets each tank speak. The
+pull is strongest for the tanks that know the least — the ten-tadpole
+ponds move the most, because they have the most to borrow.
 
 <Wide><ReedfrogTheater /></Wide>
 
@@ -68,11 +78,16 @@ box.
 
 A varying-intercept model is a stack of parameters — one per tank plus two
 hyperparameters — yet it overfits *less* than the no-pooling model with the
-same tank intercepts and flat priors. The count of parameters did not fall;
-the effective count did. Shrinkage spends degrees of freedom only where the
+same tank intercepts and flat priors. If that sounds impossible, chapter 7
+already sold you the resolution: what overfits is not the number of
+parameters but their freedom to chase noise. The count of parameters did
+not fall; the effective count did. Each tethered intercept can wander only
+as far as σ permits, so shrinkage spends degrees of freedom only where the
 data support them. This is the same bargain the compass of chapter 7 was
-pointing at, now bought automatically: the model regularizes itself, and the
-strength of the regularization is estimated rather than tuned.
+pointing at, now bought automatically: the model regularizes itself, and
+the strength of the regularization is estimated rather than tuned. You
+could have tightened those priors by hand, but you would have had to
+guess σ, and the model measures it.
 
 ## The neck of the funnel
 
@@ -80,19 +95,24 @@ Multilevel models make a shape that breaks samplers. When a cluster's
 variance σ is small, the varying effects it governs are squeezed into a thin
 neck; when σ is large, they spread into a wide mouth. Plot one effect
 against log-σ and you get a funnel, and a single leapfrog step size cannot
-handle both ends. In the mouth it is fine; in the neck it overshoots and the
+handle both ends — the marble of chapter 9 needs tiny careful steps in the
+neck and long strides in the mouth, and it was tuned with one stride for
+everywhere. In the mouth it is fine; in the neck it overshoots and the
 trajectory flies apart. Those are divergences, and they cluster exactly
 where the model most needs to look — the region where a group's variation is
-near zero.
+near zero. The danger is not the warning message; it is that a sampler
+which cannot enter the neck quietly under-reports how plausible small σ
+is, and you believe the tanks differ more than they do.
 
 <Wide><DivergenceDetective /></Wide>
 
 The fix costs nothing statistically. Write the varying effect as
 $\alpha_j = \bar\alpha + \sigma z_j$ with $z_j \sim \text{Normal}(0,1)$
 instead of $\alpha_j \sim \text{Normal}(\bar\alpha, \sigma)$. The two say the
-same thing about $\alpha_j$, but the sampler now explores the round, tidy
-space of the $z$'s, and the geometry of the funnel is reconstructed by the
-multiplication afterward. This is non-centered parameterization, and for
+same thing about $\alpha_j$ — check it: a standard normal scaled by σ and
+shifted by ᾱ *is* Normal(ᾱ, σ) — but the sampler now explores the round,
+tidy space of the $z$'s, and the geometry of the funnel is reconstructed by
+the multiplication afterward. This is non-centered parameterization, and for
 multilevel models it is usually the difference between a chain that works and
 one that lies.
 

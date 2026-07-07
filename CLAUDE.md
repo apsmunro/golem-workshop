@@ -133,6 +133,8 @@ All text in this project — chapter prose, UI copy, hints, solutions, READMEs, 
 
 **Positive direction.** Write like a good science essayist: concrete nouns, active verbs, specific numbers, opinions held plainly. When a sentence could appear unchanged in any other stats course, sharpen it until it could only belong to this one. McElreath's own register — plainspoken, a little mischievous, hostile to ritual — is the north star, but do not imitate his sentences; earn the tone with our own material.
 
+**Read `VOICE.md` (repo root) before writing or editing any prose.** It carries the calibrated before/after pairs — the *positive* examples this section can only gesture at — plus the human-review checklist for the tells a regex can't catch (figurative `rich`, self-praising `beautiful`, em-dash density). The banned lists here are the floor; `VOICE.md` is how you clear the bar. When you catch a new generic-but-clean sentence in review, add the fixed pair to `VOICE.md`, the way you'd add a pattern to `banned-words.txt`.
+
 **Gate.** Add `npm run lint:prose` — a script scanning `content/`, UI string files, and hint/solution YAML for the banned vocabulary and phrases above (simple regex list in `scripts/prose-lint.ts`, maintained as new tells are noticed). CI fails on hits; legitimate exceptions get an inline `prose-lint-disable` comment with a one-line justification.
 
 ## 5. Statistical correctness gates

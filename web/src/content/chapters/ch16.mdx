@@ -6,12 +6,23 @@ mechanics of a nut, the arithmetic of predators eating prey — and builds a
 model shaped like the science. These golems assume a great deal, and when the
 assumptions are right they see further than any curve fit.
 
+The trade is worth naming plainly. A generic model asks the data to supply
+the shape of the relationship, spending parameters to bend a flexible curve
+into whatever the points suggest. A scientific model brings the shape and
+asks the data only to fill in a constant or two. When your scientific story
+is right, this is a spectacular bargain — you extrapolate where a curve fit
+would flail, and your parameters mean something you can argue about with a
+biologist. When the story is wrong, you fail loudly and specifically, which
+is its own kind of gift.
+
 ## People are cylinders
 
 Why should weight rise with height? Not for any statistical reason. A body is
 roughly a cylinder of fixed proportions and fixed density, so its mass grows
-with its volume, and its volume grows with the cube of its height. That is not
-a coefficient to estimate; it is geometry, fixed at 3 before any data arrive.
+with its volume, and its volume grows with the cube of its height. Double a
+person's height while keeping their proportions and you get eight times the
+volume, hence eight times the weight. That exponent — three — is not a
+coefficient to estimate; it is geometry, fixed before any data arrive.
 
 $$
 W_i \sim \text{LogNormal}\!\left(\log\!\big(k\,\pi\,p^2\,H_i^{3}\big), \sigma\right)
@@ -28,9 +39,10 @@ exponent 3 is brought, not learned.
 Drag the exponent away from 3 and the fit falls apart at both ends at once —
 the infants and the tallest adults. Return it to 3 and a single constant
 carries the model across the whole growth range, no separate children's model
-required. A statistical model would have spent parameters bending a line to
-match that curve; the scientific model already knew the shape and asked the
-data for one number.
+required. That is the payoff of a scientific model made visible: one number
+does what a polynomial would need several wiggles to fake, and it keeps
+working past the edges of the data because the cube is a fact about
+geometry, not a pattern read off these particular people.
 
 <Rosetta
   model="m16.1"
@@ -57,10 +69,13 @@ m16.1 <- brm(
 
 ## Some models must be solved
 
-Hares breed; lynx eat hares and breed; lynx starve. Write that story as rates
-of change and you get two coupled differential equations with no closed-form
-solution — to predict next year's hares you have to integrate the system
-forward.
+Hares breed; lynx eat hares and breed; lynx starve. That story is not about
+how many hares there are — it is about how fast the numbers *change*, and
+how each population's rate of change depends on the other's size. Write it
+that way and you get two coupled differential equations. They have no
+closed-form solution: there is no tidy formula for "hares at year t". To
+predict next year's hares you have to integrate the system forward, stepping
+through time and letting each population push the other.
 
 $$
 \frac{dH}{dt} = H\,(b_H - m_H L), \qquad \frac{dL}{dt} = L\,(b_L H - m_L)
@@ -74,13 +89,16 @@ equations to find out.
 
 <Wide><LynxHareOde /></Wide>
 
-The four rates do not set the populations; they set the shape of the loop the
-populations trace in the (hare, lynx) plane. The phase portrait is the model's
-real object, and the Hudson's Bay pelt record cycles through it roughly every
+The four rates do not set the populations directly; they set the shape of
+the loop the populations trace as they chase each other — hares boom, lynx
+follow, hares crash, lynx starve, hares recover. Plot lynx against hares and
+that loop becomes a closed orbit, the phase portrait, which is the model's
+real object. The Hudson's Bay pelt record cycles through it roughly every
 ten years. Fitting this means solving the differential equations inside the
-sampler at every step — the golem of this chapter does calculus to make a
-prediction, and the reward is parameters that mean something ecological rather
-than coefficients that mean nothing in particular.
+sampler at every step: the golem of this chapter does calculus to make a
+prediction, and the reward is parameters that mean something ecological
+(birth rates, death rates, predation efficiency) rather than coefficients
+that mean nothing in particular.
 
 <Rosetta
   model="m16.5"

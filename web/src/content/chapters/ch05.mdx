@@ -4,6 +4,14 @@ the South marries young, and marrying young predicts divorce. The waffles are
 innocent bystanders standing near the crime. This chapter is about golems
 that can tell a bystander from a cause — and about how easily they fail to.
 
+The word for what the waffles are doing is **spurious association**: two
+variables move together, yet neither moves the other. Some third thing —
+here, being in the South — pushes on both, and the golem, which only ever
+sees the numbers, cannot smell the difference between "moves together" and
+"causes". Correlation is cheap. Most correlations in any dataset tell you
+nothing about what would happen if you intervened, and intervening is
+usually what you wanted to know about.
+
 ## More is not better
 
 The reflex when a variable looks spurious is to "control for" everything in
@@ -12,33 +20,45 @@ let the golem sort it out. Sometimes this works. Sometimes it manufactures
 confounds, hides real effects, or flips a sign. A regression coefficient is
 not "the effect of X"; it is "the effect of X, given exactly the other
 things in this particular model", and that clause does enormous, invisible
-work.
+work. Add or remove one covariate and every other coefficient is answering
+a different question than it was a moment ago — same names, new meanings,
+no warning printed anywhere.
 
 ## Draw the causes first
 
 Before any regression, draw what you think causes what. A directed acyclic
-graph is a set of claims precise enough to be wrong: arrows for direct
-causes, no cycles, and every path between two variables is either open
-(carrying association) or blocked. The sandbox below lets you condition on
-nodes and watch the doors. Start with waffles: which variables must you hold
+graph (DAG — the name is friendlier than it sounds) is nothing more
+than circles for variables and arrows for direct causes, with one rule: no
+loops. What makes it useful is that it is a set of claims precise enough to
+be wrong. Once the arrows are down, simple rules tell you which paths
+between two variables carry association and which are blocked, before you
+fit anything. The sandbox below lets you condition on nodes and watch the
+doors open and close. Start with waffles: which variables must you hold
 fixed to ask honestly whether Waffle Houses cause divorce?
 
 <Wide><DagSandbox /></Wide>
 
-Two rules do most of the work. Conditioning on a **fork** (a common cause)
-closes the spurious path — this is legitimate control, and it is what
-dissolves the waffle correlation. Conditioning on a **collider** (a common
-effect) *opens* a path that was closed, inventing association from nothing.
-The difference between wisdom and self-sabotage is knowing which kind of node
-you just clicked.
+Two rules do most of the work, and they hinge on two shapes. A **fork** is
+a common cause: some variable Z with arrows out to both X and Y, like the
+South pushing on both waffles and divorce. Forks create spurious
+association, and conditioning on the fork (holding Z fixed, comparing
+only like with like) closes the path. This is legitimate control, and it
+is what dissolves the waffle correlation. A **collider** is the mirror
+image: a common *effect*, with arrows pointing in. Conditioning on a
+collider *opens* a path that was closed, inventing association from
+nothing. The difference between wisdom and self-sabotage is knowing which
+kind of node you just clicked, and nothing in the data will tell you —
+only the arrows do.
 
 ## Multiple regression, read honestly
 
 Fit divorce on marriage rate alone and it looks important. Add median age at
-marriage and the marriage-rate coefficient collapses to nearly zero. The
-golem is answering a conditional question: once you know a state's typical
-marriage age, its marriage *rate* tells you almost nothing more about
-divorce.
+marriage and the marriage-rate coefficient collapses to nearly zero. Neither
+model malfunctioned. The golem is answering a conditional question: once
+you know a state's typical marriage age, its marriage *rate* tells you
+almost nothing more about divorce. Marriage rate predicted divorce only
+because both are downstream of age at marriage — a fork, exactly the waffle
+pattern, and adding the fork to the model is what exposed it.
 
 <Rosetta
   model="m5.3"
@@ -67,18 +87,28 @@ divorce.
 
 Predictor residual plots and counterfactual plots are the two tools for
 reading these golems. The first shows what a predictor adds *after* the
-others are accounted for; the second asks the model to imagine intervening —
-raise the marriage age, hold the rate fixed, what happens to divorce? A
+others are accounted for: strip out of marriage rate everything that age
+already explains, and see whether the leftover still predicts divorce (it
+doesn't). The second asks the model to imagine intervening — raise the
+marriage age, hold the rate fixed, what happens to divorce? That question
+is different in kind from "what do high-age states look like?", because
+intervening breaks the arrows pointing *into* the variable you grabbed. A
 regression that cannot answer a clean counterfactual is not yet a causal
 model, however good its fit.
 
 ## Masking
 
-The milk preset shows the opposite failure. Neocortex size and body mass each
-look unrelated to milk energy on their own, because they are correlated with
-each other and pull in opposite directions. Put both in and both light up —
-the golem finally sees each effect with the other held still. Confounds hide
-effects as readily as they fake them.
+The milk preset shows the opposite failure: a real effect that hides
+instead of a fake one that shows. Neocortex size and body mass each look
+unrelated to milk energy on their own. The reason is that the two
+predictors are correlated with each other and pull the outcome in opposite
+directions — bigger-brained species make richer milk, bigger-bodied species
+make thinner milk, and big brains tend to come in big bodies. Examined one
+at a time, each predictor's effect is cancelled by its hidden passenger.
+Put both in the model and both light up, because the golem can finally see
+each effect with the other held still. Confounds hide effects as readily
+as they fake them, and only the model with both predictors could tell you
+which was happening.
 
 ## Forge it
 

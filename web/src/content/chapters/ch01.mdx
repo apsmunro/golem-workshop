@@ -14,56 +14,104 @@ your design is sound or an elaborate way of fooling yourself. The golem
 never lies. It also never tells you the truth, exactly — it tells you what
 follows from the clay you shaped.
 
+If "statistical model" still feels abstract, make it concrete. A model is a
+small machine with a slot on each end. Into one slot you feed data — heights,
+counts, survey answers. Out of the other comes a summary the machine was
+built to produce: an average difference, a slope, a probability. Everything
+interesting lives in the middle, in the assumptions you built the machine
+from. Feed the same data to two machines built from different assumptions
+and you get two different answers, and the machines will never tell you
+which set of assumptions was wiser. That part stays your job, permanently.
+
 This first bench holds no tools, only a warning label written in someone
 else's handwriting a century ago and never revised.
 
 ## The tests are not the science
 
 Somewhere in your education you probably met a flowchart: which statistical
-test goes with which kind of data. That chart is a bestiary of pre-built
-golems — the t-test, the chi-squared, ANOVA — each forged long ago for a
-narrow chore, each still obeying. The chart teaches you to pick a servant.
-It does not teach you to build one, so when your problem wanders off the
-chart (it will, by roughly Chapter 5), you are left knocking on the doors
-of dead engineers.
+test goes with which kind of data. Two groups and a continuous outcome? The
+t-test. Counts in categories? Chi-squared. More than two groups? ANOVA. That
+chart is a bestiary of pre-built golems, each forged long ago for a narrow
+chore, each still obeying. The chart teaches you to pick a servant. It does
+not teach you to build one, so when your problem wanders off the chart (it
+will, by roughly Chapter 5), you are left knocking on the doors of dead
+engineers.
 
-The deeper trouble is that the chart quietly claims statistical tests can
-falsify hypotheses. They can't, except in cartoons. Any interesting
-hypothesis is consistent with several process models; each process model
-maps to several statistical models; the arrows run both directions and
-cross. Reject a null and you have learned that one particular golem, fed
-one particular dataset, produced a surprising number. Which scientific
-claim died? Frequently: none.
+Each of those classical tests runs on the same fuel: a null hypothesis, a
+deliberately boring stand-in claim that nothing is going on — no difference
+between groups, no relationship between variables. The test asks how
+surprising your data would be if the boring claim were true, and if the
+answer is "quite surprising", you are invited to reject the boring claim and
+feel that you have learned something.
+
+The deeper trouble is that this ritual quietly claims to falsify hypotheses,
+and it can't, except in cartoons. Any interesting scientific hypothesis is
+consistent with several process models — several distinct stories about how
+the world might generate data. Each of those stories maps onto several
+statistical models, and the arrows run both directions and cross. So when
+you reject a null, what exactly died? You have learned that one particular
+golem, fed one particular dataset, produced a surprising number. The
+hypothesis you actually care about may be sitting comfortably behind three
+other process models the test never touched. Frequently, nothing died at
+all, and the ceremony only felt like science.
+
+None of this makes the classical tests wrong. A t-test is a perfectly good
+golem for the chore it was built for. The mistake is treating the chart of
+tests as if it were the reasoning, when it is only a cabinet of tools with
+the reasoning removed.
 
 ## What we do instead
 
-This workshop teaches golem engineering, one owner's manual at a time:
+This workshop teaches golem engineering, one owner's manual at a time. Four
+ideas run through everything:
 
-- **Bayesian data analysis.** Count all the ways the data could have
-  happened; prefer the explanations with more ways. Chapter 2 does this
-  literally, with marbles.
-- **Multilevel models.** Golems with memory, which resist the amnesia of
-  treating every cluster as brand new. The course's own author calls
-  single-level regression the exception, and by Chapter 13 you will agree.
-- **Model comparison by predictive accuracy.** Information theory, minus
-  the mysticism: how wrong will this golem be about data it has not seen?
-- **Graphical causal models.** Because a golem that predicts well can still
-  answer a *why* question backwards. Prediction and causation part ways in
-  Chapter 5, loudly.
+- **Bayesian data analysis.** Strip away the notation and it is a counting
+  exercise: consider every way the world could be, count the ways each
+  version of the world could have produced the data you saw, and believe
+  each version in proportion to its count. Explanations with more surviving
+  ways earn more of your belief. Chapter 2 does this literally, with
+  marbles, before any formula appears.
+- **Multilevel models.** Golems with memory. Ordinary regression treats
+  every group in your data — every pond, every hospital, every participant —
+  as if it were the first one ever observed, learning nothing from the
+  others. Multilevel golems let groups share information, which turns out to
+  be the sane default rather than an advanced trick. The course's own author
+  calls single-level regression the exception, and by Chapter 13 you will
+  agree.
+- **Model comparison by predictive accuracy.** When two golems disagree, you
+  need a way to compare them that doesn't reward the one that flatters your
+  data most. The honest question is: how wrong will each golem be about data
+  it has not seen yet? Information theory turns that question into a number,
+  minus the mysticism.
+- **Graphical causal models.** A golem that predicts well can still answer a
+  *why* question backwards. Barometers predict storms without causing them,
+  and a model that confuses those two things will confidently recommend
+  smashing barometers. Prediction and causation part ways in Chapter 5,
+  loudly, and simple cause-and-effect diagrams become the tool for keeping
+  them apart.
 
-The engine under everything is **brms**: you will write models as formulas,
-state priors out loud, and let Stan do the heavy lifting. Book code appears
-only as a dialect toggle for cross-reference.
+The engine under everything is **brms**, an R package that lets you describe
+a model in one compact formula line and then hands the hard computation to
+Stan, a battle-tested sampling engine. You will write models as formulas,
+state your assumptions out loud, and let Stan do the heavy lifting. The
+book's own code appears only as a dialect toggle for cross-reference — every
+model in this course exists in both tongues, side by side.
 
 ## How a bench works
 
 Every chapter in this workshop runs the same loop. You **predict** — sketch
-a posterior, pick a direction, commit — before any answer is shown, and the
-app scores your calibration over the whole course. You **simulate**,
-because pushing numbers through a model teaches more than reading about
-the model ever will. Then you **forge**: finish the work and the chapter's
-golem joins your bestiary, permanently, with its formula stamped on its
-chest.
+an answer, pick a direction, commit — before any result is shown. This is
+not a quiz to pass. Committing first is what makes the reveal informative:
+if you never say what you expect, you can never be surprised, and surprise
+is the only feedback that recalibrates your instincts. The app scores how
+well your expectations track the mathematics over the whole course.
+
+You **simulate**, because pushing numbers through a model teaches more than
+reading about the model ever will. A model you have only read about is a
+rumor; a model you have broken and repaired is a tool.
+
+Then you **forge**: finish the work and the chapter's golem joins your
+bestiary, permanently, with its formula stamped on its chest.
 
 Your first golem waits at the next bench, and it is small: a fist of clay
 that does nothing except toss a globe and count. Build it well. Every

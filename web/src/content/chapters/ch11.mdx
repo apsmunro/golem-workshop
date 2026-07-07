@@ -2,18 +2,30 @@ Count data are where the comfortable habits of Gaussian regression go to
 die. The outcome is 0, 1, 2, 3 — never 2.4, never −1 — and the natural
 scale of effects is multiplicative, not additive. This chapter forges the
 two count golems that carry most of applied statistics: the binomial for
-counts with a known ceiling, the Poisson for counts without one. Both are
-maximum-entropy choices from chapter 10; both speak through links; and
+counts with a known ceiling (seven successes out of ten tries), the
+Poisson for counts without one (how many tools a society invents). Both
+are maximum-entropy choices from chapter 10; both speak through links; and
 both punish anyone who reads their coefficients as if they were slopes on
 the outcome.
+
+That last warning deserves one concrete airing before the animals arrive.
+In chapter 4, a slope of 0.9 meant "one more kilogram, 0.9 more
+centimetres", everywhere, for everyone. A logistic coefficient of 0.9
+means "one more unit of x adds 0.9 to the log-odds" — and how much that
+moves the *probability* depends entirely on where the probability already
+was. Near 50%, a lot; near 99%, almost nothing. There is no single "effect
+on the outcome" to quote. You must pick a starting point, push the
+predictor, and report what happens — which is why this chapter keeps
+shoving you toward the outcome scale and the contrast.
 
 ## Chimpanzees and the lever
 
 Seven chimpanzees, two levers, and a question: does a partner across the
 table make the prosocial lever more attractive? Each pull is a Bernoulli
-trial, the treatment is one of four side-and-partner combinations, and
-every animal gets its own intercept because chimpanzees, like people,
-have habits.
+trial — a binomial with a ceiling of one, a single yes-or-no — the
+treatment is one of four side-and-partner combinations, and every animal
+gets its own intercept because chimpanzees, like people, have habits.
+Actor 2, as you are about to see, has nothing but habits.
 
 <Rosetta
   model="m11.4"
@@ -44,36 +56,50 @@ piled against the walls of probability.
 
 <Wide><ChimpExplorer /></Wide>
 
-The contrasts hug zero on both scales: adding a partner moved no lever.
-Meanwhile actor 2 pulled left all 72 times and the model, priors keeping
-it sane, estimates a merely enormous intercept rather than an infinite
-one. The scale toggle is the chapter's repeated warning label — a
-log-odds effect and a probability effect are different numbers, and only
-the second one answers "how much did behavior change?"
+The contrasts hug zero on both scales: adding a partner moved no lever. A
+contrast, note, is the difference between two conditions computed draw by
+draw from the posterior: the direct answer to "how much did the
+treatment change behavior?", which no single coefficient supplies.
+Meanwhile actor 2 pulled left all 72 times, and the data alone would push
+its intercept to infinity — no finite log-odds makes 72-for-72 anything
+but more likely still. The prior is what keeps the estimate merely
+enormous rather than infinite, sane rather than silly. The scale toggle is
+the chapter's repeated warning label: a log-odds effect and a probability
+effect are different numbers, and only the second one answers "how much
+did behavior change?"
 
 ## Berkeley, and which question you asked
 
 The 1973 Berkeley admissions data show men admitted at a higher rate than
 women. They also show, department by department, no such advantage — in
 the largest departments, a small one for women. Neither summary is a
-mistake.
+mistake. The two analyses answer two different questions, and the fork in
+the road is a variable in the middle: which department a person applied
+to.
 
 <Wide><AdmitParadox /></Wide>
 
 The gender-only model estimates the *total* effect of gender, and the
 total effect is real: it flows through which departments people apply to,
 because the departments women favored admitted almost nobody of anyone.
-Condition on department and you ask the *direct* question instead —
-different estimand, different answer, opposite sign. The paradox
-dissolves the moment you say out loud which causal question you are
-paying the golem to answer. Chapter 6's back-door lessons did not retire
-when the outcomes became integers.
+Condition on department and you ask the *direct* question instead — does
+gender matter for two applications sitting in the same pile? Different
+estimand, different answer, opposite sign. Both numbers are correct;
+they measure different paths through the same graph, and which one you
+want depends on what you would intervene on. The paradox dissolves the
+moment you say out loud which causal question you are paying the golem to
+answer. Chapter 6's back-door lessons did not retire when the outcomes
+became integers.
 
 ## Tools, people, and the ledger's fine print
 
-For counts with no ceiling, the binomial hands over to the Poisson: one
-parameter λ, both mean and variance, linked through the log so that
-predictors act multiplicatively.
+For counts with no ceiling, the binomial hands over to the Poisson. It is
+the binomial pushed to a limit (many opportunities, each individually
+unlikely) and it travels light: one parameter λ, serving as both mean and
+variance, linked through the log so that predictors act multiplicatively.
+A coefficient of 0.3 on the log scale means each unit of the predictor
+scales the expected count by e^0.3 ≈ 1.35 — a 35% increase, compounding,
+never an addition.
 
 <Rosetta
   model="m11.10"
@@ -103,10 +129,13 @@ Ten societies is not much data, so the priors do visible work — again
 tuned by simulating on the outcome scale, since Normal(0, 10) on a log
 link proposes societies with more tools than atoms. Hawaii sits alone at
 the population extreme, low contact, 71 tools, daring the model to
-extrapolate. And the monastery ledger beneath teaches the offset: when
-observations cover different exposures — days, weeks, person-years — the
-exposure enters as log τ added to the linear predictor, and rates become
-comparable across any bookkeeping. Skip the offset and you are comparing
+extrapolate. And the monastery ledger beneath teaches the offset, the
+Poisson's bookkeeping clause. When observations cover different
+exposures (one monastery logs manuscripts daily, another weekly) the raw
+counts are not comparable: seven versus five may be the same underlying
+rate wearing different calendars. The fix is to put the exposure into the
+model as log τ added to the linear predictor, which converts every count
+back to a rate before comparison. Skip the offset and you are comparing
 λ·7 to λ·1 and calling it a difference in diligence.
 
 ## Forge it

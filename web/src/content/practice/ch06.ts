@@ -52,7 +52,7 @@ x2 <- rnorm(200, x1, 0.01)   # almost identical
 y  <- rnorm(200, 2*x1)
 # fit y ~ x1 + x2, then plot post$b1 vs post$b2`,
     solution:
-      'The individual slopes are wildly uncertain and strongly negatively correlated in the posterior — the golem knows their *sum* is about 2 but cannot say how to split it. Crucially the predictions are unharmed: multicollinearity muddies interpretation of coefficients, not the fit. The fix is not "drop a variable" reflexively but understanding why the two are redundant.',
+      'The individual slopes are wildly uncertain and strongly negatively correlated in the posterior — the golem knows their *sum* is about 2 but cannot say how to split it. Note that the predictions are unharmed: multicollinearity muddies interpretation of coefficients, not the fit. The fix is not "drop a variable" reflexively but understanding why the two are redundant.',
   },
   '6M3': {
     paraphrase: 'For four small DAGs, state the adjustment set for the total X → Y effect.',

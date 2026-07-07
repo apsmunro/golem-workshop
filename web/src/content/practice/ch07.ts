@@ -128,4 +128,24 @@ loo_compare(f1, f2, f3, f4, f5)`,
     solution:
       'The models containing both avgfood (or area) and groupsize cluster at the top within a standard error of one another, while the single-predictor models trail. The DAG explains every gap: food helps foxes but also attracts groupmates who eat the surplus, so the two paths nearly cancel unless both variables are in the model, and area acts only through food, so area and food are interchangeable predictors. The WAIC table and the causal graph tell one consistent story — read together, as always.',
   },
+  '7C1': {
+    workshop: true,
+    paraphrase:
+      'Forge your own overfitting trap. Simulate 20 points from a known quadratic — y = 2 + 0.8x − 0.9x² + Normal(0, 0.5), x standardized, seed 1959 — then fit polynomials of degree 1 through 5. Confirm the one thing that is mathematically guaranteed (train deviance falls at every added degree), then use PSIS-LOO to find the degree that predicts new data best, and check it against the degree you know is true. Finally, resimulate the y-values a few times and watch which fitted curve stays put and which one thrashes.',
+    concept:
+      'The whole chapter on data you built, so the truth is known: train fit always improves with flexibility, out-of-sample skill peaks at the generating degree, and variance is the thing you can literally watch shake.',
+    strategy:
+      'Standardize x once. Fit the five nested polynomials by least squares (or brm with weak priors). Tabulate train deviance across degrees first — it must decrease monotonically, no exceptions, or you have a bug. Then add LOO to each fit and read loo_compare. Then hold the x fixed, redraw y under the same seed family, refit, and overlay the degree-2 and degree-5 curves across draws.',
+    skeleton: `set.seed(1959)
+n <- 20
+x <- scale(runif(n, -2, 2))[, 1]
+y <- 2 + 0.8 * x - 0.9 * x^2 + rnorm(n, 0, 0.5)
+train_dev <- sapply(1:5, function(d) {
+  m <- lm(y ~ poly(x, d))
+  -2 * as.numeric(logLik(m))   # deviance; must fall as d rises
+})
+# then: brm each degree, add_criterion(., "loo"), loo_compare(...)`,
+    solution:
+      'The verifiable spine of the drill is the guarantee: `train_dev` is **strictly decreasing** in degree — 1 > 2 > 3 > 4 > 5 — every time, because each higher polynomial nests the last and least squares can only lower the residual sum. If yours ever ticks up, the bug is in your code, not the statistics. That monotonic slide is exactly why in-sample deviance can never referee model choice.\n\nLOO tells the honest story. The degree-2 model wins or ties the top, degree-1 trails clearly (it cannot bend to the real curvature), and degrees 3 through 5 score a hair worse than 2 with overlapping standard errors — flexibility you paid for and did not need. The exact LOO numbers wobble with the seed, but the *ordering* holds: you built a degree-2 world, and leave-one-out finds it. That is the chapter\'s promise made checkable: out-of-sample skill peaks at the generating degree, not the highest one.\n\nThe resimulation is the payoff you can see. Redraw y and refit: the degree-2 curve barely shivers between draws, while the degree-5 curve convulses at the edges, inventing a new wiggle for each fresh accident. That shaking is variance, and it is the bill the overfit golem hands you the moment tomorrow\'s data arrive.',
+  },
 }
