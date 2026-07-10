@@ -2,7 +2,8 @@ import { Suspense, lazy, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { ChapterShell } from '../components/core/ChapterShell'
 import { LivingPosterior } from '../components/core/LivingPosterior'
-import { chapterBySlug } from '../content/chapters'
+import { chapterBySlug, chapters } from '../content/chapters'
+import { toRoman } from '../lib/roman'
 import { chapterContent } from '../content/chapter-content'
 import type { MDXPage } from '../content/chapter-content'
 import { drawsForChapter } from '../content/chapter-draws'
@@ -28,6 +29,36 @@ const MdxBundle = lazy(async () => {
     ),
   }
 })
+
+/**
+ * The bench's exit: the next bench first, so momentum carries forward.
+ * Chapter 17 has no next — the floor is the destination.
+ */
+function ChapterFooterNav({ n }: { n: number }) {
+  const next = chapters.find((c) => c.n === n + 1)
+  return (
+    <nav aria-label="Chapter navigation" className="mt-16 border-t border-line pt-8">
+      {next ? (
+        <Link
+          to={`/chapter/${next.slug}`}
+          className="group block rounded-card border border-line p-5 !no-underline transition-colors duration-[180ms] hover:border-accent"
+        >
+          <span className="eyebrow">Next bench · Chapter {toRoman(next.n)}</span>
+          <span className="mt-2 block font-display text-xl !text-primary group-hover:!text-accent-bright">
+            {next.title}
+          </span>
+        </Link>
+      ) : (
+        <p className="text-secondary">
+          Seventeen benches, seventeen golems. The workshop is yours now.
+        </p>
+      )}
+      <p className="mt-6">
+        <Link to="/">Back to the workshop floor</Link>
+      </p>
+    </nav>
+  )
+}
 
 export function ChapterPage() {
   const { slug } = useParams()
@@ -102,9 +133,7 @@ export function ChapterPage() {
           <PracticeSection chapter={chapter.n} />
         </Suspense>
       ) : null}
-      <p className="mt-16">
-        <Link to="/">Back to the workshop floor</Link>
-      </p>
+      <ChapterFooterNav n={chapter.n} />
     </ChapterShell>
   )
 }

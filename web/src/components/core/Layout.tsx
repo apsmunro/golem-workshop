@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useLocation } from 'react-router-dom'
 import { useWorkshopStore } from '../../store'
 import type { SrsDeckCard } from '../../content/srs/types'
 import { buildReviewQueue } from '../../lib/srs-review'
@@ -33,6 +33,13 @@ export function Layout() {
   useEffect(() => {
     document.documentElement.dataset.theme = theme
   }, [theme])
+
+  // Client-side navigation keeps the old scroll position; a reader who
+  // follows "next bench" must arrive at the top of the new chapter.
+  const { pathname } = useLocation()
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
 
   return (
     <div className="min-h-screen bg-ground text-primary">
