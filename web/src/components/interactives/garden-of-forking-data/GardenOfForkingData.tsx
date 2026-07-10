@@ -76,12 +76,17 @@ function Fan({ composition, observed }: FanProps) {
               className="transition-opacity duration-[180ms] ease-out"
               opacity={node.alive ? 1 : 0.18}
             >
+              {/* The garden is drawn on the always-dark panel (bg-ink-950),
+                  so its marks are bone in both moods — not --stat-data, which
+                  flips to dark ink in daylight and would vanish here. The
+                  on-page MarbleDots below keep --stat-data; they sit on the
+                  themed page ground. */}
               <line
                 x1={parent.x}
                 y1={parent.y}
                 x2={p.x}
                 y2={p.y}
-                stroke={node.alive ? 'var(--stat-data)' : 'var(--line)'}
+                stroke={node.alive ? 'var(--bone-100)' : 'var(--bone-300)'}
                 strokeWidth={node.alive ? 1 : 0.75}
                 opacity={node.alive ? 0.55 : 1}
               />
@@ -89,8 +94,8 @@ function Fan({ composition, observed }: FanProps) {
                 cx={p.x}
                 cy={p.y}
                 r={dotR}
-                fill={node.marked ? 'var(--stat-data)' : 'var(--ink-950)'}
-                stroke="var(--stat-data)"
+                fill={node.marked ? 'var(--bone-100)' : 'var(--ink-950)'}
+                stroke="var(--bone-100)"
                 strokeWidth={0.9}
               />
             </g>
