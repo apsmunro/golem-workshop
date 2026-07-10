@@ -8,6 +8,7 @@ const DATA_KEYS = [
   'calibrations',
   'cards',
   'theme',
+  'dialect',
 ] as const
 
 type DataKey = (typeof DATA_KEYS)[number]

@@ -26,16 +26,12 @@ export function ChapterShell({ n, title, golem, header, children }: ChapterShell
           </div>
           <div className="relative">
             <p className="eyebrow">
-              Chapter {toRoman(n)} · {title}
+              Chapter {toRoman(n)}
+              {golem ? <> · forges the {golem}</> : null}
             </p>
             <h1 className="mt-4 font-display text-3xl leading-tight">
               {title}
             </h1>
-            {golem ? (
-              <p className="mt-3 text-secondary">
-                Forged here: <span className="text-accent-bright">{golem}</span>
-              </p>
-            ) : null}
           </div>
         </div>
       </header>

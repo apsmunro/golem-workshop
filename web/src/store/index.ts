@@ -126,6 +126,8 @@ export const useWorkshopStore = create<WorkshopState>()(
       setTheme: (theme) => set({ theme }),
       toggleTheme: () =>
         set((s) => ({ theme: s.theme === 'workshop' ? 'daylight' : 'workshop' })),
+      dialect: 'brms',
+      setDialect: (dialect) => set({ dialect }),
     }),
     {
       name: STORE_NAME,

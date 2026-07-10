@@ -1,24 +1,11 @@
 /**
  * Rosetta — the same model in the book's dialect (quap/ulam) and ours
- * (brms), as tabs. The chosen dialect persists for the session so a
- * reader who thinks in one voice stays in it across the whole page.
+ * (brms), as tabs. The chosen dialect lives in the persisted settings
+ * slice, so a reader who thinks in one voice stays in it across pages
+ * and across visits.
  */
-import { useSyncExternalStore } from 'react'
-
-export type Dialect = 'book' | 'brms'
-
-let currentDialect: Dialect = 'brms'
-const listeners = new Set<() => void>()
-
-function setDialect(d: Dialect) {
-  currentDialect = d
-  listeners.forEach((fn) => fn())
-}
-
-function subscribe(fn: () => void) {
-  listeners.add(fn)
-  return () => listeners.delete(fn)
-}
+import { useWorkshopStore } from '../../store'
+export type { Dialect } from '../../store/types'
 
 interface RosettaProps {
   /** model name shown in the header, e.g. "m4.3" */
@@ -30,7 +17,8 @@ interface RosettaProps {
 }
 
 export function Rosetta({ model, book, brms }: RosettaProps) {
-  const dialect = useSyncExternalStore(subscribe, () => currentDialect)
+  const dialect = useWorkshopStore((s) => s.dialect)
+  const setDialect = useWorkshopStore((s) => s.setDialect)
   const code = dialect === 'book' ? book : brms
 
   return (

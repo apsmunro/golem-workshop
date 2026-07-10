@@ -36,6 +36,9 @@ export type SrsGrade = 0 | 1 | 2 | 3 | 4 | 5
 
 export type ThemeName = 'workshop' | 'daylight'
 
+/** Rosetta code-pane dialect: the book's (quap/ulam) or ours (brms). */
+export type Dialect = 'book' | 'brms'
+
 export interface ProgressSlice {
   chapters: Record<number, ChapterProgress>
   visitChapter: (n: number) => void
@@ -64,6 +67,8 @@ export interface SettingsSlice {
   theme: ThemeName
   setTheme: (theme: ThemeName) => void
   toggleTheme: () => void
+  dialect: Dialect
+  setDialect: (dialect: Dialect) => void
 }
 
 export type WorkshopState = ProgressSlice &

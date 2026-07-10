@@ -3,6 +3,7 @@ import { chapters } from '../content/chapters'
 import { toRoman } from '../lib/roman'
 import { useWorkshopStore } from '../store'
 import { golemForChapter } from '../components/bestiary/registry'
+import { ProgressPorter } from '../components/core/ProgressPorter'
 
 export function Bestiary() {
   const forged = useWorkshopStore((s) => s.golems)
@@ -15,6 +16,13 @@ export function Bestiary() {
         Every model you forge stands here, formula stamped on its chest.
         Empty plinths are chapters still waiting for their clay.
       </p>
+      <div className="mt-4 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+        <p className="max-w-[52ch] text-sm text-secondary">
+          Your golems live only in this browser. Clear its storage and they
+          crumble — export a copy to keep them.
+        </p>
+        <ProgressPorter />
+      </div>
 
       <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
         {chapters

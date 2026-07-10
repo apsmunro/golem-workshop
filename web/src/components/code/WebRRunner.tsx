@@ -3,7 +3,7 @@
  * The engine loads once per page visit, on demand, shared by all cells.
  * Text output only in v1; plots come with the Posterior Explorer work.
  */
-import { useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { getWebR, outputMatches } from './webr-session'
 import type { RunResult } from './webr-session'
 
@@ -34,12 +34,18 @@ export function WebRRunner({ code, expect, caption, rows = 8 }: WebRRunnerProps)
   const [status, setStatus] = useState<EngineStatus>(engineStatus)
   const [running, setRunning] = useState(false)
   const [result, setResult] = useState<RunResult | null>(null)
-  const listenerRef = useRef<((s: EngineStatus) => void) | null>(null)
+  // Tab is trapped for indentation while editing; Escape releases it so
+  // keyboard users can still leave the cell (WCAG 2.1.2).
+  const tabFreeRef = useRef(false)
+  const keysHintId = useId()
 
-  if (!listenerRef.current) {
-    listenerRef.current = setStatus
+  useEffect(() => {
     statusListeners.add(setStatus)
-  }
+    setStatus(engineStatus)
+    return () => {
+      statusListeners.delete(setStatus)
+    }
+  }, [])
 
   const wake = async () => {
     if (engineStatus === 'cold' || engineStatus === 'failed') {
@@ -65,7 +71,28 @@ export function WebRRunner({ code, expect, caption, rows = 8 }: WebRRunnerProps)
     }
   }
 
+  const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Escape') {
+      tabFreeRef.current = true
+      return
+    }
+    if (e.key === 'Tab' && !e.shiftKey && !tabFreeRef.current) {
+      e.preventDefault()
+      const el = e.currentTarget
+      const { selectionStart, selectionEnd } = el
+      setSource(source.slice(0, selectionStart) + '  ' + source.slice(selectionEnd))
+      requestAnimationFrame(() => {
+        el.selectionStart = el.selectionEnd = selectionStart + 2
+      })
+    }
+  }
+
+  // The brass check marks the cell's own snippet. Once the learner edits,
+  // the expected fragments no longer apply — say so instead of letting the
+  // check vanish as if something broke.
+  const edited = source !== code
   const passed =
+    !edited &&
     result !== null &&
     result.error === null &&
     expect !== undefined &&
@@ -81,11 +108,19 @@ export function WebRRunner({ code, expect, caption, rows = 8 }: WebRRunnerProps)
       <textarea
         value={source}
         onChange={(e) => setSource(e.target.value)}
+        onKeyDown={onKeyDown}
+        onFocus={() => {
+          tabFreeRef.current = false
+        }}
         rows={rows}
         spellCheck={false}
         aria-label={caption ?? 'R code cell'}
+        aria-describedby={keysHintId}
         className="block w-full resize-y bg-ink-950 p-4 font-mono text-sm leading-relaxed text-primary outline-none"
       />
+      <span id={keysHintId} className="sr-only">
+        Tab indents inside the cell. Press Escape, then Tab, to move focus out.
+      </span>
       <div className="flex flex-wrap items-center gap-3 border-t border-line px-4 py-3">
         <button
           type="button"
@@ -124,6 +159,11 @@ export function WebRRunner({ code, expect, caption, rows = 8 }: WebRRunnerProps)
               <circle cx="6" cy="6" r="4.5" fill="var(--brass-400)" />
             </svg>
             output matches
+          </span>
+        ) : expect && edited && result && !result.error ? (
+          <span className="text-sm text-secondary">
+            Your experiment now — the check marks only the original snippet.
+            Reset restores it.
           </span>
         ) : null}
       </div>
