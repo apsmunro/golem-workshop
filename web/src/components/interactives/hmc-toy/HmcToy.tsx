@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { RNG } from '../../../lib/rng'
+import { useNarrow } from '../../../lib/use-narrow'
 import { correlatedGaussian, densityGrid, funnel, hmcStep } from './engine'
 import type { TargetDist, Trajectory, Vec2 } from './engine'
 
@@ -9,8 +10,6 @@ const PRESETS: { id: string; label: string; make: () => TargetDist; start: Vec2 
   { id: 'funnel', label: "Neal's funnel", make: () => funnel(), start: [0, 0] },
 ]
 
-const W = 460
-const H = 400
 const GRID = 116
 
 function cssColor(name: string): string {
@@ -18,6 +17,13 @@ function cssColor(name: string): string {
 }
 
 export function HmcToy() {
+  // The canvas bitmap is sized for the viewport it will actually occupy:
+  // a 460px bowl downscaled to a phone column goes soft, so the phone
+  // gets its own square composition drawn 1:1. Switching viewports resets
+  // the chain, which the preset switch does anyway.
+  const narrow = useNarrow()
+  const W = narrow ? 340 : 460
+  const H = narrow ? 340 : 400
   const [presetId, setPresetId] = useState('bowl')
   const [eps, setEps] = useState(0.18)
   const [L, setL] = useState(18)
@@ -42,7 +48,7 @@ export function HmcToy() {
       ((q[0] - target.xRange[0]) / (target.xRange[1] - target.xRange[0])) * W,
       H - ((q[1] - target.yRange[0]) / (target.yRange[1] - target.yRange[0])) * H,
     ],
-    [target],
+    [target, W, H],
   )
 
   // rebuild background + reset the chain when the bowl changes
@@ -95,7 +101,7 @@ export function HmcToy() {
       main.clearRect(0, 0, W, H)
       main.drawImage(bg, 0, 0)
     }
-  }, [target, preset])
+  }, [target, preset, W, H])
 
   const compose = useCallback(
     (extra?: (ctx: CanvasRenderingContext2D) => void) => {
@@ -106,7 +112,7 @@ export function HmcToy() {
       ctx.drawImage(dotsRef.current, 0, 0)
       if (extra) extra(ctx)
     },
-    [],
+    [W, H],
   )
 
   const settle = useCallback(

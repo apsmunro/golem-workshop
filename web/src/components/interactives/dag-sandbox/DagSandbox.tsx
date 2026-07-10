@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { RNG } from '../../../lib/rng'
+import { useNarrow } from '../../../lib/use-narrow'
 import {
   adjustmentSets,
   allPaths,
@@ -10,9 +11,11 @@ import { presets } from './presets'
 import { biasDemo } from './sim'
 import type { BiasReadout } from './sim'
 
-const W = 620
-const H = 380
-const R = 17
+// Desktop and phone are different compositions, not one drawing scaled:
+// the narrow canvas is taller and its nodes larger, so labels stay
+// legible and circles stay tappable at 390px.
+const DESK = { W: 620, H: 380, R: 17, font: 13 }
+const PHONE = { W: 360, H: 420, R: 22, font: 14 }
 
 function pathLabel(path: DagPath): string {
   let out = path.nodes[0]!
@@ -28,6 +31,8 @@ function isDirectedCausal(path: DagPath): boolean {
 }
 
 export function DagSandbox() {
+  const narrow = useNarrow()
+  const { W, H, R, font } = narrow ? PHONE : DESK
   const [presetId, setPresetId] = useState('waffles')
   const [conditioned, setConditioned] = useState<Set<string>>(new Set())
   const [readout, setReadout] = useState<BiasReadout | null>(null)
@@ -156,7 +161,7 @@ export function DagSandbox() {
                   y={p.y + 4.5}
                   textAnchor="middle"
                   fontFamily="var(--font-mono)"
-                  fontSize="13"
+                  fontSize={font}
                   fill={isCond ? 'var(--ink-950)' : 'var(--bone-100)'}
                 >
                   {n}

@@ -11,10 +11,13 @@ import {
   proportions,
 } from './engine'
 import type { TrolleyCell } from './engine'
+import { useNarrow } from '../../../lib/use-narrow'
 
-const W = 620
-const AXIS_H = 170
-const BAR_H = 150
+// Two compositions: the phone axis is taller with fatter drag handles so
+// cutpoints stay grabbable at 390px, rather than the desktop drawing
+// scaled to 55%.
+const DESK = { W: 620, AXIS_H: 170, BAR_H: 150, HANDLE_R: 7 }
+const PHONE = { W: 360, AXIS_H: 210, BAR_H: 170, HANDLE_R: 11 }
 const X_LO = -4.5
 const X_HI = 4.5
 
@@ -30,6 +33,8 @@ const CELL_LABELS: Record<string, string> = {
 const START_CUTS = [-2.5, -1.5, -0.5, 0.5, 1.5, 2.5]
 
 export function CutpointDragger() {
+  const narrow = useNarrow()
+  const { W, AXIS_H, BAR_H, HANDLE_R } = narrow ? PHONE : DESK
   const [cells, setCells] = useState<TrolleyCell[] | null>(null)
   const [selection, setSelection] = useState<string>('all')
   const [cuts, setCuts] = useState<number[]>(START_CUTS)
@@ -183,7 +188,7 @@ export function CutpointDragger() {
               <circle
                 cx={xOf(k)}
                 cy={16}
-                r="7"
+                r={HANDLE_R}
                 fill="var(--ink-800)"
                 stroke="var(--brass-400)"
                 strokeWidth="1.5"
