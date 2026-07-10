@@ -122,6 +122,8 @@ export const mdxComponents: MDXComponents = {
   LectureCallout,
   GardenOfForkingData,
   GlobeCalibration: embed('GlobeCalibration'),
+  GlobePredictiveCalibration: embed('GlobePredictiveCalibration'),
+  ChapterCalibration: embed('ChapterCalibration'),
   PriorPlayground: embed('PriorPlayground'),
   DagSandbox: embed('DagSandbox'),
   HowellExplorer: embed('HowellExplorer'),

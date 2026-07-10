@@ -64,6 +64,65 @@ export function GlobeCalibration() {
   )
 }
 
+/**
+ * The chapter's predict-commit-reveal exercise, scored against the same
+ * draws that animate its living-posterior header. One instrument, every
+ * bench — the ledger the capstone reads is built one of these at a time.
+ */
+export function ChapterCalibration({
+  chapter,
+  id,
+  left,
+  label,
+  right,
+  lo,
+  hi,
+}: {
+  chapter: number
+  id: string
+  left: string
+  label: string
+  right: string
+  /** Axis bounds. Default to the draw range, but widen them whenever the
+   *  range alone would leak the answer's sign or spread. */
+  lo?: number
+  hi?: number
+}) {
+  const truth = useMemo(() => {
+    const d = drawsForChapter(chapter)!
+    return kde(d.draws, { lo: lo ?? d.range[0], hi: hi ?? d.range[1], n: 128 })
+  }, [chapter, lo, hi])
+  return (
+    <CalibrationSketch
+      id={id}
+      chapter={chapter}
+      truth={truth}
+      axis={{ left, label, right }}
+    />
+  )
+}
+
+/**
+ * Chapter 3's sketch is predictive, not posterior: push every plausible p
+ * through nine fresh tosses and guess the spread of outcomes.
+ */
+export function GlobePredictiveCalibration() {
+  const truth = useMemo(() => {
+    const globe = drawsForChapter(2)!
+    const rng = new RNG(1959, 3)
+    const draws = globe.draws.map((p) => rng.binomial(9, p) / 9)
+    return kde(draws, { lo: 0, hi: 1, n: 128 })
+  }, [])
+  return (
+    <CalibrationSketch
+      id="ch03-globe-predictive"
+      chapter={3}
+      truth={truth}
+      axis={{ left: '0', label: 'share of water in the next 9 tosses', right: '1' }}
+    />
+  )
+}
+
 export {
   PriorPlayground,
   DagSandbox,

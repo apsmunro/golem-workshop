@@ -90,6 +90,23 @@ example. A link function is a change of scale, and priors, like effects,
 must be judged on the scale where their consequences live, which is one
 more job for prior predictive simulation.
 
+Test that instinct now, because next chapter uses this exact prior on real
+chimpanzees. Normal(0, 1.5) on the log-odds scale: push it through the
+inverse logit and sketch what it believes about the probability itself.
+
+<ChapterCalibration
+  chapter={10}
+  id="ch10-logit-prior"
+  left="0"
+  label="inverse-logit of Normal(0, 1.5)"
+  right="1"
+/>
+
+Not the wall-hugging monster the wide prior makes — that is the point.
+The 1.5 was chosen so the probability scale comes out nearly level. Widen
+it to 10 and the mass flees to the walls; that difference is invisible on
+the logit scale and decisive on this one.
+
 ## No practice section — drills instead
 
 The book gives chapter 10 no end-of-chapter problems; it is the armory

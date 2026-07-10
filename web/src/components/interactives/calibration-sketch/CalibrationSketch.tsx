@@ -26,8 +26,16 @@ export function CalibrationSketch({ id, chapter, truth, axis, onScored }: Calibr
   const pointsRef = useRef<SketchPoint[]>([])
   const drawingRef = useRef(false)
   const [hasInk, setHasInk] = useState(false)
+  /** The recorded score. Null until reveal; stays put forever after. */
   const [revealed, setRevealed] = useState<number | null>(null)
+  /** Revealed without a sketch — the no-pointer path. Nothing recorded. */
+  const [skipped, setSkipped] = useState(false)
+  /** After the reveal: drawing is open again, unscored, for consolidation. */
+  const [practicing, setPracticing] = useState(false)
   const recordCalibration = useWorkshopStore((s) => s.recordCalibration)
+
+  const shown = revealed !== null || skipped
+  const canDraw = !shown || practicing
 
   const redraw = useCallback(() => {
     const canvas = canvasRef.current
@@ -65,7 +73,7 @@ export function CalibrationSketch({ id, chapter, truth, axis, onScored }: Calibr
     }
 
     // the truth, revealed in brass with the house fill
-    if (revealed !== null) {
+    if (shown) {
       const maxY = Math.max(...truth.y)
       const color = cssVar('--stat-posterior')
       ctx.beginPath()
@@ -86,7 +94,7 @@ export function CalibrationSketch({ id, chapter, truth, axis, onScored }: Calibr
       ctx.fill()
       ctx.globalAlpha = 1
     }
-  }, [revealed, truth])
+  }, [shown, truth])
 
   useEffect(() => {
     redraw()
@@ -103,7 +111,7 @@ export function CalibrationSketch({ id, chapter, truth, axis, onScored }: Calibr
   }
 
   const onPointerDown = (e: React.PointerEvent) => {
-    if (revealed !== null) return
+    if (!canDraw) return
     drawingRef.current = true
     canvasRef.current?.setPointerCapture(e.pointerId)
     pointsRef.current.push(pointerPos(e))
@@ -111,7 +119,7 @@ export function CalibrationSketch({ id, chapter, truth, axis, onScored }: Calibr
     redraw()
   }
   const onPointerMove = (e: React.PointerEvent) => {
-    if (!drawingRef.current || revealed !== null) return
+    if (!drawingRef.current || !canDraw) return
     pointsRef.current.push(pointerPos(e))
     redraw()
   }
@@ -127,7 +135,7 @@ export function CalibrationSketch({ id, chapter, truth, axis, onScored }: Calibr
 
   const reveal = () => {
     const canvas = canvasRef.current
-    if (!canvas || revealed !== null) return
+    if (!canvas || shown) return
     const density = sketchToDensity(
       pointsRef.current,
       canvas.clientWidth,
@@ -139,6 +147,22 @@ export function CalibrationSketch({ id, chapter, truth, axis, onScored }: Calibr
     setRevealed(score)
     recordCalibration({ id, chapter, score })
     onScored?.(score)
+  }
+
+  /** No-pointer path: show the answer, record nothing. */
+  const revealUnscored = () => {
+    if (shown) return
+    pointsRef.current = []
+    setHasInk(false)
+    setSkipped(true)
+  }
+
+  /** Open the canvas back up after the reveal; the ledger entry stands. */
+  const practiceAgain = () => {
+    pointsRef.current = []
+    setHasInk(false)
+    setPracticing(true)
+    redraw()
   }
 
   const scorable = hasInk
@@ -161,32 +185,77 @@ export function CalibrationSketch({ id, chapter, truth, axis, onScored }: Calibr
         <span>{axis.right}</span>
       </div>
       <div className="mt-4 flex flex-wrap items-center gap-3">
-        <button
-          type="button"
-          onClick={reveal}
-          disabled={!scorable || revealed !== null}
-          className="cursor-pointer rounded-card border border-accent px-4 py-2 text-sm text-accent-bright transition-colors duration-[180ms] hover:bg-accent hover:text-ink-950 disabled:cursor-not-allowed disabled:opacity-40"
-        >
-          Reveal the posterior
-        </button>
-        <button
-          type="button"
-          onClick={clear}
-          disabled={!hasInk || revealed !== null}
-          className="cursor-pointer rounded-card border border-line px-4 py-2 text-sm text-secondary transition-colors duration-[180ms] hover:border-accent disabled:cursor-not-allowed disabled:opacity-40"
-        >
-          Clear
-        </button>
-        {revealed !== null ? (
-          <span className="font-mono text-sm">
-            overlap{' '}
-            <span className="text-accent-bright">{(revealed * 100).toFixed(1)}%</span>
-          </span>
-        ) : !scorable ? (
-          <span className="text-sm text-secondary">
-            Draw the shape you expect, then reveal.
-          </span>
-        ) : null}
+        {!shown ? (
+          <>
+            <button
+              type="button"
+              onClick={reveal}
+              disabled={!scorable}
+              className="cursor-pointer rounded-card border border-accent px-4 py-2 text-sm text-accent-bright transition-colors duration-[180ms] hover:bg-accent hover:text-ink-950 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              Reveal the posterior
+            </button>
+            <button
+              type="button"
+              onClick={clear}
+              disabled={!hasInk}
+              className="cursor-pointer rounded-card border border-line px-4 py-2 text-sm text-secondary transition-colors duration-[180ms] hover:border-accent disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              Clear
+            </button>
+            {!scorable ? (
+              <span className="text-sm text-secondary">
+                Draw the shape you expect, then reveal.
+              </span>
+            ) : null}
+            <button
+              type="button"
+              onClick={revealUnscored}
+              className="cursor-pointer text-sm text-secondary underline decoration-[color:color-mix(in_srgb,var(--link)_45%,transparent)] underline-offset-[3px] transition-colors duration-[180ms] hover:text-accent-bright"
+            >
+              Can't sketch here? Reveal unscored
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              type="button"
+              onClick={practiceAgain}
+              className="cursor-pointer rounded-card border border-line px-4 py-2 text-sm text-secondary transition-colors duration-[180ms] hover:border-accent"
+            >
+              Sketch it again (unscored)
+            </button>
+            {practicing ? (
+              <button
+                type="button"
+                onClick={clear}
+                disabled={!hasInk}
+                className="cursor-pointer rounded-card border border-line px-4 py-2 text-sm text-secondary transition-colors duration-[180ms] hover:border-accent disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                Clear
+              </button>
+            ) : null}
+            <span role="status" className="font-mono text-sm">
+              {revealed !== null ? (
+                <>
+                  overlap{' '}
+                  <span className="text-accent-bright">
+                    {(revealed * 100).toFixed(1)}%
+                  </span>
+                  {practicing ? (
+                    <span className="text-secondary"> · practice strokes are free</span>
+                  ) : (
+                    <span className="text-secondary"> · in your ledger</span>
+                  )}
+                </>
+              ) : (
+                <span className="text-secondary">
+                  revealed unscored — trace it to learn the shape
+                </span>
+              )}
+            </span>
+          </>
+        )}
       </div>
     </div>
   )

@@ -118,6 +118,13 @@ cluster near it.
 )`}
 />
 
+One change of workshop practice, so you don't go looking for a fault: the
+editable R cells of chapters 2 and 3 end here. Grid approximation was
+cheap enough to run in your browser; Stan is not. From this bench onward
+every model was fitted offline — four chains, seed 1959, diagnostics
+checked before export — and its posterior draws travel with the page. The
+code above is the code that made them. Nothing broke.
+
 ## Reading the posterior
 
 Fit it and the golem hands back not a line but a posterior over lines —
@@ -129,6 +136,20 @@ ever fail to load, an in-browser quadratic approximation stands in).
 Marginals first, then the model's lines over the data, then a
 counterfactual: pick a weight the census never recorded and ask for a
 height.
+
+Sketch before you open the drawers: the marginal for β, in centimetres of
+average height per extra kilogram. You know people well enough to have an
+opinion. Where does the slope sit, and how much can 352 adults narrow it?
+
+<ChapterCalibration
+  chapter={4}
+  id="ch04-height-slope"
+  left="0"
+  label="β · cm of height per kg of weight"
+  right="+1.5"
+  lo={0}
+  hi={1.5}
+/>
 
 <Wide><HowellExplorer /></Wide>
 

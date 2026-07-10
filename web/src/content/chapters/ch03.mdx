@@ -69,7 +69,16 @@ world. But parameters are not observations. Nobody will ever hand you a
 $p$; they will hand you tosses. To speak about *future data*, push whole
 posterior draws through the likelihood: for each sampled globe, toss it
 nine more times and record what happens. Every plausible globe gets tossed
-again, in proportion to its plausibility:
+again, in proportion to its plausibility.
+
+Commit before the code answers. Last bench you sketched the posterior for
+$p$ itself; this is a different animal — the share of water in nine *new*
+tosses. A globe of known wetness can still land dry five times in a row.
+Wider than the posterior, or narrower? Draw it.
+
+<GlobePredictiveCalibration />
+
+Now let the samples do the same job:
 
 <WebRRunner
   caption="Posterior predictive for nine new tosses"

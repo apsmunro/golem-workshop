@@ -44,6 +44,22 @@ amount of pooling is not estimated from the spread of states, it is handed to
 the model as the standard error. Information you threw away by rounding to a
 point estimate comes back.
 
+You have sketched this coefficient before. On the chapter 5 bench, bA —
+the effect of age at marriage on divorce, both standardized — came out
+around −0.6. Now the outcome wears honest error bars. Does admitting that
+the divorce rates were measured noisily widen the posterior, drag it
+toward zero, or leave it be? Same axis as chapter 5; commit.
+
+<ChapterCalibration
+  chapter={15}
+  id="ch15-age-effect-corrected"
+  left="−1.5"
+  label="bA with measurement error modeled (std)"
+  right="+0.5"
+  lo={-1.5}
+  hi={0.5}
+/>
+
 <Rosetta
   model="m15.1"
   book={`m15.1 <- ulam(

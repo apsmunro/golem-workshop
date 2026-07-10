@@ -54,6 +54,24 @@ divergences pile up in the neck, where curvature changes too fast for any
 single ε. Chapter 13 meets that geometry in earnest and learns to melt it
 away by reparameterization.
 
+One more instinct to calibrate before moving on. The ridge you just rolled
+through is two parameters correlated at 0.9 — a narrow diagonal canyon.
+Sketch the marginal distribution of the first parameter alone: what does
+that canyon look like once you flatten it onto a single axis?
+
+<ChapterCalibration
+  chapter={9}
+  id="ch09-ridge-marginal"
+  left="−3"
+  label="q1, the ridge flattened to one axis"
+  right="+3"
+/>
+
+If you drew something narrow, the canyon fooled you: correlation constrains
+the *pair*, not each coordinate. Each marginal is an ordinary Gaussian, as
+wide as if the correlation were zero. This is why pairs of trace plots can
+each look healthy while the joint geometry is strangling the sampler.
+
 ## From quap to chains
 
 In brms nothing about the model changes — the formula and priors carry

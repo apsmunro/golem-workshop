@@ -85,6 +85,21 @@ pattern, and adding the fork to the model is what exposed it.
 )`}
 />
 
+Before the golem reports: with both predictors in the model, where does the
+age-at-marriage coefficient land? Everything is standardized, so −1 would
+mean a full standard deviation of divorce per standard deviation of age.
+Zero would mean age adds nothing once marriage rate is known. Commit.
+
+<ChapterCalibration
+  chapter={5}
+  id="ch05-age-coefficient"
+  left="−1.5"
+  label="bA · effect of age at marriage (std)"
+  right="+0.5"
+  lo={-1.5}
+  hi={0.5}
+/>
+
 Predictor residual plots and counterfactual plots are the two tools for
 reading these golems. The first shows what a predictor adds *after* the
 others are accounted for: strip out of marriage rate everything that age
