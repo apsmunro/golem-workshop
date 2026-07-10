@@ -63,14 +63,14 @@ function FunnelPanel({
             strokeDasharray="2 4"
             opacity="0.5"
           />
-          <text x={W - PAD} y={yOf(-3) - 4} textAnchor="end" fill="var(--text-secondary)" fontSize="8" fontFamily="var(--font-mono)">
+          <text x={W - PAD} y={yOf(-3) - 4} textAnchor="end" fill="var(--bone-300)" fontSize="8" fontFamily="var(--font-mono)">
             the neck
           </text>
 
           {/* accepted samples */}
           {run.samples.map((s, i) =>
             s.divergent ? null : (
-              <circle key={i} cx={xOf(s.q[0])} cy={yOf(s.q[1])} r={1.3} fill="var(--stat-data)" opacity="0.5" />
+              <circle key={i} cx={xOf(s.q[0])} cy={yOf(s.q[1])} r={1.3} fill="var(--bone-100)" opacity="0.5" />
             ),
           )}
           {/* divergences: clay crosses at the launch point */}
@@ -83,13 +83,13 @@ function FunnelPanel({
             ) : null,
           )}
 
-          <text x={PAD + 2} y={H - PAD - 2} fill="var(--text-secondary)" fontSize="8" fontFamily="var(--font-mono)">
+          <text x={PAD + 2} y={H - PAD - 2} fill="var(--bone-300)" fontSize="8" fontFamily="var(--font-mono)">
             x (the parameter)
           </text>
           <text
             x={PAD + 8}
             y={PAD + 40}
-            fill="var(--text-secondary)"
+            fill="var(--bone-300)"
             fontSize="8"
             fontFamily="var(--font-mono)"
             transform={`rotate(-90 ${PAD + 8} ${PAD + 40})`}

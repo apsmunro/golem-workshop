@@ -47,7 +47,7 @@ export function HintLadder({ hints }: { hints: ProblemHints }) {
               <div className="mt-2 space-y-2 text-[15px] leading-relaxed">
                 {content.split('\n\n').map((para, pi) =>
                   para.startsWith('```') ? (
-                    <pre key={pi} className="overflow-x-auto rounded-card bg-ink-950 p-3 text-sm leading-relaxed whitespace-pre-wrap">
+                    <pre key={pi} className="overflow-x-auto rounded-card bg-ink-950 p-3 text-sm leading-relaxed whitespace-pre-wrap text-bone-100">
                       {para.replace(/```r?\n?/g, '').replace(/```$/, '')}
                     </pre>
                   ) : (

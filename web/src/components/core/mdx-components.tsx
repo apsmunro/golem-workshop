@@ -104,7 +104,7 @@ export const mdxComponents: MDXComponents = {
   code: (props) => <code className="text-[0.92em]" {...props} />,
   pre: (props) => (
     <pre
-      className="mt-5 overflow-x-auto rounded-card border border-line bg-ink-950 p-4 text-sm leading-relaxed"
+      className="mt-5 overflow-x-auto rounded-card border border-line bg-ink-950 p-4 text-sm leading-relaxed text-bone-100"
       {...props}
     />
   ),

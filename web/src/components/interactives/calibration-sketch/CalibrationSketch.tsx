@@ -59,10 +59,12 @@ export function CalibrationSketch({ id, chapter, truth, axis, onScored }: Calibr
     ctx.lineTo(w, h - 1)
     ctx.stroke()
 
-    // the learner's stroke, in bone
+    // the learner's stroke, in bone — the canvas is a fixed-dark panel in
+    // both themes, so this must not use --stat-data (it flips to dark ink
+    // in daylight and would vanish against the same dark background)
     const pts = pointsRef.current
     if (pts.length > 1) {
-      ctx.strokeStyle = cssVar('--stat-data')
+      ctx.strokeStyle = cssVar('--bone-100')
       ctx.lineWidth = 1.5
       ctx.beginPath()
       pts.forEach((p, i) => {

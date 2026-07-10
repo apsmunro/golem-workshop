@@ -45,19 +45,19 @@ export function ErrorInVariables({ rows }: { rows: WaffleRow[] }) {
             <g key={g}>
               <line x1={xOf(g)} x2={xOf(g)} y1={PAD_T} y2={H - PAD_B} stroke="var(--line)" strokeWidth="1" opacity="0.25" />
               <line x1={PAD_L} x2={W - PAD_R} y1={yOf(g)} y2={yOf(g)} stroke="var(--line)" strokeWidth="1" opacity="0.25" />
-              <text x={xOf(g)} y={H - PAD_B + 16} textAnchor="middle" fill="var(--text-secondary)" fontSize="9" fontFamily="var(--font-mono)">{g}</text>
-              <text x={PAD_L - 6} y={yOf(g) + 3} textAnchor="end" fill="var(--text-secondary)" fontSize="9" fontFamily="var(--font-mono)">{g}</text>
+              <text x={xOf(g)} y={H - PAD_B + 16} textAnchor="middle" fill="var(--bone-300)" fontSize="9" fontFamily="var(--font-mono)">{g}</text>
+              <text x={PAD_L - 6} y={yOf(g) + 3} textAnchor="end" fill="var(--bone-300)" fontSize="9" fontFamily="var(--font-mono)">{g}</text>
             </g>
           ))}
-          <text x={(PAD_L + W - PAD_R) / 2} y={H - 6} textAnchor="middle" fill="var(--text-secondary)" fontSize="10" fontFamily="var(--font-mono)">
+          <text x={(PAD_L + W - PAD_R) / 2} y={H - 6} textAnchor="middle" fill="var(--bone-300)" fontSize="10" fontFamily="var(--font-mono)">
             median age at marriage (std)
           </text>
-          <text x={14} y={(PAD_T + H - PAD_B) / 2} textAnchor="middle" fill="var(--text-secondary)" fontSize="10" fontFamily="var(--font-mono)" transform={`rotate(-90 14 ${(PAD_T + H - PAD_B) / 2})`}>
+          <text x={14} y={(PAD_T + H - PAD_B) / 2} textAnchor="middle" fill="var(--bone-300)" fontSize="10" fontFamily="var(--font-mono)" transform={`rotate(-90 14 ${(PAD_T + H - PAD_B) / 2})`}>
             divorce rate (std)
           </text>
 
           {/* naive line, always shown as a faint dashed reference */}
-          <line x1={xOf(-RANGE)} y1={yOf(lineY0(fit.naive.a, fit.naive.b, -RANGE))} x2={xOf(RANGE)} y2={yOf(lineY0(fit.naive.a, fit.naive.b, RANGE))} stroke="var(--stat-data)" strokeWidth="1.2" strokeDasharray="5 4" opacity="0.5" />
+          <line x1={xOf(-RANGE)} y1={yOf(lineY0(fit.naive.a, fit.naive.b, -RANGE))} x2={xOf(RANGE)} y2={yOf(lineY0(fit.naive.a, fit.naive.b, RANGE))} stroke="var(--bone-100)" strokeWidth="1.2" strokeDasharray="5 4" opacity="0.5" />
           {/* active line */}
           <line x1={xOf(-RANGE)} y1={yOf(lineY(-RANGE))} x2={xOf(RANGE)} y2={yOf(lineY(RANGE))} stroke="var(--stat-posterior)" strokeWidth="1.8" />
 
@@ -72,7 +72,7 @@ export function ErrorInVariables({ rows }: { rows: WaffleRow[] }) {
                 {correct ? (
                   <line x1={xOf(a)} y1={yOf(dObs)} x2={xOf(a)} y2={yOf(dTrue)} stroke="var(--brass-400)" strokeWidth="1" opacity="0.5" />
                 ) : null}
-                <circle cx={xOf(a)} cy={yOf(dObs)} r={2.4} fill="none" stroke="var(--stat-data)" strokeWidth="1.1" opacity="0.75" />
+                <circle cx={xOf(a)} cy={yOf(dObs)} r={2.4} fill="none" stroke="var(--bone-100)" strokeWidth="1.1" opacity="0.75" />
                 {correct ? <circle cx={xOf(a)} cy={yOf(dTrue)} r={2.6} fill="var(--stat-posterior)" /> : null}
               </g>
             )

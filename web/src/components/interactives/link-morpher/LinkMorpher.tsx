@@ -87,7 +87,7 @@ export function LinkMorpher() {
                 x={PAD_L - 8}
                 y={fToPy(f) + 3}
                 textAnchor="end"
-                fill="var(--text-secondary)"
+                fill="var(--bone-300)"
                 fontSize="9"
                 fontFamily="var(--font-mono)"
                 opacity={1 - t * 0.65}
@@ -98,7 +98,7 @@ export function LinkMorpher() {
                 x={W - PAD_R + 8}
                 y={fToPy(f) + 3}
                 textAnchor="start"
-                fill="var(--text-secondary)"
+                fill="var(--bone-300)"
                 fontSize="9"
                 fontFamily="var(--font-mono)"
                 opacity={0.35 + t * 0.65}
@@ -145,7 +145,7 @@ export function LinkMorpher() {
             x={(PAD_L + W - PAD_R) / 2}
             y={H - 8}
             textAnchor="middle"
-            fill="var(--text-secondary)"
+            fill="var(--bone-300)"
             fontSize="10"
             fontFamily="var(--font-mono)"
           >
@@ -155,7 +155,7 @@ export function LinkMorpher() {
             x={PAD_L - 8}
             y={PAD_T - 4}
             textAnchor="end"
-            fill="var(--text-secondary)"
+            fill="var(--bone-300)"
             fontSize="9"
             fontFamily="var(--font-mono)"
             opacity={1 - t * 0.65}
@@ -166,7 +166,7 @@ export function LinkMorpher() {
             x={W - PAD_R + 8}
             y={PAD_T - 4}
             textAnchor="start"
-            fill="var(--text-secondary)"
+            fill="var(--bone-300)"
             fontSize="9"
             fontFamily="var(--font-mono)"
             opacity={0.35 + t * 0.65}

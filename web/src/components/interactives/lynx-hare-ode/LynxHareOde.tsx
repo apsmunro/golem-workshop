@@ -57,7 +57,7 @@ export function LynxHareOde() {
             {[0, 30, 60, 90].map((g) => (
               <g key={g}>
                 <line x1={PAD} x2={TS_W - 8} y1={tsY(g)} y2={tsY(g)} stroke="var(--line)" strokeWidth="1" opacity="0.2" />
-                <text x={PAD - 5} y={tsY(g) + 3} textAnchor="end" fill="var(--text-secondary)" fontSize="8" fontFamily="var(--font-mono)">{g}</text>
+                <text x={PAD - 5} y={tsY(g) + 3} textAnchor="end" fill="var(--bone-300)" fontSize="8" fontFamily="var(--font-mono)">{g}</text>
               </g>
             ))}
             <path d={path(main.t, main.H, tsX, tsY)} fill="none" stroke="var(--brass-400)" strokeWidth="1.8" />
@@ -68,7 +68,7 @@ export function LynxHareOde() {
                 <circle cx={tsX(d.year - 1900)} cy={tsY(d.lynx)} r={1.8} fill="none" stroke="var(--verdigris-400)" strokeWidth="1" opacity="0.8" />
               </g>
             ))}
-            <text x={(PAD + TS_W) / 2} y={HGT - 6} textAnchor="middle" fill="var(--text-secondary)" fontSize="8" fontFamily="var(--font-mono)">years (from 1900)</text>
+            <text x={(PAD + TS_W) / 2} y={HGT - 6} textAnchor="middle" fill="var(--bone-300)" fontSize="8" fontFamily="var(--font-mono)">years (from 1900)</text>
             <text x={PAD + 4} y={16} fill="var(--brass-200)" fontSize="8" fontFamily="var(--font-mono)">hare</text>
             <text x={PAD + 40} y={16} fill="var(--verdigris-400)" fontSize="8" fontFamily="var(--font-mono)">lynx</text>
           </svg>
@@ -83,8 +83,8 @@ export function LynxHareOde() {
             <path d={path(main.H, main.L, ppX, ppY)} fill="none" stroke="var(--stat-posterior)" strokeWidth="1.8" />
             <circle cx={ppX(eq[0])} cy={ppY(eq[1])} r={2.4} fill="var(--brass-200)" />
             <circle cx={ppX(INIT[0])} cy={ppY(INIT[1])} r={2.4} fill="none" stroke="var(--bone-300)" strokeWidth="1.2" />
-            <text x={(PAD + PP_W) / 2} y={HGT - 6} textAnchor="middle" fill="var(--text-secondary)" fontSize="8" fontFamily="var(--font-mono)">hare (thousands)</text>
-            <text x={12} y={(PAD + HGT) / 2} textAnchor="middle" fill="var(--text-secondary)" fontSize="8" fontFamily="var(--font-mono)" transform={`rotate(-90 12 ${(PAD + HGT) / 2})`}>lynx (thousands)</text>
+            <text x={(PAD + PP_W) / 2} y={HGT - 6} textAnchor="middle" fill="var(--bone-300)" fontSize="8" fontFamily="var(--font-mono)">hare (thousands)</text>
+            <text x={12} y={(PAD + HGT) / 2} textAnchor="middle" fill="var(--bone-300)" fontSize="8" fontFamily="var(--font-mono)" transform={`rotate(-90 12 ${(PAD + HGT) / 2})`}>lynx (thousands)</text>
           </svg>
         </div>
       </div>

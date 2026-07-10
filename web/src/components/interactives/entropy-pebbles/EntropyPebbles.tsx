@@ -121,7 +121,7 @@ export function EntropyPebbles() {
                     cy={cy}
                     r={PEB_R}
                     fill="none"
-                    stroke="var(--stat-data)"
+                    stroke="var(--bone-100)"
                     strokeWidth="1.5"
                   />
                 )
@@ -130,7 +130,7 @@ export function EntropyPebbles() {
                 x={bucketX(i) + BUCKET_W / 2}
                 y={H - 8}
                 textAnchor="middle"
-                fill="var(--text-secondary)"
+                fill="var(--bone-300)"
                 fontSize="11"
                 fontFamily="var(--font-mono)"
               >

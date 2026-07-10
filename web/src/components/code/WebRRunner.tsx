@@ -116,7 +116,7 @@ export function WebRRunner({ code, expect, caption, rows = 8 }: WebRRunnerProps)
         spellCheck={false}
         aria-label={caption ?? 'R code cell'}
         aria-describedby={keysHintId}
-        className="block w-full resize-y bg-ink-950 p-4 font-mono text-sm leading-relaxed text-primary outline-none"
+        className="block w-full resize-y bg-ink-950 p-4 font-mono text-sm leading-relaxed text-bone-100 outline-none"
       />
       <span id={keysHintId} className="sr-only">
         Tab indents inside the cell. Press Escape, then Tab, to move focus out.
@@ -168,11 +168,11 @@ export function WebRRunner({ code, expect, caption, rows = 8 }: WebRRunnerProps)
         ) : null}
       </div>
       {result ? (
-        <pre className="overflow-x-auto border-t border-line bg-ink-950 p-4 font-mono text-sm leading-relaxed whitespace-pre-wrap">
+        <pre className="overflow-x-auto border-t border-line bg-ink-950 p-4 font-mono text-sm leading-relaxed whitespace-pre-wrap text-bone-100">
           {result.error ? (
             <span className="text-stat-danger">{result.error}</span>
           ) : result.lines.length === 0 ? (
-            <span className="text-secondary">(no printed output)</span>
+            <span className="text-bone-300">(no printed output)</span>
           ) : (
             result.lines.map((l, i) => (
               <span key={i} className={l.type === 'stderr' ? 'text-stat-danger' : undefined}>

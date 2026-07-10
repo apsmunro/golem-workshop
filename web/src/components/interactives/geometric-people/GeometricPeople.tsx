@@ -64,20 +64,20 @@ export function GeometricPeople({ rows }: { rows: HW[] }) {
           {[60, 90, 120, 150, 180].map((g) => (
             <g key={g}>
               <line x1={xOf(g)} x2={xOf(g)} y1={PAD_T} y2={H - PAD_B} stroke="var(--line)" strokeWidth="1" opacity="0.2" />
-              <text x={xOf(g)} y={H - PAD_B + 16} textAnchor="middle" fill="var(--text-secondary)" fontSize="9" fontFamily="var(--font-mono)">{g}</text>
+              <text x={xOf(g)} y={H - PAD_B + 16} textAnchor="middle" fill="var(--bone-300)" fontSize="9" fontFamily="var(--font-mono)">{g}</text>
             </g>
           ))}
           {[0, 20, 40, 60].map((g) => (
             <g key={g}>
               <line x1={PAD_L} x2={W - PAD_R} y1={yOf(g)} y2={yOf(g)} stroke="var(--line)" strokeWidth="1" opacity="0.2" />
-              <text x={PAD_L - 6} y={yOf(g) + 3} textAnchor="end" fill="var(--text-secondary)" fontSize="9" fontFamily="var(--font-mono)">{g}</text>
+              <text x={PAD_L - 6} y={yOf(g) + 3} textAnchor="end" fill="var(--bone-300)" fontSize="9" fontFamily="var(--font-mono)">{g}</text>
             </g>
           ))}
-          <text x={(PAD_L + W - PAD_R) / 2} y={H - 6} textAnchor="middle" fill="var(--text-secondary)" fontSize="10" fontFamily="var(--font-mono)">height (cm)</text>
-          <text x={14} y={(PAD_T + H - PAD_B) / 2} textAnchor="middle" fill="var(--text-secondary)" fontSize="10" fontFamily="var(--font-mono)" transform={`rotate(-90 14 ${(PAD_T + H - PAD_B) / 2})`}>weight (kg)</text>
+          <text x={(PAD_L + W - PAD_R) / 2} y={H - 6} textAnchor="middle" fill="var(--bone-300)" fontSize="10" fontFamily="var(--font-mono)">height (cm)</text>
+          <text x={14} y={(PAD_T + H - PAD_B) / 2} textAnchor="middle" fill="var(--bone-300)" fontSize="10" fontFamily="var(--font-mono)" transform={`rotate(-90 14 ${(PAD_T + H - PAD_B) / 2})`}>weight (kg)</text>
 
           {rows.map((r, i) => (
-            <circle key={i} cx={xOf(r.height)} cy={yOf(r.weight)} r={1.7} fill="var(--stat-data)" opacity="0.5" />
+            <circle key={i} cx={xOf(r.height)} cy={yOf(r.weight)} r={1.7} fill="var(--bone-100)" opacity="0.5" />
           ))}
 
           {showLine ? (

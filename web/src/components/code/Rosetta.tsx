@@ -46,7 +46,7 @@ export function Rosetta({ model, book, brms }: RosettaProps) {
           ))}
         </span>
       </figcaption>
-      <pre className="overflow-x-auto bg-ink-950 p-4 font-mono text-sm leading-relaxed whitespace-pre">
+      <pre className="overflow-x-auto bg-ink-950 p-4 font-mono text-sm leading-relaxed whitespace-pre text-bone-100">
         {code}
       </pre>
     </figure>

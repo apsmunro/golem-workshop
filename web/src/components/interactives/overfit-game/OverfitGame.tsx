@@ -94,7 +94,7 @@ export function OverfitGame() {
               cy={py(Math.max(yLo, Math.min(yHi, sample.y[i]!)))}
               r="2.6"
               fill="none"
-              stroke="var(--stat-data)"
+              stroke="var(--bone-100)"
               strokeWidth="1"
             />
           ))}

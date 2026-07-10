@@ -118,7 +118,7 @@ export function ShrinkageTheater({ tanks }: { tanks: Tank[] }) {
                 x={PAD_L - 6}
                 y={yOf(p) + 3}
                 textAnchor="end"
-                fill="var(--text-secondary)"
+                fill="var(--bone-300)"
                 fontSize="9"
                 fontFamily="var(--font-mono)"
               >
@@ -169,7 +169,7 @@ export function ShrinkageTheater({ tanks }: { tanks: Tank[] }) {
               x={PAD_L + ((i + 0.5) / 3) * plotW}
               y={H - PAD_B + 26}
               textAnchor="middle"
-              fill="var(--text-secondary)"
+              fill="var(--bone-300)"
               fontSize="9"
               fontFamily="var(--font-mono)"
             >
@@ -199,7 +199,7 @@ export function ShrinkageTheater({ tanks }: { tanks: Tank[] }) {
               cy={yOf(r.raw)}
               r={rOf(r.tank.density)}
               fill="none"
-              stroke="var(--stat-data)"
+              stroke="var(--bone-100)"
               strokeWidth="1.1"
               opacity="0.75"
             />
@@ -220,7 +220,7 @@ export function ShrinkageTheater({ tanks }: { tanks: Tank[] }) {
             x={PAD_L - 30}
             y={PAD_T + plotH / 2}
             textAnchor="middle"
-            fill="var(--text-secondary)"
+            fill="var(--bone-300)"
             fontSize="10"
             fontFamily="var(--font-mono)"
             transform={`rotate(-90 ${PAD_L - 30} ${PAD_T + plotH / 2})`}

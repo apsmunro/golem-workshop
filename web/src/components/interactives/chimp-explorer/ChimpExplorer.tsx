@@ -136,7 +136,7 @@ export function ChimpExplorer() {
             x={W / 2}
             y={DENS_H - 8}
             textAnchor="middle"
-            fill="var(--text-secondary)"
+            fill="var(--bone-300)"
             fontSize="10"
             fontFamily="var(--font-mono)"
           >
@@ -178,7 +178,7 @@ export function ChimpExplorer() {
                 x={38}
                 y={ay(p) + 3}
                 textAnchor="end"
-                fill="var(--text-secondary)"
+                fill="var(--bone-300)"
                 fontSize="9"
                 fontFamily="var(--font-mono)"
               >
@@ -203,7 +203,7 @@ export function ChimpExplorer() {
                 x={48 + (actor - 0.5) * colW}
                 y={GRID_H - 16}
                 textAnchor="middle"
-                fill="var(--text-secondary)"
+                fill="var(--bone-300)"
                 fontSize="10"
                 fontFamily="var(--font-mono)"
               >
@@ -233,7 +233,7 @@ export function ChimpExplorer() {
                         cy={ay(data.pulls / data.trials)}
                         r="3.4"
                         fill="none"
-                        stroke="var(--stat-data)"
+                        stroke="var(--bone-100)"
                         strokeWidth="1.2"
                       />
                     </g>

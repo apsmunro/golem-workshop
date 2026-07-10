@@ -47,14 +47,14 @@ export function ImputationExplorer({ rows }: { rows: MilkRow[] }) {
             <g key={g}>
               <line x1={xOf(g)} x2={xOf(g)} y1={PAD_T} y2={H - PAD_B} stroke="var(--line)" strokeWidth="1" opacity="0.22" />
               <line x1={PAD_L} x2={W - PAD_R} y1={yOf(g)} y2={yOf(g)} stroke="var(--line)" strokeWidth="1" opacity="0.22" />
-              <text x={xOf(g)} y={H - PAD_B + 16} textAnchor="middle" fill="var(--text-secondary)" fontSize="9" fontFamily="var(--font-mono)">{g}</text>
-              <text x={PAD_L - 6} y={yOf(g) + 3} textAnchor="end" fill="var(--text-secondary)" fontSize="9" fontFamily="var(--font-mono)">{g}</text>
+              <text x={xOf(g)} y={H - PAD_B + 16} textAnchor="middle" fill="var(--bone-300)" fontSize="9" fontFamily="var(--font-mono)">{g}</text>
+              <text x={PAD_L - 6} y={yOf(g) + 3} textAnchor="end" fill="var(--bone-300)" fontSize="9" fontFamily="var(--font-mono)">{g}</text>
             </g>
           ))}
-          <text x={(PAD_L + W - PAD_R) / 2} y={H - 6} textAnchor="middle" fill="var(--text-secondary)" fontSize="10" fontFamily="var(--font-mono)">
+          <text x={(PAD_L + W - PAD_R) / 2} y={H - 6} textAnchor="middle" fill="var(--bone-300)" fontSize="10" fontFamily="var(--font-mono)">
             body mass, log (std)
           </text>
-          <text x={14} y={(PAD_T + H - PAD_B) / 2} textAnchor="middle" fill="var(--text-secondary)" fontSize="10" fontFamily="var(--font-mono)" transform={`rotate(-90 14 ${(PAD_T + H - PAD_B) / 2})`}>
+          <text x={14} y={(PAD_T + H - PAD_B) / 2} textAnchor="middle" fill="var(--bone-300)" fontSize="10" fontFamily="var(--font-mono)" transform={`rotate(-90 14 ${(PAD_T + H - PAD_B) / 2})`}>
             neocortex % (std)
           </text>
 
@@ -75,7 +75,7 @@ export function ImputationExplorer({ rows }: { rows: MilkRow[] }) {
                 <line key={i} x1={xOf(row.M)} x2={xOf(row.M)} y1={H - PAD_B} y2={H - PAD_B + 5} stroke="var(--stat-danger)" strokeWidth="1.4" opacity="0.6" />
               )
             ) : (
-              <circle key={i} cx={xOf(row.M)} cy={yOf(row.N)} r={R} fill="none" stroke="var(--stat-data)" strokeWidth="1.2" opacity="0.85" />
+              <circle key={i} cx={xOf(row.M)} cy={yOf(row.N)} r={R} fill="none" stroke="var(--bone-100)" strokeWidth="1.2" opacity="0.85" />
             ),
           )}
         </svg>

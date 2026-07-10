@@ -143,7 +143,7 @@ export function PosteriorExplorer({ draws, xbar, data, xLabel, yLabel, xRange }:
           <path d={bandPath(bands.predLo, bands.predHi)} fill="var(--stat-predictive)" fillOpacity="0.12" />
           <path d={bandPath(bands.muLo, bands.muHi)} fill="var(--stat-posterior)" fillOpacity="0.16" />
           {data.map((d, i) => (
-            <circle key={i} cx={px(d.x)} cy={py(d.y)} r="2" fill="none" stroke="var(--stat-data)" strokeWidth="0.8" opacity="0.7" />
+            <circle key={i} cx={px(d.x)} cy={py(d.y)} r="2" fill="none" stroke="var(--bone-100)" strokeWidth="0.8" opacity="0.7" />
           ))}
           <path
             d={bands.xs.map((x, i) => `${i === 0 ? 'M' : 'L'}${px(x).toFixed(1)},${py(bands.mean[i]!).toFixed(1)}`).join(' ')}

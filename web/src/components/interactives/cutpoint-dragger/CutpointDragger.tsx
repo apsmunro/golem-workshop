@@ -212,7 +212,7 @@ export function CutpointDragger() {
                 x={xOf(k)}
                 y={AXIS_H - 10}
                 textAnchor="middle"
-                fill="var(--text-secondary)"
+                fill="var(--bone-300)"
                 fontSize="9"
                 fontFamily="var(--font-mono)"
               >
@@ -251,14 +251,14 @@ export function CutpointDragger() {
                   x2={x + barW - 12}
                   y1={yTop(obs)}
                   y2={yTop(obs)}
-                  stroke="var(--stat-data)"
+                  stroke="var(--bone-100)"
                   strokeWidth="1.6"
                 />
                 <text
                   x={x + (barW - 10) / 2}
                   y={BAR_H - 20}
                   textAnchor="middle"
-                  fill="var(--text-secondary)"
+                  fill="var(--bone-300)"
                   fontSize="10"
                   fontFamily="var(--font-mono)"
                 >
@@ -271,7 +271,7 @@ export function CutpointDragger() {
             x={W / 2}
             y={BAR_H - 5}
             textAnchor="middle"
-            fill="var(--text-secondary)"
+            fill="var(--bone-300)"
             fontSize="10"
             fontFamily="var(--font-mono)"
           >

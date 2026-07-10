@@ -67,7 +67,7 @@ export function ZeroInflationMixer() {
                   x={34}
                   y={yOf(f) + 3}
                   textAnchor="end"
-                  fill="var(--text-secondary)"
+                  fill="var(--bone-300)"
                   fontSize="9"
                   fontFamily="var(--font-mono)"
                 >
@@ -88,9 +88,9 @@ export function ZeroInflationMixer() {
                   y={yOf(fWork)}
                   width={barW - 16}
                   height={H - 44 - yOf(fWork)}
-                  fill="var(--stat-data)"
+                  fill="var(--bone-100)"
                   opacity="0.35"
-                  stroke="var(--stat-data)"
+                  stroke="var(--bone-100)"
                   strokeWidth="1.2"
                 />
                 <rect
@@ -98,9 +98,9 @@ export function ZeroInflationMixer() {
                   y={yOf(fWork + fDrink)}
                   width={barW - 16}
                   height={yOf(fWork) - yOf(fWork + fDrink)}
-                  fill={revealed ? 'var(--plum-500)' : 'var(--stat-data)'}
+                  fill={revealed ? 'var(--plum-500)' : 'var(--bone-100)'}
                   opacity={revealed ? 0.55 : 0.35}
-                  stroke={revealed ? 'var(--plum-500)' : 'var(--stat-data)'}
+                  stroke={revealed ? 'var(--plum-500)' : 'var(--bone-100)'}
                   strokeWidth="1.2"
                 />
               </g>
@@ -115,9 +115,9 @@ export function ZeroInflationMixer() {
                 y={yOf(c / N_DAYS)}
                 width={barW - 16}
                 height={H - 44 - yOf(c / N_DAYS)}
-                fill="var(--stat-data)"
+                fill="var(--bone-100)"
                 opacity="0.35"
-                stroke="var(--stat-data)"
+                stroke="var(--bone-100)"
                 strokeWidth="1.2"
               />
             ),
@@ -151,7 +151,7 @@ export function ZeroInflationMixer() {
               x={xOf(k) + (barW - 8) / 2}
               y={H - 26}
               textAnchor="middle"
-              fill="var(--text-secondary)"
+              fill="var(--bone-300)"
               fontSize="10"
               fontFamily="var(--font-mono)"
             >
@@ -162,7 +162,7 @@ export function ZeroInflationMixer() {
             x={W / 2}
             y={H - 8}
             textAnchor="middle"
-            fill="var(--text-secondary)"
+            fill="var(--bone-300)"
             fontSize="10"
             fontFamily="var(--font-mono)"
           >

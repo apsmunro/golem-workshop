@@ -124,7 +124,7 @@ export function KlinePoisson() {
                 x={40}
                 y={yOf(tv) + 3}
                 textAnchor="end"
-                fill="var(--text-secondary)"
+                fill="var(--bone-300)"
                 fontSize="9"
                 fontFamily="var(--font-mono)"
               >
@@ -168,7 +168,7 @@ export function KlinePoisson() {
                   cx={xOf(r.logPopStd)}
                   cy={yOf(r.tools)}
                   r="4"
-                  fill="var(--stat-data)"
+                  fill="var(--bone-100)"
                 />
               ) : (
                 <circle
@@ -176,7 +176,7 @@ export function KlinePoisson() {
                   cy={yOf(r.tools)}
                   r="4.4"
                   fill="none"
-                  stroke="var(--stat-data)"
+                  stroke="var(--bone-100)"
                   strokeWidth="1.4"
                 />
               )}
@@ -185,7 +185,7 @@ export function KlinePoisson() {
                   x={xOf(r.logPopStd) + (r.culture === 'Hawaii' ? -8 : 8)}
                   y={yOf(r.tools) - 7}
                   textAnchor={r.culture === 'Hawaii' ? 'end' : 'start'}
-                  fill="var(--text-secondary)"
+                  fill="var(--bone-300)"
                   fontSize="9"
                   fontFamily="var(--font-mono)"
                 >
@@ -200,7 +200,7 @@ export function KlinePoisson() {
             x={(46 + W) / 2}
             y={H - 24}
             textAnchor="middle"
-            fill="var(--text-secondary)"
+            fill="var(--bone-300)"
             fontSize="10"
             fontFamily="var(--font-mono)"
           >

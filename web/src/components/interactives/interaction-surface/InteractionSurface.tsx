@@ -155,7 +155,7 @@ export function InteractionSurface({
                 cy={py(d.y)}
                 r="2.2"
                 fill="none"
-                stroke="var(--stat-data)"
+                stroke="var(--bone-100)"
                 strokeWidth="0.9"
                 opacity={mNear(d.m) ? 0.9 : 0.18}
               />
@@ -176,7 +176,7 @@ export function InteractionSurface({
               {yLabel}
             </text>
           </svg>
-          <figcaption className="border-t border-line px-3 py-2 font-mono text-xs text-secondary">
+          <figcaption className="border-t border-line px-3 py-2 font-mono text-xs text-bone-300">
             the line where {mLabel} = {formatM(m0)}
           </figcaption>
         </figure>
@@ -216,7 +216,7 @@ export function InteractionSurface({
               slope of {xLabel}
             </text>
           </svg>
-          <figcaption className="border-t border-line px-3 py-2 font-mono text-xs text-secondary">
+          <figcaption className="border-t border-line px-3 py-2 font-mono text-xs text-bone-300">
             the interaction: how the slope itself moves
           </figcaption>
         </figure>

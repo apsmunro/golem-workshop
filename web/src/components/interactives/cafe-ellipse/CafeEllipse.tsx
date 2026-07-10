@@ -67,26 +67,26 @@ export function CafeEllipse() {
         >
           {/* axes */}
           {[1, 2, 3, 4, 5, 6].map((x) => (
-            <text key={x} x={xOf(x)} y={H - PAD_B + 16} textAnchor="middle" fill="var(--text-secondary)" fontSize="9" fontFamily="var(--font-mono)">
+            <text key={x} x={xOf(x)} y={H - PAD_B + 16} textAnchor="middle" fill="var(--bone-300)" fontSize="9" fontFamily="var(--font-mono)">
               {x}
             </text>
           ))}
           {[-2, -1, 0].map((y) => (
             <g key={y}>
               <line x1={PAD_L} x2={W - PAD_R} y1={yOf(y)} y2={yOf(y)} stroke="var(--line)" strokeWidth="1" opacity="0.3" />
-              <text x={PAD_L - 6} y={yOf(y) + 3} textAnchor="end" fill="var(--text-secondary)" fontSize="9" fontFamily="var(--font-mono)">
+              <text x={PAD_L - 6} y={yOf(y) + 3} textAnchor="end" fill="var(--bone-300)" fontSize="9" fontFamily="var(--font-mono)">
                 {y}
               </text>
             </g>
           ))}
-          <text x={(PAD_L + W - PAD_R) / 2} y={H - 6} textAnchor="middle" fill="var(--text-secondary)" fontSize="10" fontFamily="var(--font-mono)">
+          <text x={(PAD_L + W - PAD_R) / 2} y={H - 6} textAnchor="middle" fill="var(--bone-300)" fontSize="10" fontFamily="var(--font-mono)">
             morning wait (intercept)
           </text>
           <text
             x={14}
             y={(PAD_T + H - PAD_B) / 2}
             textAnchor="middle"
-            fill="var(--text-secondary)"
+            fill="var(--bone-300)"
             fontSize="10"
             fontFamily="var(--font-mono)"
             transform={`rotate(-90 14 ${(PAD_T + H - PAD_B) / 2})`}
@@ -108,7 +108,7 @@ export function CafeEllipse() {
           ))}
           {/* raw estimates */}
           {pooled.map((c) => (
-            <circle key={`raw-${c.id}`} cx={xOf(c.raw[0])} cy={yOf(c.raw[1])} r={2.4} fill="none" stroke="var(--stat-data)" strokeWidth="1.1" opacity="0.7" />
+            <circle key={`raw-${c.id}`} cx={xOf(c.raw[0])} cy={yOf(c.raw[1])} r={2.4} fill="none" stroke="var(--bone-100)" strokeWidth="1.1" opacity="0.7" />
           ))}
           {/* pooled estimates */}
           {pooled.map((c) => (

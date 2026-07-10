@@ -183,7 +183,7 @@ export function AdmitParadox() {
                 x={42}
                 y={cy(p) + 3}
                 textAnchor="end"
-                fill="var(--text-secondary)"
+                fill="var(--bone-300)"
                 fontSize="9"
                 fontFamily="var(--font-mono)"
               >
@@ -200,7 +200,7 @@ export function AdmitParadox() {
                   x={56 + DEPTS.indexOf(dept) * colW + colW / 2}
                   y={H - 22}
                   textAnchor="middle"
-                  fill="var(--text-secondary)"
+                  fill="var(--bone-300)"
                   fontSize="11"
                   fontFamily="var(--font-mono)"
                 >
@@ -211,7 +211,7 @@ export function AdmitParadox() {
                   y1={cy(m.admit / m.applications)}
                   x2={cx(dept, false)}
                   y2={cy(f.admit / f.applications)}
-                  stroke="var(--stat-data)"
+                  stroke="var(--bone-100)"
                   strokeWidth="0.7"
                   opacity="0.5"
                 />
@@ -248,7 +248,7 @@ export function AdmitParadox() {
                 cx={cx(r.dept, true)}
                 cy={cy(rate)}
                 r={rad}
-                fill="var(--stat-data)"
+                fill="var(--bone-100)"
                 opacity="0.9"
               />
             ) : (
@@ -258,7 +258,7 @@ export function AdmitParadox() {
                 cy={cy(rate)}
                 r={rad}
                 fill="none"
-                stroke="var(--stat-data)"
+                stroke="var(--bone-100)"
                 strokeWidth="1.4"
               />
             )
@@ -288,7 +288,7 @@ export function AdmitParadox() {
             x={W / 2}
             y={DENS_H - 10}
             textAnchor="middle"
-            fill="var(--text-secondary)"
+            fill="var(--bone-300)"
             fontSize="10"
             fontFamily="var(--font-mono)"
           >

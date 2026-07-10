@@ -91,7 +91,7 @@ export function GpIslands() {
             {pts.map((p, i) => (
               <g key={i}>
                 <circle cx={p.x} cy={p.y} r={rOf(i)} fill="var(--ink-800)" stroke="var(--bone-300)" strokeWidth="1.2" />
-                <text x={p.x} y={p.y - rOf(i) - 3} textAnchor="middle" fill="var(--text-secondary)" fontSize="8" fontFamily="var(--font-mono)">
+                <text x={p.x} y={p.y - rOf(i) - 3} textAnchor="middle" fill="var(--bone-300)" fontSize="8" fontFamily="var(--font-mono)">
                   {SOCIETIES[i]}
                 </text>
               </g>
@@ -107,14 +107,14 @@ export function GpIslands() {
             <path d={curve} fill="none" stroke="var(--brass-400)" strokeWidth="1.6" />
             <path d={`${curve} L${curveX(8)},${curveY(0)} L${curveX(0)},${curveY(0)} Z`} fill="var(--brass-400)" opacity="0.08" />
             {[0, 2, 4, 6, 8].map((d) => (
-              <text key={d} x={curveX(d)} y={CURVE_H - PAD + 14} textAnchor="middle" fill="var(--text-secondary)" fontSize="9" fontFamily="var(--font-mono)">
+              <text key={d} x={curveX(d)} y={CURVE_H - PAD + 14} textAnchor="middle" fill="var(--bone-300)" fontSize="9" fontFamily="var(--font-mono)">
                 {d}
               </text>
             ))}
-            <text x={(CURVE_W + PAD) / 2} y={CURVE_H - 6} textAnchor="middle" fill="var(--text-secondary)" fontSize="9" fontFamily="var(--font-mono)">
+            <text x={(CURVE_W + PAD) / 2} y={CURVE_H - 6} textAnchor="middle" fill="var(--bone-300)" fontSize="9" fontFamily="var(--font-mono)">
               distance (thousands of km)
             </text>
-            <text x={PAD - 6} y={20} textAnchor="end" fill="var(--text-secondary)" fontSize="9" fontFamily="var(--font-mono)">
+            <text x={PAD - 6} y={20} textAnchor="end" fill="var(--bone-300)" fontSize="9" fontFamily="var(--font-mono)">
               cov
             </text>
           </svg>
